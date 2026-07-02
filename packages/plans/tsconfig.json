@@ -1,0 +1,5 @@
+{
+  "extends": "@afterservice/tsconfig/node",
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@afterservice/notifications",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "biome check .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@afterservice/db": "workspace:*",
+    "@afterservice/tsconfig": "workspace:*",
+    "@afterservice/utils": "workspace:*",
+    "@afterservice/whatsapp": "workspace:*",
+    "@types/node": "^25.2.3",
+    "typescript": "^5.9.3",
+    "zod": "^4.4.3"
+  }
+}

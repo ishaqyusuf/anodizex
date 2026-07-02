@@ -1,0 +1,28 @@
+@import "@afterservice/ui/globals.css";
+
+@keyframes mobile-beta-sheet-reveal {
+  0%,
+  99% {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(1.5rem);
+    visibility: hidden;
+  }
+
+  100% {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    visibility: visible;
+  }
+}
+
+@media (max-width: 767px) {
+  @supports (animation-timeline: scroll()) {
+    .mobile-beta-sheet {
+      animation: mobile-beta-sheet-reveal linear both;
+      animation-range: 1100px 1400px;
+      animation-timeline: scroll(root block);
+    }
+  }
+}

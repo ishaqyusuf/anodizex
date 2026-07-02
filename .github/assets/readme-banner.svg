@@ -1,0 +1,76 @@
+<svg width="1200" height="360" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">afterservice README banner</title>
+  <desc id="desc">afterservice, post-job follow-up software for local operators, with an abstract follow-up workflow board.</desc>
+  <defs>
+    <pattern id="dot-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#17232b" opacity="0.1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="360" rx="28" fill="#f7fbf7"/>
+  <rect width="1200" height="360" rx="28" fill="url(#dot-grid)" opacity="0.55"/>
+  <path d="M0 298C145 256 258 280 399 306C548 334 704 346 850 310C999 274 1085 190 1200 214V360H0V298Z" fill="#e9eee6"/>
+  <path d="M858 0H1172C1187.46 0 1200 12.536 1200 28V360H748L858 0Z" fill="#d7f3ed" opacity="0.62"/>
+
+  <g transform="translate(72 66)">
+    <rect width="72" height="72" rx="18" fill="#17232b"/>
+    <path d="M56 57V33C56 21.4 46.6 12 35 12S14 21.4 14 33s9.4 21 21 21c5.6 0 10.7-2.2 14.5-5.9" stroke="#f7fbf7" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="35" cy="33" r="7" fill="#009b98"/>
+  </g>
+
+  <g transform="translate(164 120)">
+    <text x="0" y="0" fill="#17232b" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="62" font-weight="800">afterservice</text>
+  </g>
+
+  <g transform="translate(72 194)">
+    <text x="0" y="0" fill="#52615a" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="27" font-weight="650">Post-job follow-up software for local operators</text>
+    <g transform="translate(0 38)">
+      <rect x="0" y="0" width="218" height="42" rx="21" fill="#17232b"/>
+      <circle cx="24" cy="21" r="6" fill="#009b98"/>
+      <text x="42" y="27" fill="#f7fbf7" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" font-weight="750">afterservice.app</text>
+    </g>
+  </g>
+
+  <g transform="translate(720 61)">
+    <rect x="10" y="18" width="424" height="238" rx="24" fill="#17232b" opacity="0.08"/>
+    <rect width="424" height="238" rx="24" fill="#ffffff"/>
+    <rect x="1" y="1" width="422" height="236" rx="23" stroke="#17232b" stroke-opacity="0.1" stroke-width="2"/>
+
+    <g transform="translate(25 22)">
+      <circle cx="9" cy="9" r="5" fill="#ef4444"/>
+      <circle cx="28" cy="9" r="5" fill="#f59e0b"/>
+      <circle cx="47" cy="9" r="5" fill="#22c55e"/>
+      <rect x="264" y="3" width="86" height="12" rx="6" fill="#e9eee6"/>
+    </g>
+
+    <g transform="translate(24 58)">
+      <rect width="114" height="154" rx="14" fill="#f6f7f4"/>
+      <text x="14" y="28" fill="#52615a" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" font-weight="750">Due today</text>
+      <rect x="14" y="46" width="86" height="32" rx="8" fill="#ffffff" stroke="#dbe4dc"/>
+      <rect x="26" y="58" width="46" height="6" rx="3" fill="#009b98"/>
+      <rect x="14" y="90" width="86" height="32" rx="8" fill="#ffffff" stroke="#dbe4dc"/>
+      <rect x="26" y="102" width="58" height="6" rx="3" fill="#f59e0b"/>
+    </g>
+
+    <g transform="translate(155 58)">
+      <rect width="114" height="154" rx="14" fill="#f6f7f4"/>
+      <text x="14" y="28" fill="#52615a" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" font-weight="750">Waiting</text>
+      <rect x="14" y="46" width="86" height="32" rx="8" fill="#ffffff" stroke="#dbe4dc"/>
+      <rect x="26" y="58" width="52" height="6" rx="3" fill="#17232b"/>
+      <rect x="14" y="90" width="86" height="32" rx="8" fill="#ffffff" stroke="#dbe4dc"/>
+      <rect x="26" y="102" width="35" height="6" rx="3" fill="#009b98"/>
+    </g>
+
+    <g transform="translate(286 58)">
+      <rect width="114" height="154" rx="14" fill="#f6f7f4"/>
+      <text x="14" y="28" fill="#52615a" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="13" font-weight="750">Closed</text>
+      <rect x="14" y="46" width="86" height="32" rx="8" fill="#ffffff" stroke="#dbe4dc"/>
+      <rect x="26" y="58" width="48" height="6" rx="3" fill="#22c55e"/>
+      <rect x="14" y="90" width="86" height="32" rx="8" fill="#ffffff" stroke="#dbe4dc"/>
+      <rect x="26" y="102" width="61" height="6" rx="3" fill="#009b98"/>
+    </g>
+
+    <path d="M118 135C145 135 139 89 166 89" stroke="#009b98" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 8"/>
+    <path d="M249 101C276 101 270 143 297 143" stroke="#17232b" stroke-opacity="0.36" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 8"/>
+  </g>
+</svg>

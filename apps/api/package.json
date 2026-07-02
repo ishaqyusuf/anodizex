@@ -1,0 +1,36 @@
+{
+  "name": "@afterservice/api",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./context": "./src/context.ts",
+    "./internal-api": "./src/internal-api.ts",
+    "./router": "./src/routers/_app.ts",
+    "./schemas": "./src/schemas/index.ts"
+  },
+  "scripts": {
+    "dev": "bun ../../scripts/with-workspace-env.mjs --mode local -- bun --watch src/index.ts",
+    "dev:portless": "PORTLESS_APP_PORT=${PORTLESS_APP_PORT:-4102} PORTLESS_WILDCARD=${PORTLESS_WILDCARD:-1} PORTLESS_SYNC_HOSTS=${PORTLESS_SYNC_HOSTS:-0} portless api-afterservice bun --watch src/index.ts",
+    "lint": "biome check .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@afterservice/auth": "workspace:*",
+    "@afterservice/db": "workspace:*",
+    "@afterservice/events": "workspace:*",
+    "@afterservice/jobs": "workspace:*",
+    "@afterservice/notifications": "workspace:*",
+    "@afterservice/utils": "workspace:*",
+    "@polar-sh/sdk": "^0.34.0",
+    "@trigger.dev/sdk": "4.0.1",
+    "@trpc/server": "^11.17.0",
+    "hono": "^4.0.0",
+    "superjson": "^2.2.2",
+    "zod": "^4.3.5"
+  },
+  "devDependencies": {
+    "@afterservice/tsconfig": "workspace:*",
+    "@types/node": "^25.2.3",
+    "typescript": "^5.9.3"
+  }
+}

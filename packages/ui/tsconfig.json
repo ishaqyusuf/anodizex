@@ -1,0 +1,5 @@
+{
+  "extends": "@afterservice/tsconfig/react-library",
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}

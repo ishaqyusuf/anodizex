@@ -1,0 +1,9 @@
+{
+  "extends": "@afterservice/tsconfig/base",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "prisma.ts", "trigger.config.ts"],
+  "exclude": ["node_modules"]
+}

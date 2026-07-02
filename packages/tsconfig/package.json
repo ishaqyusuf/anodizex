@@ -1,0 +1,10 @@
+{
+  "name": "@afterservice/tsconfig",
+  "private": true,
+  "exports": {
+    "./base": "./base.json",
+    "./nextjs": "./nextjs.json",
+    "./node": "./node.json",
+    "./react-library": "./react-library.json"
+  }
+}

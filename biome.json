@@ -1,0 +1,28 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
+  "files": {
+    "includes": [
+      "**",
+      "!**/.next",
+      "!**/.next/**",
+      "!**/.turbo",
+      "!**/.turbo/**",
+      "!**/dist",
+      "!**/dist/**",
+      "!**/build",
+      "!**/build/**",
+      "!**/generated/prisma",
+      "!**/generated/prisma/**",
+      "!**/node_modules",
+      "!**/node_modules/**"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@afterservice/db",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "bun run db:generate && tsc --noEmit",
+    "--build": "prisma generate && tsc",
+    "db:generate": "bun ../../scripts/with-workspace-env.mjs --mode local -- prisma generate",
+    "db:migrate": "bun ../../scripts/with-workspace-env.mjs --mode local -- prisma migrate dev",
+    "db:push": "bun ../../scripts/with-workspace-env.mjs --mode production -- prisma db push",
+    "db:validate": "bun ../../scripts/with-workspace-env.mjs --mode local -- prisma validate",
+    "lint": "biome check .",
+    "typecheck": "bun run db:generate && tsc --noEmit"
+  },
+  "devDependencies": {
+    "@afterservice/tsconfig": "workspace:*",
+    "@types/node": "^25.2.3",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "pg": "^8.21.0",
+    "prisma": "^7.8.0"
+  }
+}

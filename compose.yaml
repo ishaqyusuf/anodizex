@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: afterservice-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: afterservice
+      POSTGRES_USER: afterservice
+      POSTGRES_PASSWORD: afterservice
+    ports:
+      - "55433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U afterservice -d afterservice"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - afterservice-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  afterservice-postgres-data:

@@ -6,13 +6,24 @@ Anodizex is an aluminium systems platform for windows, sliding systems, doors, f
 
 The product is built for architectural aluminium operators who need a public project website, content management, enquiry capture, and dashboard workflows for quoting and project follow-up.
 
+## Current Capabilities
+
+- Public landing website for aluminium windows, sliding systems, doors, façades, and architectural project positioning.
+- Contact enquiry flow that stores customer messages and can send admin/customer emails when email provider env is configured.
+- Gallery, blog, and completed-project roadmap pages backed by dashboard-managed CMS data.
+- Roadmap project detail pages with project logs, images, videos, and published project metadata.
+- Authenticated dashboard for website settings, gallery, roadmap projects, project media, blog posts, and contact enquiries.
+- Project quotation system with BOQ units, dimensions, labor, materials, markup, totals, and quote status workflow.
+- Supplier-based material pricing with supplier-specific unit costs, preferred supplier prices, supplier SKU snapshots, and pricing history.
+- Existing copied customer, job, follow-up, template, billing, notifications, and Trigger.dev job foundations remain available while the product is reshaped around Anodizex.
+
 ## Product Workflow
 
-1. Record a customer.
-2. Record a completed service job.
-3. Create or schedule a follow-up.
-4. Work the follow-up board.
-5. Log contact, replies, outcomes, and closed loops.
+1. Manage public website content, contact details, gallery media, roadmap projects, and blog posts from the dashboard.
+2. Capture website contact enquiries and store them for admin review.
+3. Maintain a material library with supplier-specific pricing and price history.
+4. Build BOQ-style project quotations for aluminium units such as windows, doors, sliding systems, and façade bays.
+5. Review saved quotations, totals, status, supplier snapshots, and customer/project follow-up records.
 
 ## Monorepo
 
@@ -67,6 +78,8 @@ Start the full local stack:
 bun run dev
 ```
 
+`bun run dev` starts website, dashboard, API, and jobs. The jobs package requires `TRIGGER_PROJECT_ID`; for normal website/dashboard work without Trigger.dev configured, run the relevant app scripts below instead.
+
 Run one surface at a time:
 
 ```bash
@@ -109,7 +122,7 @@ Expected Portless URLs, using the default proxy on port `1355`:
 | Dashboard | `http://app-afterservice.localhost:1355` |
 | API | `http://api-afterservice.localhost:1355` |
 
-Prefer the Portless scripts when debugging auth, redirects, callback behavior, or cross-app URL handling.
+These local aliases are inherited from the copied scaffold and remain until the route/domain cleanup pass. Prefer the Portless scripts when debugging auth, redirects, callback behavior, or cross-app URL handling.
 
 ## Environment
 
@@ -137,6 +150,8 @@ For local Docker database work without relying on `.env`, use:
 bun run db:local:migrate
 bun run db:local:push
 ```
+
+The formal root `db:migrate`/`db:push` Prisma path is currently documented in Brain as having a local Turbo/Prisma `P1001` connection issue against `localhost:55435`; the Docker database itself can still be healthy. Do not hand-create migration files to work around that issue.
 
 Production env sync helpers:
 
@@ -195,7 +210,7 @@ Use `prod:dashboard` or `prod:website` when reproducing production-only page-loa
 
 ## Deployment Notes
 
-Production surfaces:
+Current copied production surfaces pending Anodizex domain cleanup:
 
 - Website: `https://afterservice.app`
 - Dashboard: `https://dashboard.afterservice.app`
@@ -222,6 +237,7 @@ If Trigger.dev reports `Project not found` while using the `default` profile:
 
 - Use the product name `Anodizex` and package namespace `@anodizex/*`.
 - Use `buildSiteUrl`, `buildDashboardUrl`, and `buildApiUrl` from `@anodizex/utils` for cross-app URL construction.
+- Keep remaining copied `afterservice` route/domain strings scoped to a dedicated cleanup pass.
 - Keep app-specific UI inside the owning app until it is generic enough for `packages/ui`.
 - Preserve server-side workspace permission checks for all workspace-scoped operations.
 - Read and update `brain/` docs for meaningful product, architecture, API, database, billing, auth, or workflow changes.

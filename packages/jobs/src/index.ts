@@ -1,4 +1,4 @@
-import { getDbClient } from "@afterservice/db";
+import { getDbClient } from "@anodizex/db";
 
 export type DueFollowUpJobOptions = {
   now?: Date;

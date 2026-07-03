@@ -1,5 +1,5 @@
 {
-  "name": "@afterservice/auth",
+  "name": "@anodizex/auth",
   "private": true,
   "type": "module",
   "exports": {
@@ -10,13 +10,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@afterservice/db": "workspace:*",
-    "@afterservice/utils": "workspace:*",
+    "@anodizex/db": "workspace:*",
+    "@anodizex/utils": "workspace:*",
     "@better-auth/prisma-adapter": "^1.6.11",
     "better-auth": "^1.6.11"
   },
   "devDependencies": {
-    "@afterservice/tsconfig": "workspace:*",
+    "@anodizex/tsconfig": "workspace:*",
     "@types/node": "^25.2.3",
     "typescript": "^5.9.3"
   }

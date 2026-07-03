@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton } from "@afterservice/ui";
+import { Skeleton } from "@anodizex/ui";
 
 type SheetFormSkeletonProps = {
   fields?: number;

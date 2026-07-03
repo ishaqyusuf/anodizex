@@ -1,7 +1,7 @@
 "use client";
 
-import { createCustomerSchema } from "@afterservice/api/schemas";
-import { Button, Input, Textarea } from "@afterservice/ui";
+import { createCustomerSchema } from "@anodizex/api/schemas";
+import { Button, Input, Textarea } from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -9,7 +9,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { useMutation } from "@tanstack/react-query";
 import { CustomerTagsInput } from "@/components/forms/customer-tags-input";
 import { QuickFill } from "@/components/quick-fill";

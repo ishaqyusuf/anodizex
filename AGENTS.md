@@ -39,7 +39,7 @@ Final responses must include the Brain files updated, or `No Brain documentation
 
 - The project brand is `Anodizex`.
 - The product direction is aluminium windows, sliding systems, doors, façades, and related architectural aluminium systems.
-- Existing `afterservice` package names, domains, and routes are copied scaffolding only; keep them until a dedicated rename/refactor pass.
+- Package scopes are `@anodizex/*`; remaining `afterservice` domains and routes are copied scaffolding for a later dedicated cleanup pass.
 - Use Tailwind CSS for UI component styling where Tailwind is configured; when it is not configured in a target app, preserve the existing styling system unless the task includes setting Tailwind up.
 - Preserve the existing monorepo layout under `apps/` and `packages/`.
 - Do not edit secrets in `.env*` files unless the user explicitly asks.

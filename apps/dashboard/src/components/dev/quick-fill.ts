@@ -101,7 +101,7 @@ function createSeed(): QuickFillSeed {
     firstName,
     lastName,
     fullName: `${firstName} ${lastName}`,
-    email: `${slug}+${id}@afterservice.test`,
+    email: `${slug}+${id}@anodizex.test`,
     password: `Afterservice-${id}`,
     businessName: business,
   };

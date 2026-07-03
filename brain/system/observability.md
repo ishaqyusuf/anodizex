@@ -22,7 +22,7 @@ This file captures the MVP observability baseline for afterservice production re
 - Missing OpenPanel env should not fail the daily analytics review; the job should still produce database metrics and note the website analytics reason. Missing Resend/email env skips delivery but still returns the available database summary and missing-key reasons in the Trigger.dev run output.
 
 ## Error Monitoring
-- Sentry follows the Midday dashboard pattern for `@afterservice/dashboard`.
+- Sentry follows the Midday dashboard pattern for `@anodizex/dashboard`.
 - `NEXT_PUBLIC_SENTRY_DSN` is documented in `.env.example` for browser, server, and edge SDK initialization.
 - 2026-06-11: `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_ORG`, `SENTRY_PROJECT`, and `SENTRY_AUTH_TOKEN` are configured in the local production env and Vercel production.
 - 2026-06-11: Dashboard exposes `/sentry-example-page` publicly so production error capture can be verified from `https://dashboard.afterservice.app/sentry-example-page`.

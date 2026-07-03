@@ -1,4 +1,4 @@
-import { buildDashboardUrl } from "@afterservice/utils";
+import { buildDashboardUrl } from "@anodizex/utils";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { createPageMetadata } from "../../lib/seo";

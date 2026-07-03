@@ -10,8 +10,8 @@ for (const file of files) {
   const fullPath = path.join(__dirname, "..", file);
   if (fs.existsSync(fullPath)) {
     let content = fs.readFileSync(fullPath, "utf8");
-    content = content.replace(/@midday\/ui/g, "@afterservice/ui");
-    content = content.replace(/@midday\/utils/g, "@afterservice/utils");
+    content = content.replace(/@midday\/ui/g, "@anodizex/ui");
+    content = content.replace(/@midday\/utils/g, "@anodizex/utils");
     content = content.replace(/@midday\/icons/g, "lucide-react");
     fs.writeFileSync(fullPath, content, "utf8");
   }

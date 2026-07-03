@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Calendar } from "@afterservice/ui";
+import { Button, Calendar } from "@anodizex/ui";
 import { formatISO, parseISO } from "date-fns";
 
 type DateRangeFilterProps = {

@@ -1,11 +1,11 @@
 "use client";
 
-import { Icons } from "@afterservice/ui/icons";
-import { Input } from "@afterservice/ui/input";
+import { Icons } from "@anodizex/ui/icons";
+import { Input } from "@anodizex/ui/input";
 import { useQueryState } from "nuqs";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useTrack } from "@afterservice/events/client";
-import { LogEvents } from "@afterservice/events";
+import { useTrack } from "@anodizex/events/client";
+import { LogEvents } from "@anodizex/events";
 
 type Props = {
   placeholder: string;

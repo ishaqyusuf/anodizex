@@ -1,5 +1,5 @@
-import { Button } from "@afterservice/ui/button";
-import { Icons } from "@afterservice/ui/icons";
+import { Button } from "@anodizex/ui/button";
+import { Icons } from "@anodizex/ui/icons";
 import { format, parseISO } from "date-fns";
 import type { ReactNode } from "react";
 

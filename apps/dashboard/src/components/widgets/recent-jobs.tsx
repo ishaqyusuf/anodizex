@@ -7,7 +7,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import { Send } from "lucide-react";
 import Link from "next/link";
 import {

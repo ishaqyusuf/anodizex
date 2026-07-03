@@ -1,4 +1,4 @@
-import { Icons } from "@afterservice/ui/icons";
+import { Icons } from "@anodizex/ui/icons";
 
 export function SearchFooter() {
   return (

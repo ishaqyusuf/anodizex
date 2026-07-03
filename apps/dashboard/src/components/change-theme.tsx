@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import { ThemeSwitch } from "@/components/theme-switch";
 
 export function ChangeTheme() {

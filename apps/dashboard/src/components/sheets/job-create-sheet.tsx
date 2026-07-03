@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@afterservice/ui";
+import { Sheet } from "@anodizex/ui";
 import { JobCreateForm } from "@/components/forms/job-create-form";
 import { useJobParams } from "@/hooks/use-job-params";
 import { DashboardSheetContent } from "./dashboard-sheet-content";

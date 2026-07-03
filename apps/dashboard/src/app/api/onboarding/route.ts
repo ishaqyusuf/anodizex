@@ -1,6 +1,6 @@
-import { onboardingSchema } from "@afterservice/api/schemas";
-import { auth } from "@afterservice/auth";
-import { buildWorkspaceTemplateSeed, getDbClient } from "@afterservice/db";
+import { onboardingSchema } from "@anodizex/api/schemas";
+import { auth } from "@anodizex/auth";
+import { buildWorkspaceTemplateSeed, getDbClient } from "@anodizex/db";
 
 function slugify(value: string) {
   return (

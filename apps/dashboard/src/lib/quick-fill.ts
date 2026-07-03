@@ -83,7 +83,7 @@ function fillCustomer(form: QuickFillForm, _args?: QuickFillArgs["customer"]) {
   setQuickFillValue(
     form,
     "email",
-    `${emailName}.${randomSuffix()}@afterservice.test`,
+    `${emailName}.${randomSuffix()}@anodizex.test`,
   );
   setQuickFillValue(form, "companyName", faker.company.name());
   setQuickFillValue(form, "tags", tags.join(", "));

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@afterservice/ui";
+import { Button } from "@anodizex/ui";
 import { type FieldValues, useFormContext } from "react-hook-form";
 import {
   parseQuickFillArgs,

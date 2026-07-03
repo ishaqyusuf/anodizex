@@ -1,10 +1,10 @@
-import { Provider as OpenPanelProvider } from "@afterservice/events/client";
-import { cn } from "@afterservice/ui";
-import { appMetadata } from "@afterservice/utils";
+import { Provider as OpenPanelProvider } from "@anodizex/events/client";
+import { cn } from "@anodizex/ui";
+import { appMetadata } from "@anodizex/utils";
 import type { Metadata } from "next";
 import { Hedvig_Letters_Sans, Hedvig_Letters_Serif } from "next/font/google";
 import type { ReactNode } from "react";
-import "@afterservice/ui/globals.css";
+import "@anodizex/ui/globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {

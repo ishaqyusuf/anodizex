@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === "production") {
   throw new Error("DevSignupFab must not be imported in production.");
 }
 
-import { Button } from "@afterservice/ui";
+import { Button } from "@anodizex/ui";
 import { useState } from "react";
 
 export type SignUpPresetValues = {
@@ -28,7 +28,7 @@ function makeRandomPreset(): SignUpPresetValues {
 
   return {
     name: `${firstName} ${lastName}`,
-    email: `dev-${id}@afterservice.test`,
+    email: `dev-${id}@anodizex.test`,
     password: "lorem-ipsum",
   };
 }

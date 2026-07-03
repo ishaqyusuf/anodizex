@@ -1,6 +1,6 @@
 "use client";
 
-import { buildApiUrl } from "@afterservice/utils";
+import { buildApiUrl } from "@anodizex/utils";
 
 export function getApiBaseUrl() {
   if (typeof window === "undefined") return "";

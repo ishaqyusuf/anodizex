@@ -3,7 +3,7 @@
 Date: 2026-06-11
 
 ## Status
-Phase 1 public display foundation and dashboard billing preview implemented on 2026-06-11. Updated on 2026-06-11 to remove visible region selectors and rely on automatic region/locale resolution for price display. Updated on 2026-06-15 so local display prices are converted from canonical USD amounts through a const currency conversion table in `@afterservice/plans`, with dashboard `[locale]` passed in as an additional pricing signal. Do not expose paid checkout publicly until the paid pilot is intentionally enabled.
+Phase 1 public display foundation and dashboard billing preview implemented on 2026-06-11. Updated on 2026-06-11 to remove visible region selectors and rely on automatic region/locale resolution for price display. Updated on 2026-06-15 so local display prices are converted from canonical USD amounts through a const currency conversion table in `@anodizex/plans`, with dashboard `[locale]` passed in as an additional pricing signal. Do not expose paid checkout publicly until the paid pilot is intentionally enabled.
 
 ## Goal
 Show afterservice paid-plan prices in a visitor's regional or country-local currency, then send the same pricing context into Polar checkout so the marketing page, dashboard billing page, and payment page do not disagree.

@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@afterservice/ui/button";
-import { Icons } from "@afterservice/ui/icons";
-import { Sheet, SheetContent } from "@afterservice/ui/sheet";
+import { Button } from "@anodizex/ui/button";
+import { Icons } from "@anodizex/ui/icons";
+import { Sheet, SheetContent } from "@anodizex/ui/sheet";
 import { useState } from "react";
 import { MainMenu } from "./main-menu";
 

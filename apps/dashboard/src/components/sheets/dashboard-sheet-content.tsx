@@ -6,8 +6,8 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@afterservice/ui";
-import { cn } from "@afterservice/ui/cn";
+} from "@anodizex/ui";
+import { cn } from "@anodizex/ui/cn";
 
 type DashboardSheetContentProps = {
   bodyClassName?: string;

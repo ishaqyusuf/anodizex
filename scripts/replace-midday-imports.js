@@ -9,8 +9,8 @@ function replaceInDir(dir) {
       replaceInDir(fullPath);
     } else if (fullPath.endsWith(".tsx") || fullPath.endsWith(".ts")) {
       let content = fs.readFileSync(fullPath, "utf8");
-      content = content.replace(/@midday\/ui/g, "@afterservice/ui");
-      content = content.replace(/@midday\/utils/g, "@afterservice/utils");
+      content = content.replace(/@midday\/ui/g, "@anodizex/ui");
+      content = content.replace(/@midday\/utils/g, "@anodizex/utils");
       content = content.replace(/@midday\/icons/g, "lucide-react"); // They use lucide-react or an internal package, let's map it safely if we can
       fs.writeFileSync(fullPath, content, "utf8");
     }
@@ -31,8 +31,8 @@ for (const header of headers) {
   const fullPath = path.join(__dirname, "..", header);
   if (fs.existsSync(fullPath)) {
     let content = fs.readFileSync(fullPath, "utf8");
-    content = content.replace(/@midday\/ui/g, "@afterservice/ui");
-    content = content.replace(/@midday\/utils/g, "@afterservice/utils");
+    content = content.replace(/@midday\/ui/g, "@anodizex/ui");
+    content = content.replace(/@midday\/utils/g, "@anodizex/utils");
     content = content.replace(/@midday\/icons/g, "lucide-react");
     fs.writeFileSync(fullPath, content, "utf8");
   }

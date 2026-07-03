@@ -4,8 +4,8 @@ import {
   horizontalListSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
-import { Button } from "@afterservice/ui/button";
-import { TableHead, TableHeader, TableRow } from "@afterservice/ui/table";
+import { Button } from "@anodizex/ui/button";
+import { TableHead, TableHeader, TableRow } from "@anodizex/ui/table";
 import type { Header, Table } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useMemo } from "react";

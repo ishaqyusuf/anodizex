@@ -2,8 +2,8 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { cn } from "@afterservice/ui/cn";
-import { TableHead } from "@afterservice/ui/table";
+import { cn } from "@anodizex/ui/cn";
+import { TableHead } from "@anodizex/ui/table";
 import { GripVertical } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 

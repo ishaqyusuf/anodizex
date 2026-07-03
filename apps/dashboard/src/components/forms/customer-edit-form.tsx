@@ -1,8 +1,8 @@
 "use client";
 
-import type { AppRouter } from "@afterservice/api/router";
-import { updateCustomerSchema } from "@afterservice/api/schemas";
-import { Button, Input, Textarea } from "@afterservice/ui";
+import type { AppRouter } from "@anodizex/api/router";
+import { updateCustomerSchema } from "@anodizex/api/schemas";
+import { Button, Input, Textarea } from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { useMutation } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { useEffect } from "react";

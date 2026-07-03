@@ -7,6 +7,8 @@ Production public API base: `https://dashboard.afterservice.app/api`.
 
 ## HTTP
 - `GET /health`: API service health.
+- `POST /api/contact` in `apps/website`: public website contact adapter. Validates the contact payload, delegates to the `website.submitContact` tRPC procedure, stores the inquiry, and sends admin/customer emails when Resend env is configured.
+- `POST /api/website/blob/upload` in `apps/dashboard`: authenticated Vercel Blob client-upload token route for owner/admin users. Allows public image/video uploads for website gallery, project, blog, and settings media when `BLOB_READ_WRITE_TOKEN` is configured.
 - `POST /webhooks/lemon-squeezy`: Lemon Squeezy webhook receiver. Requires a valid `x-signature` HMAC signature and stores idempotent `BillingEvent` records.
 - `POST /api/jobs/follow-ups/dry-run`: cron/internal follow-up job endpoint. Requires `Authorization: Bearer <CRON_SECRET>` or `x-cron-secret`, runs a due follow-up dry-run by default, and can mark overdue follow-ups missed with `{ markMissed: true }`.
 - `/api/auth/**`: Better Auth handler. Mounted in `apps/api` and mirrored by the dashboard same-origin route at `apps/dashboard/src/app/api/auth/[...all]/route.ts`.
@@ -57,10 +59,45 @@ The API service also keeps `/trpc/*` as a legacy/local compatibility mount, but 
 - `archive`: soft archive template.
 - `setDefault`: make one template default for its channel.
 
+`quotations`
+- `list`: owner/admin list of workspace project quotations with customer summary and totals.
+- `get`: owner/admin read for one workspace-scoped project quotation including units and material lines.
+- `create`: owner/admin mutation to create a project quotation from BOQ units, material lines, labor cost, and markup percentage.
+- `update`: owner/admin mutation to update project/client metadata, status, units, material lines, labor cost, and markup percentage.
+- `updateStatus`: owner/admin mutation to move a quote between `draft`, `sent`, `approved`, `declined`, and `expired`.
+- `delete`: owner/admin deletion for a workspace-scoped quotation.
+
+`quotations.materials`
+- `list`: owner/admin list of workspace material library entries, supplier prices, supplier pricing history, and recent default cost history.
+- `create`: owner/admin mutation to add a material and write initial cost history.
+- `update`: owner/admin mutation to update material metadata.
+- `updateCost`: owner/admin mutation to change unit cost and write cost history.
+- `archive`: owner/admin mutation to hide a material from active quoting.
+
+`quotations.materials.supplierPrices`
+- `create`: owner/admin mutation to add a supplier-specific price for a material and write initial supplier price history.
+- `update`: owner/admin mutation to update supplier name/SKU/unit cost/lead time/preferred state and write supplier price history when pricing changes.
+- `archive`: owner/admin mutation to archive a supplier price.
+
 `billing`
 - `getCurrentPlan`: returns workspace plan, status, usage, and limits.
 - `createCheckout`: returns `{ checkoutUrl }` for a configured Lemon checkout URL.
 - `getPortalUrl`: optional portal URL response. Returns `null` until configured.
+
+`website`
+- `getLanding`: public read for website settings, featured gallery, roadmap projects, and blog posts. Returns fallback Anodizex demo content when CMS data is empty.
+- `getProject`: public read for one roadmap project by slug.
+- `getBlogPost`: public read for one blog post by slug.
+- `submitContact`: public contact form mutation. Stores a contact inquiry and sends an admin notification plus customer confirmation email through the existing Resend email service.
+
+`website.admin`
+- `getContent`: owner/admin read for current workspace website settings, gallery, roadmap projects/media, blog posts, and recent contact inquiries.
+- `updateSettings`: owner/admin update for public contact details, hero copy, social URLs, and hero image URL.
+- `createGalleryItem`, `updateGalleryItem`, `deleteGalleryItem`, `reorderGallery`: owner/admin gallery management.
+- `createProject`, `updateProject`, `deleteProject`, `reorderProjects`: owner/admin roadmap project management.
+- `createProjectMedia`, `updateProjectMedia`, `deleteProjectMedia`, `reorderProjectMedia`: owner/admin project media management.
+- `createBlogPost`, `updateBlogPost`, `deleteBlogPost`: owner/admin blog management.
+- `updateInquiryStatus`: owner/admin contact inquiry status management.
 
 ## Endpoint Rules
 - Mutations require auth unless explicitly public.
@@ -68,3 +105,6 @@ The API service also keeps `/trpc/*` as a legacy/local compatibility mount, but 
 - Client-provided workspace IDs are never trusted for scoping.
 - Billing webhooks use signature verification, not session auth.
 - Cron job endpoints use `CRON_SECRET` and must not send outbound messages.
+- Website admin routes derive workspace from the authenticated session and require owner/admin role.
+- Public contact email sends require `RESEND_API_KEY` and `EMAIL_FROM_ADDRESS`; local/dev recipient override follows `TEST_EMAIL`.
+- Quotation material and quotation mutations derive workspace from the authenticated session and require owner/admin role.

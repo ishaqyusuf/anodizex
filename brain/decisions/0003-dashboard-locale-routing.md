@@ -22,4 +22,4 @@ Use the Midday dashboard locale architecture in `apps/dashboard`:
 - Website language routing is intentionally not introduced yet.
 - Pricing currency/region selection remains independent from dashboard language work. As of 2026-06-15, the pricing layer may use the Midday-style dashboard `[locale]` route param and request locale headers as pricing-only signals after explicit query overrides and geolocation/country headers.
 - The pricing use of `[locale]` does not introduce translated dashboard copy, public language routing, or a language selector.
-- Regional pricing data lives in `@afterservice/plans`, matching Midday's package-boundary pattern for plan/pricing business rules.
+- Regional pricing data lives in `@anodizex/plans`, matching Midday's package-boundary pattern for plan/pricing business rules.

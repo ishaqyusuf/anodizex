@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@afterservice/ui";
-import { TableCell, TableRow } from "@afterservice/ui";
+import { cn } from "@anodizex/ui";
+import { TableCell, TableRow } from "@anodizex/ui";
 import type {
   Cell,
   ColumnOrderState,

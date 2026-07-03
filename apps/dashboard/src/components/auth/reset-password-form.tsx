@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@afterservice/ui";
+import { Button, Input } from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -8,7 +8,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { useState } from "react";
 import { z } from "zod";
 import { useZodForm } from "@/hooks/use-zod-form";

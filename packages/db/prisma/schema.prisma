@@ -53,6 +53,26 @@ enum BillingProvider {
   stripe
 }
 
+enum WebsiteMediaType {
+  image
+  video
+}
+
+enum ContactInquiryStatus {
+  new
+  reviewed
+  replied
+  archived
+}
+
+enum ProjectQuotationStatus {
+  draft
+  sent
+  approved
+  declined
+  expired
+}
+
 model User {
   id            String       @id @default(cuid())
   email         String       @unique
@@ -109,26 +129,39 @@ model Verification {
 }
 
 model Workspace {
-  id                       String              @id @default(cuid())
-  name                     String
-  slug                     String              @unique
-  businessType             String?
-  serviceCategory          String?
-  defaultFollowUpDelayDays Int                 @default(7)
-  plan                     WorkspacePlan       @default(starter)
-  planStatus               WorkspacePlanStatus @default(trialing)
-  createdAt                DateTime            @default(now())
-  updatedAt                DateTime            @updatedAt
-  billingEvents            BillingEvent[]
-  customers                Customer[]
-  followUpEvents           FollowUpEvent[]
-  followUps                FollowUp[]
-  invites                  TeamInvite[]
-  jobs                     ServiceJob[]
-  memberships              Membership[]
-  messageLogs              MessageLog[]
-  subscriptions            Subscription[]
-  templates                FollowUpTemplate[]
+  id                             String                         @id @default(cuid())
+  name                           String
+  slug                           String                         @unique
+  businessType                   String?
+  serviceCategory                String?
+  defaultFollowUpDelayDays       Int                            @default(7)
+  plan                           WorkspacePlan                  @default(starter)
+  planStatus                     WorkspacePlanStatus            @default(trialing)
+  createdAt                      DateTime                       @default(now())
+  updatedAt                      DateTime                       @updatedAt
+  billingEvents                  BillingEvent[]
+  customers                      Customer[]
+  followUpEvents                 FollowUpEvent[]
+  followUps                      FollowUp[]
+  blogPosts                      BlogPost[]
+  contactInquiries               ContactInquiry[]
+  projectQuotationMaterialLines  ProjectQuotationMaterialLine[]
+  projectQuotationUnits          ProjectQuotationUnit[]
+  projectQuotations              ProjectQuotation[]
+  quotationMaterialCostHistories QuotationMaterialCostHistory[]
+  quotationMaterialSupplierPriceHistories QuotationMaterialSupplierPriceHistory[]
+  quotationMaterialSupplierPrices QuotationMaterialSupplierPrice[]
+  quotationMaterials             QuotationMaterial[]
+  websiteGalleryItems            WebsiteGalleryItem[]
+  websiteProjectMedia            WebsiteProjectMedia[]
+  websiteProjects                WebsiteProject[]
+  websiteSettings                WebsiteSettings?
+  invites                        TeamInvite[]
+  jobs                           ServiceJob[]
+  memberships                    Membership[]
+  messageLogs                    MessageLog[]
+  subscriptions                  Subscription[]
+  templates                      FollowUpTemplate[]
 }
 
 model Membership {
@@ -161,23 +194,24 @@ model TeamInvite {
 }
 
 model Customer {
-  id            String       @id @default(cuid())
-  workspaceId   String
-  name          String
-  phone         String?
-  email         String?
-  companyName   String?
-  preferredChannel FollowUpChannel @default(email)
-  tags          String[]     @default([])
-  notes         String?
-  lastServiceAt DateTime?
-  archivedAt    DateTime?
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  followUps     FollowUp[]
-  jobs          ServiceJob[]
-  messageLogs   MessageLog[]
-  workspace     Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  id               String             @id @default(cuid())
+  workspaceId      String
+  name             String
+  phone            String?
+  email            String?
+  companyName      String?
+  preferredChannel FollowUpChannel    @default(email)
+  tags             String[]           @default([])
+  notes            String?
+  lastServiceAt    DateTime?
+  archivedAt       DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  followUps        FollowUp[]
+  jobs             ServiceJob[]
+  messageLogs      MessageLog[]
+  quotations       ProjectQuotation[]
+  workspace        Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@index([workspaceId, archivedAt])
   @@index([workspaceId, name])
@@ -264,23 +298,23 @@ model FollowUpEvent {
 }
 
 model MessageLog {
-  id          String          @id @default(cuid())
-  workspaceId String
-  customerId  String?
-  followUpId  String?
-  channel     FollowUpChannel
-  recipient   String
-  subject     String?
-  body        String
-  provider    String?
-  providerId  String?
+  id           String          @id @default(cuid())
+  workspaceId  String
+  customerId   String?
+  followUpId   String?
+  channel      FollowUpChannel
+  recipient    String
+  subject      String?
+  body         String
+  provider     String?
+  providerId   String?
   errorDetails Json?
-  status      String          @default("draft")
-  sentAt      DateTime?
-  createdAt   DateTime        @default(now())
-  customer    Customer?       @relation(fields: [customerId], references: [id], onDelete: SetNull)
-  followUp    FollowUp?       @relation(fields: [followUpId], references: [id], onDelete: SetNull)
-  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  status       String          @default("draft")
+  sentAt       DateTime?
+  createdAt    DateTime        @default(now())
+  customer     Customer?       @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  followUp     FollowUp?       @relation(fields: [followUpId], references: [id], onDelete: SetNull)
+  workspace    Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@index([workspaceId, createdAt])
   @@index([workspaceId, followUpId])
@@ -315,4 +349,306 @@ model BillingEvent {
   workspace   Workspace?      @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
 
   @@index([workspaceId])
+}
+
+model WebsiteSettings {
+  id           String    @id @default(cuid())
+  workspaceId  String    @unique
+  companyName  String    @default("Anodizex")
+  headline     String    @default("Architectural aluminium systems for modern buildings")
+  description  String    @default("Premium aluminium windows, sliding systems, doors, facades, and architectural glazing for residential and commercial projects.")
+  email        String    @default("hello@anodizex.com")
+  phone        String    @default("+234 800 000 0000")
+  addressLine1 String    @default("Lagos, Nigeria")
+  addressLine2 String?
+  city         String?
+  region       String?
+  country      String    @default("Nigeria")
+  officeHours  String    @default("Monday to Friday, 9:00 AM - 5:00 PM")
+  mapUrl       String?
+  whatsappUrl  String?
+  instagramUrl String?
+  linkedinUrl  String?
+  heroImageUrl String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+model WebsiteProject {
+  id            String                @id @default(cuid())
+  workspaceId   String
+  slug          String
+  title         String
+  clientName    String?
+  location      String?
+  year          Int
+  serviceType   String?
+  summary       String
+  description   String?
+  log           String?
+  coverImageUrl String?
+  status        String                @default("completed")
+  sortOrder     Int                   @default(0)
+  publishedAt   DateTime?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  galleryItems  WebsiteGalleryItem[]
+  media         WebsiteProjectMedia[]
+  workspace     Workspace             @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, slug])
+  @@index([workspaceId, year])
+  @@index([workspaceId, sortOrder])
+}
+
+model WebsiteProjectMedia {
+  id           String           @id @default(cuid())
+  workspaceId  String
+  projectId    String
+  mediaType    WebsiteMediaType @default(image)
+  url          String
+  thumbnailUrl String?
+  alt          String?
+  caption      String?
+  sortOrder    Int              @default(0)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  project      WebsiteProject   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  workspace    Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, projectId])
+  @@index([workspaceId, sortOrder])
+}
+
+model WebsiteGalleryItem {
+  id           String           @id @default(cuid())
+  workspaceId  String
+  projectId    String?
+  mediaType    WebsiteMediaType @default(image)
+  title        String
+  description  String?
+  url          String
+  thumbnailUrl String?
+  alt          String?
+  sortOrder    Int              @default(0)
+  isFeatured   Boolean          @default(true)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  project      WebsiteProject?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  workspace    Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, sortOrder])
+}
+
+model BlogPost {
+  id            String    @id @default(cuid())
+  workspaceId   String
+  slug          String
+  title         String
+  excerpt       String
+  content       String
+  coverImageUrl String?
+  authorName    String    @default("Anodizex")
+  sortOrder     Int       @default(0)
+  publishedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  workspace     Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, slug])
+  @@index([workspaceId, publishedAt])
+}
+
+model ContactInquiry {
+  id                  String               @id @default(cuid())
+  workspaceId         String?
+  name                String
+  email               String
+  phone               String?
+  companyName         String?
+  projectType         String?
+  message             String
+  status              ContactInquiryStatus @default(new)
+  adminEmailStatus    String?
+  customerEmailStatus String?
+  metadata            Json?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  workspace           Workspace?           @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+
+  @@index([workspaceId, createdAt])
+  @@index([status])
+}
+
+model QuotationMaterial {
+  id                   String                         @id @default(cuid())
+  workspaceId          String
+  name                 String
+  category             String?
+  unit                 String                         @default("piece")
+  currentUnitCostCents Int                            @default(0)
+  supplier             String?
+  notes                String?
+  archivedAt           DateTime?
+  createdAt            DateTime                       @default(now())
+  updatedAt            DateTime                       @updatedAt
+  costHistory          QuotationMaterialCostHistory[]
+  quotationLines       ProjectQuotationMaterialLine[]
+  supplierPriceHistory QuotationMaterialSupplierPriceHistory[]
+  supplierPrices       QuotationMaterialSupplierPrice[]
+  workspace            Workspace                      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, name, unit])
+  @@index([workspaceId, archivedAt])
+  @@index([workspaceId, category])
+}
+
+model QuotationMaterialCostHistory {
+  id            String            @id @default(cuid())
+  workspaceId   String
+  materialId    String
+  unitCostCents Int
+  supplier      String?
+  note          String?
+  effectiveAt   DateTime          @default(now())
+  createdAt     DateTime          @default(now())
+  material      QuotationMaterial @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  workspace     Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, materialId, effectiveAt])
+}
+
+model QuotationMaterialSupplierPrice {
+  id              String                                  @id @default(cuid())
+  workspaceId     String
+  materialId      String
+  supplierName    String
+  supplierSku     String?
+  unitCostCents   Int                                     @default(0)
+  currency        String                                  @default("NGN")
+  leadTimeDays    Int?
+  isPreferred     Boolean                                 @default(false)
+  notes           String?
+  archivedAt      DateTime?
+  createdAt       DateTime                                @default(now())
+  updatedAt       DateTime                                @updatedAt
+  history         QuotationMaterialSupplierPriceHistory[]
+  material        QuotationMaterial                       @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  quotationLines  ProjectQuotationMaterialLine[]
+  workspace       Workspace                               @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, materialId, supplierName, supplierSku])
+  @@index([workspaceId, materialId, archivedAt])
+  @@index([workspaceId, supplierName])
+}
+
+model QuotationMaterialSupplierPriceHistory {
+  id                    String                         @id @default(cuid())
+  workspaceId           String
+  materialId            String
+  supplierPriceId       String
+  supplierName          String
+  supplierSku           String?
+  previousUnitCostCents Int?
+  unitCostCents         Int
+  currency              String                         @default("NGN")
+  note                  String?
+  effectiveAt           DateTime                       @default(now())
+  createdAt             DateTime                       @default(now())
+  material              QuotationMaterial              @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  supplierPrice         QuotationMaterialSupplierPrice @relation(fields: [supplierPriceId], references: [id], onDelete: Cascade)
+  workspace             Workspace                      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, materialId, effectiveAt])
+  @@index([workspaceId, supplierPriceId, effectiveAt])
+}
+
+model ProjectQuotation {
+  id                    String                         @id @default(cuid())
+  workspaceId           String
+  customerId            String?
+  quotationNumber       String
+  projectName           String
+  clientName            String?
+  clientEmail           String?
+  siteAddress           String?
+  status                ProjectQuotationStatus         @default(draft)
+  currency              String                         @default("NGN")
+  markupBps             Int                            @default(0)
+  materialSubtotalCents Int                            @default(0)
+  laborSubtotalCents    Int                            @default(0)
+  subtotalCents         Int                            @default(0)
+  markupCents           Int                            @default(0)
+  totalCents            Int                            @default(0)
+  notes                 String?
+  validUntil            DateTime?
+  createdAt             DateTime                       @default(now())
+  updatedAt             DateTime                       @updatedAt
+  customer              Customer?                      @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  materialLines         ProjectQuotationMaterialLine[]
+  units                 ProjectQuotationUnit[]
+  workspace             Workspace                      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, quotationNumber])
+  @@index([workspaceId, createdAt])
+  @@index([workspaceId, status])
+  @@index([workspaceId, customerId])
+}
+
+model ProjectQuotationUnit {
+  id                    String                         @id @default(cuid())
+  workspaceId           String
+  quotationId           String
+  label                 String
+  location              String?
+  unitType              String                         @default("window")
+  widthMm               Int                            @default(0)
+  heightMm              Int                            @default(0)
+  quantity              Int                            @default(1)
+  laborCostCents        Int                            @default(0)
+  materialSubtotalCents Int                            @default(0)
+  laborSubtotalCents    Int                            @default(0)
+  subtotalCents         Int                            @default(0)
+  markupCents           Int                            @default(0)
+  totalCents            Int                            @default(0)
+  sortOrder             Int                            @default(0)
+  notes                 String?
+  createdAt             DateTime                       @default(now())
+  updatedAt             DateTime                       @updatedAt
+  materialLines         ProjectQuotationMaterialLine[]
+  quotation             ProjectQuotation               @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  workspace             Workspace                      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, quotationId, sortOrder])
+}
+
+model ProjectQuotationMaterialLine {
+  id            String               @id @default(cuid())
+  workspaceId   String
+  quotationId   String
+  unitId        String
+  materialId    String?
+  supplierPriceId String?
+  materialName  String
+  supplierName  String?
+  supplierSku   String?
+  unit          String               @default("piece")
+  quantity      Float                @default(1)
+  unitCostCents Int                  @default(0)
+  wastePercent  Float                @default(0)
+  totalCents    Int                  @default(0)
+  sortOrder     Int                  @default(0)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  material      QuotationMaterial?   @relation(fields: [materialId], references: [id], onDelete: SetNull)
+  supplierPrice QuotationMaterialSupplierPrice? @relation(fields: [supplierPriceId], references: [id], onDelete: SetNull)
+  quotation     ProjectQuotation     @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  quotationUnit ProjectQuotationUnit @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  workspace     Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, quotationId])
+  @@index([workspaceId, unitId])
+  @@index([workspaceId, materialId])
+  @@index([workspaceId, supplierPriceId])
 }

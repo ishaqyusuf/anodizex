@@ -1,4 +1,4 @@
-import { Badge } from "@afterservice/ui";
+import { Badge } from "@anodizex/ui";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SignupCompletionTracker } from "@/components/analytics/signup-completion-tracker";

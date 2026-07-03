@@ -1,5 +1,5 @@
-import { BrandLogo } from "@afterservice/ui";
-import { appMetadata } from "@afterservice/utils";
+import { BrandLogo } from "@anodizex/ui";
+import { appMetadata } from "@anodizex/utils";
 import { featurePages, guidePages, solutionPages } from "../../lib/seo-content";
 
 export function LandingFooter() {
@@ -91,7 +91,7 @@ export function LandingFooter() {
                 Terms of Service
               </a>
               <a
-                href="mailto:hello@afterservice.app"
+                href="mailto:hello@anodizex.app"
                 className="transition-colors hover:text-[#18211c] dark:hover:text-white"
               >
                 Contact

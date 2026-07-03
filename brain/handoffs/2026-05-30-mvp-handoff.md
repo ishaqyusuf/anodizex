@@ -16,7 +16,7 @@ Date: 2026-05-30
 - Added `bun run smoke:mvp` to automate auth, API, permission, entitlement, cron-job, and Lemon webhook smoke coverage.
 - Added website feature, customer, privacy, and terms routes.
 - Added the required dashboard catch-all route redirecting unknown dashboard paths to `/`.
-- Moved dashboard forms onto shared shadcn-style field primitives from `@afterservice/ui`.
+- Moved dashboard forms onto shared shadcn-style field primitives from `@anodizex/ui`.
 - Updated Brain API, database, feature, roadmap, and handoff docs.
 
 ## Auth Bug Root Cause

@@ -19,4 +19,4 @@ Implemented on 2026-06-09.
 - Design tokens: `packages/ui/src/globals.css` already defines `:root` and `.dark` variables.
 
 ## Rule
-Use class-based dark mode so all shared Tailwind color tokens continue to resolve through the existing `@afterservice/ui` CSS variables.
+Use class-based dark mode so all shared Tailwind color tokens continue to resolve through the existing `@anodizex/ui` CSS variables.

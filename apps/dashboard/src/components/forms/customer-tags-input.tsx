@@ -2,7 +2,7 @@
 
 import MultipleSelector, {
   type Option,
-} from "@afterservice/ui/multiple-selector";
+} from "@anodizex/ui/multiple-selector";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import {

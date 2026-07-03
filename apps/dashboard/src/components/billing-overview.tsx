@@ -3,7 +3,7 @@
 import {
   getLocalizedPlanPrice,
   type PricingResolution,
-} from "@afterservice/plans";
+} from "@anodizex/plans";
 import {
   Badge,
   Button,
@@ -13,7 +13,7 @@ import {
   CardTitle,
   Progress,
   Skeleton,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, CreditCard } from "lucide-react";
 import { useRouter } from "next/navigation";

@@ -1,7 +1,7 @@
 import {
   getHeaderPricingHints,
   resolvePricingRegion,
-} from "@afterservice/plans";
+} from "@anodizex/plans";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Suspense } from "react";

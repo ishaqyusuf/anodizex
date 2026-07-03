@@ -1,6 +1,6 @@
-import { auth } from "@afterservice/auth";
-import { getDbClient } from "@afterservice/db";
-import { IdentifyUser } from "@afterservice/events/client";
+import { auth } from "@anodizex/auth";
+import { getDbClient } from "@anodizex/db";
+import { IdentifyUser } from "@anodizex/events/client";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";

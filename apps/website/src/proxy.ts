@@ -1,4 +1,4 @@
-import { buildDashboardUrl } from "@afterservice/utils";
+import { buildDashboardUrl } from "@anodizex/utils";
 import { type NextRequest, NextResponse } from "next/server";
 
 const REDIRECT_MAP: Record<string, string> = {

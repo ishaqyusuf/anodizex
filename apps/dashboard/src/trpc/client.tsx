@@ -1,6 +1,6 @@
 "use client";
 
-import type { AppRouter } from "@afterservice/api/router";
+import type { AppRouter } from "@anodizex/api/router";
 import type { QueryClient } from "@tanstack/react-query";
 import { isServer, QueryClientProvider } from "@tanstack/react-query";
 import {

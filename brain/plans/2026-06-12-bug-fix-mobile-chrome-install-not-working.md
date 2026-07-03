@@ -52,8 +52,8 @@ Harden the website PWA install path by making the service worker satisfy Chrome 
 - Desktop website behavior remains unchanged.
 
 ## Test Plan
-- Run `bun --filter @afterservice/website typecheck`.
-- Run `bun run --filter @afterservice/website build`.
+- Run `bun --filter @anodizex/website typecheck`.
+- Run `bun run --filter @anodizex/website build`.
 - Start the production website locally and verify `/`, `/manifest.webmanifest`, icons, and `/sw.js` respond successfully.
 - In mobile Chrome or Chrome DevTools, verify the app meets installability criteria and the install action opens the browser install dialog.
 - Verify no visible regression on the mobile landing page.
@@ -66,17 +66,17 @@ Harden the website PWA install path by making the service worker satisfy Chrome 
 - `scripts/verify-website-pwa.mjs` and `apps/website` script `pwa:verify` now provide repeatable static, runtime, and optional Chrome DevTools installability checks for the manifest, service worker, icon contract, rendered mobile metadata, and Chrome installability errors.
 
 ## Verification - 2026-06-15
-- `bun --filter @afterservice/website typecheck` passed.
-- `bun run --filter @afterservice/website build` passed.
-- `bun --filter @afterservice/events typecheck` passed.
-- `bun --filter @afterservice/website pwa:verify` passed.
-- `PWA_SITE_URL=http://127.0.0.1:4103 bun --filter @afterservice/website pwa:verify` passed against the built production server.
-- `PWA_SITE_URL=http://127.0.0.1:4103/ PWA_CHROME_DEBUG_URL=http://127.0.0.1:9223 bun --filter @afterservice/website pwa:verify` passed against system Chrome DevTools Protocol; Chrome reported zero manifest errors, zero installability errors, standalone display parsing, the expected PWA start URL, and a registered/controlling service worker.
+- `bun --filter @anodizex/website typecheck` passed.
+- `bun run --filter @anodizex/website build` passed.
+- `bun --filter @anodizex/events typecheck` passed.
+- `bun --filter @anodizex/website pwa:verify` passed.
+- `PWA_SITE_URL=http://127.0.0.1:4103 bun --filter @anodizex/website pwa:verify` passed against the built production server.
+- `PWA_SITE_URL=http://127.0.0.1:4103/ PWA_CHROME_DEBUG_URL=http://127.0.0.1:9223 bun --filter @anodizex/website pwa:verify` passed against system Chrome DevTools Protocol; Chrome reported zero manifest errors, zero installability errors, standalone display parsing, the expected PWA start URL, and a registered/controlling service worker.
 - `bunx biome check apps/website/public/sw.js apps/website/src/app/manifest.ts apps/website/src/components/landing/mobile-install-top-sheet.tsx packages/events/src/events.ts` passed.
 - Built production server response checks on `127.0.0.1:4103` returned 200 for `/`, `/manifest.webmanifest`, `/sw.js`, `/icons/icon-192.png`, and `/icons/maskable-512.png`; manifest JSON includes `start_url: "/?source=pwa"`, `display: "standalone"`, `display_override`, and icon purposes.
 - Direct system Chrome headless DOM/CDP smoke loaded `http://127.0.0.1:4103/` with a Pixel-style mobile user agent and confirmed the rendered page includes the manifest link, mobile metadata, landing content, signup CTA, and Chrome installability diagnostics with no errors.
 - Android emulator follow-up: `Pixel_3a_API_34` exists and booted, Android Chrome `113.0.5672.136` is installed, and the local production site was launched through `http://10.0.2.2:4103/`. The emulator then hit a System UI ANR and black-screen state, Android Chrome DevTools did not expose a usable HTTP diagnostics endpoint, and `uiautomator` could not return a root node. Native Android Chrome install-dialog verification remains external until a stable device/emulator is available.
-- Broad `bun --filter @afterservice/website lint` and `bun --filter @afterservice/events lint` still fail on pre-existing unrelated import-order/non-null assertion issues outside this patch.
+- Broad `bun --filter @anodizex/website lint` and `bun --filter @anodizex/events lint` still fail on pre-existing unrelated import-order/non-null assertion issues outside this patch.
 - Playwright-controlled browser verification was not completed because Playwright's bundled browser binary is not installed, and using system Chrome through the REPL sandbox aborts. Direct system Chrome headless DOM/CDP verification did run, including Chrome installability diagnostics, but the native Android Chrome install dialog still needs a physical/emulated Android Chrome pass.
 
 ## Risks / Edge Cases

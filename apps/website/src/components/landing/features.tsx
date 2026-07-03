@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@afterservice/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@anodizex/ui";
 import {
   CalendarCheck,
   MessageSquare,

@@ -1,7 +1,7 @@
 "use client";
 
-import type { AppRouter } from "@afterservice/api/router";
-import { Badge, Button, Card, CardContent, Skeleton } from "@afterservice/ui";
+import type { AppRouter } from "@anodizex/api/router";
+import { Badge, Button, Card, CardContent, Skeleton } from "@anodizex/ui";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { ClipboardList } from "lucide-react";

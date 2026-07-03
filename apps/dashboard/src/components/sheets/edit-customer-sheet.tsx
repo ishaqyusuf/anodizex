@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@afterservice/ui";
+import { Sheet } from "@anodizex/ui";
 import { useQuery } from "@tanstack/react-query";
 import { CustomerEditForm } from "@/components/forms/customer-edit-form";
 import { useCustomerParams } from "@/hooks/use-customer-params";

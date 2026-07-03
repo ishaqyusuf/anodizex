@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@afterservice/ui/button";
-import { Icons } from "@afterservice/ui/icons";
+import { Button } from "@anodizex/ui/button";
+import { Icons } from "@anodizex/ui/icons";
 import { useFollowUpParams } from "@/hooks/use-follow-up-params";
 
 export function OpenFollowUpSheet() {

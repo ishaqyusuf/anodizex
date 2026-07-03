@@ -4,7 +4,7 @@ import {
   Button,
   Input,
   Icons
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -12,7 +12,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";

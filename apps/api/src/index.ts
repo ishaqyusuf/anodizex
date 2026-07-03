@@ -1,8 +1,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
-import { auth, getTrustedOrigins } from "@afterservice/auth";
-import { buildWorkspaceTemplateSeed, getDbClient } from "@afterservice/db";
-import { markMissedFollowUps, runDueFollowUpsDryRun } from "@afterservice/jobs";
-import { getDevAppUrlStrings } from "@afterservice/utils";
+import { auth, getTrustedOrigins } from "@anodizex/auth";
+import { buildWorkspaceTemplateSeed, getDbClient } from "@anodizex/db";
+import { markMissedFollowUps, runDueFollowUpsDryRun } from "@anodizex/jobs";
+import { getDevAppUrlStrings } from "@anodizex/utils";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { type Context, Hono } from "hono";
 import { cors } from "hono/cors";

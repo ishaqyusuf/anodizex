@@ -1,41 +1,29 @@
 import type { Metadata } from "next";
 import { JsonLd } from "../components/json-ld";
-import { landingFaqs } from "../components/landing/faq";
-import { LaunchedPage } from "../components/launched";
-import { getPricingResolution } from "../lib/pricing-request";
+import { LaunchedPage, type LandingPageContent } from "../components/launched";
 import {
   createPageMetadata,
-  faqJsonLd,
   organizationJsonLd,
-  softwareApplicationJsonLd,
 } from "../lib/seo";
-
-type HomePageProps = {
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
-};
+import { getWebsiteCaller } from "../lib/server-trpc";
 
 export async function generateMetadata(): Promise<Metadata> {
   return createPageMetadata({
-    title: "afterservice | Post-job follow-up board for service shops",
+    title: "Anodizex | Aluminium windows, doors, sliders, and facades",
     description:
-      "Join the free beta for a manual-first follow-up board built for repair shops, installers, contractors, and local service teams.",
+      "Premium aluminium windows, sliding systems, doors, facades, and architectural aluminium systems for residential and commercial projects.",
     path: "/",
   });
 }
 
-export default async function HomePage({ searchParams }: HomePageProps) {
-  const initialPricing = await getPricingResolution(searchParams);
+export default async function HomePage() {
+  const caller = await getWebsiteCaller();
+  const content = await caller.website.getLanding();
 
   return (
     <>
-      <JsonLd
-        data={[
-          organizationJsonLd(),
-          softwareApplicationJsonLd(),
-          faqJsonLd(landingFaqs),
-        ]}
-      />
-      <LaunchedPage initialPricing={initialPricing} />
+      <JsonLd data={[organizationJsonLd()]} />
+      <LaunchedPage content={content.item as LandingPageContent} />
     </>
   );
 }

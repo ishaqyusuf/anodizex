@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardContent } from "@afterservice/ui";
+import { Button, Card, CardContent } from "@anodizex/ui";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useTRPC } from "@/trpc/client";

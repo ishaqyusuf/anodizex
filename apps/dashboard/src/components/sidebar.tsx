@@ -1,6 +1,6 @@
 "use client";
 
-import { BrandLogo, Icons } from "@afterservice/ui";
+import { BrandLogo, Icons } from "@anodizex/ui";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { MainMenu } from "./main-menu";

@@ -30,7 +30,7 @@ Clicking "Sign up with Google" on the dashboard sign-up page stays on the page a
 ## Verification
 - 2026-06-09 local repro: clicking "Continue with Google" on `http://localhost:4101/sign-in` stays on the page and shows `Google sign-in failed.`
 - 2026-06-09 local HTTP repro: `POST http://localhost:4101/api/auth/sign-in/social` returns `500` when Google OAuth credentials are absent from local env.
-- 2026-06-09 local fix check: after adding local Google OAuth credentials and starting `@afterservice/api` on `4102`, `POST http://localhost:4101/api/auth/sign-in/social` returns `200` with a Google Accounts URL and `redirect_uri=http://localhost:4101/api/auth/callback/google`.
+- 2026-06-09 local fix check: after adding local Google OAuth credentials and starting `@anodizex/api` on `4102`, `POST http://localhost:4101/api/auth/sign-in/social` returns `200` with a Google Accounts URL and `redirect_uri=http://localhost:4101/api/auth/callback/google`.
 - 2026-06-09 browser check: clicking "Continue with Google" in the in-app browser redirects from `http://localhost:4101/sign-in` to Google Accounts.
 - 2026-06-09 local DB check: the configured local Postgres URL responds to a Prisma `select 1`, so the OAuth callback has a reachable database for user/session writes.
 - 2026-06-09 production env check: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_DASHBOARD_URL`, `BETTER_AUTH_URL`, `AUTH_TRUSTED_ORIGINS`, and `BETTER_AUTH_TRUSTED_ORIGINS` match the configured Google OAuth origins/redirect. Validator reports no URL invalids, but unrelated production secrets remain missing in the local `.env.production` copy.
@@ -42,9 +42,9 @@ Clicking "Sign up with Google" on the dashboard sign-up page stays on the page a
 - 2026-06-09 live check: `GET https://dashboard.afterservice.app/sign-up` returns `200` from cached Vercel/Cloudflare content, while dynamic dashboard auth and API auth routes return `525`.
 - 2026-06-09 live check: `app.afterservice.app` also returns `525`, so the issue is not limited to the canonical dashboard hostname used by Better Auth.
 - 2026-06-09 DNS check: `dashboard.afterservice.app`, `app.afterservice.app`, and `afterservice.app` resolve through the same Cloudflare proxy IPs. Fix should focus on Cloudflare SSL/origin routing for dashboard/API origins, then re-run the auth initiation probe.
-- `bun --filter @afterservice/dashboard typecheck` passed.
-- `bun --filter @afterservice/auth typecheck` passed.
-- `bun --filter @afterservice/utils typecheck` passed.
+- `bun --filter @anodizex/dashboard typecheck` passed.
+- `bun --filter @anodizex/auth typecheck` passed.
+- `bun --filter @anodizex/utils typecheck` passed.
 - `bun scripts/with-workspace-env.mjs --mode production -- bun -e ...` now resolves both `NEXT_PUBLIC_DASHBOARD_URL` and `BETTER_AUTH_URL` to `https://dashboard.afterservice.app`.
 - Production env validation has no auth URL mismatch. It still reports missing placeholder secrets in the local `.env.production` copy.
 - Production browser retry remains pending after deployment/TLS health is confirmed.

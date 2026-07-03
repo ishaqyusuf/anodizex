@@ -1,12 +1,12 @@
 "use client";
 
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
 import {
   getLocalizedPlanPrice,
   type PricingResolution,
-} from "@afterservice/plans";
-import { Button, Card } from "@afterservice/ui";
+} from "@anodizex/plans";
+import { Button, Card } from "@anodizex/ui";
 import { Check } from "lucide-react";
 import { publicPlans } from "./pricing-data";
 

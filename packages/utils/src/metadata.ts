@@ -1,6 +1,7 @@
 export const appMetadata = {
-  description: "After-service follow-up software for local operators.",
-  dashboardTitle: "afterservice dashboard",
-  name: "afterservice",
-  title: "afterservice",
+  description:
+    "Premium aluminium windows, sliding systems, doors, facades, and architectural systems.",
+  dashboardTitle: "Anodizex dashboard",
+  name: "Anodizex",
+  title: "Anodizex",
 } as const;

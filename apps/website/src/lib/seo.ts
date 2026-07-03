@@ -1,9 +1,9 @@
-import { appMetadata, siteRootDomain } from "@afterservice/utils";
+import { appMetadata, siteRootDomain } from "@anodizex/utils";
 import type { Metadata, MetadataRoute } from "next";
 
 export const siteUrl = `https://www.${siteRootDomain}`;
 export const socialImage = {
-  alt: "afterservice - one board for every post-job customer follow-up",
+  alt: "Anodizex - premium aluminium architectural systems",
   height: 630,
   path: "/opengraph-image",
   width: 1200,
@@ -21,79 +21,43 @@ export const publicRoutes: PublicRoute[] = [
     path: "/",
     priority: 1,
     changeFrequency: "weekly",
-    lastModified: "2026-06-18",
+    lastModified: "2026-07-02",
   },
   {
-    path: "/pricing",
-    priority: 0.8,
+    path: "/contact",
+    priority: 0.9,
     changeFrequency: "monthly",
-    lastModified: "2026-06-15",
+    lastModified: "2026-07-02",
   },
   {
-    path: "/features",
-    priority: 0.8,
-    changeFrequency: "monthly",
-    lastModified: "2026-06-18",
-  },
-  {
-    path: "/features/follow-up-board",
+    path: "/projects/lagoon-house-sliding-systems",
     priority: 0.7,
     changeFrequency: "monthly",
-    lastModified: "2026-06-18",
+    lastModified: "2026-07-02",
   },
   {
-    path: "/features/templates",
+    path: "/projects/atrium-commercial-facade",
     priority: 0.7,
     changeFrequency: "monthly",
-    lastModified: "2026-06-18",
+    lastModified: "2026-07-02",
   },
   {
-    path: "/features/customer-history",
+    path: "/projects/courtyard-entrance-doors",
     priority: 0.7,
     changeFrequency: "monthly",
-    lastModified: "2026-06-18",
+    lastModified: "2026-07-02",
   },
   {
-    path: "/solutions/repair-shops",
-    priority: 0.8,
-    changeFrequency: "monthly",
-    lastModified: "2026-06-18",
-  },
-  {
-    path: "/solutions/installers",
-    priority: 0.8,
-    changeFrequency: "monthly",
-    lastModified: "2026-06-18",
-  },
-  {
-    path: "/solutions/contractors",
-    priority: 0.8,
-    changeFrequency: "monthly",
-    lastModified: "2026-06-18",
-  },
-  {
-    path: "/solutions/field-service-teams",
-    priority: 0.8,
-    changeFrequency: "monthly",
-    lastModified: "2026-06-18",
-  },
-  {
-    path: "/guides/post-job-follow-up",
+    path: "/blog/choosing-aluminium-systems",
     priority: 0.7,
     changeFrequency: "monthly",
-    lastModified: "2026-06-18",
+    lastModified: "2026-07-02",
   },
   {
-    path: "/guides/review-request-workflow",
+    path: "/blog/facade-planning-checklist",
     priority: 0.7,
     changeFrequency: "monthly",
-    lastModified: "2026-06-18",
-  },
-  {
-    path: "/guides/issue-recovery-follow-up",
-    priority: 0.7,
-    changeFrequency: "monthly",
-    lastModified: "2026-06-18",
+    lastModified: "2026-07-02",
   },
   {
     path: "/privacy",
@@ -177,7 +141,7 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    email: "hello@afterservice.app",
+    email: "hello@anodizex.com",
     name: appMetadata.name,
     url: siteUrl,
   };
@@ -186,17 +150,9 @@ export function organizationJsonLd() {
 export function softwareApplicationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    applicationCategory: "BusinessApplication",
+    "@type": "ProfessionalService",
     description: appMetadata.description,
     name: appMetadata.name,
-    offers: {
-      "@type": "Offer",
-      availability: "https://schema.org/InStock",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    operatingSystem: "Web",
     url: siteUrl,
   };
 }
@@ -244,7 +200,7 @@ export function articleJsonLd({
     dateModified: "2026-06-18",
     datePublished: "2026-06-09",
     description,
-    headline: title.replace(" | afterservice", ""),
+    headline: title.replace(" | afterservice", "").replace(" | Anodizex", ""),
     mainEntityOfPage: absoluteUrl(path),
     publisher: {
       "@type": "Organization",

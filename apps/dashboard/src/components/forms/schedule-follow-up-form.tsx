@@ -1,6 +1,6 @@
 "use client";
 
-import type { AppRouter } from "@afterservice/api/router";
+import type { AppRouter } from "@anodizex/api/router";
 import {
   Button,
   Calendar,
@@ -14,8 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
   Textarea,
-} from "@afterservice/ui";
-import { cn } from "@afterservice/ui/cn";
+} from "@anodizex/ui";
+import { cn } from "@anodizex/ui/cn";
 import {
   Form,
   FormControl,
@@ -23,7 +23,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { useMutation } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { format } from "date-fns";

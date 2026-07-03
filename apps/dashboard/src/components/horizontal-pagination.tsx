@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@afterservice/ui/button";
-import { cn } from "@afterservice/ui/cn";
-import { Icons } from "@afterservice/ui/icons";
+import { Button } from "@anodizex/ui/button";
+import { cn } from "@anodizex/ui/cn";
+import { Icons } from "@anodizex/ui/icons";
 
 interface HorizontalPaginationProps {
   canScrollLeft: boolean;

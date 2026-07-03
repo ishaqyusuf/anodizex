@@ -5,9 +5,9 @@ Implemented foundation for MVP on 2026-05-30.
 
 Updated on 2026-06-09 with a fuller Midday-style billing page and structured loading skeleton.
 
-Updated on 2026-06-11 with a regional paid-pricing preview in the dashboard billing page. The preview uses the shared `@afterservice/plans` pricing catalog and automatically resolves the display currency from request region headers, then locale headers, matching the public website pricing behavior.
+Updated on 2026-06-11 with a regional paid-pricing preview in the dashboard billing page. The preview uses the shared `@anodizex/plans` pricing catalog and automatically resolves the display currency from request region headers, then locale headers, matching the public website pricing behavior.
 
-Updated on 2026-06-15 so planned paid prices are converted from canonical USD through the shared const currency conversion table in `@afterservice/plans`. The dashboard billing page now passes its Midday-style `[locale]` route param into pricing resolution as a pricing-only signal; no translated billing copy or language switcher was added.
+Updated on 2026-06-15 so planned paid prices are converted from canonical USD through the shared const currency conversion table in `@anodizex/plans`. The dashboard billing page now passes its Midday-style `[locale]` route param into pricing resolution as a pricing-only signal; no translated billing copy or language switcher was added.
 
 ## Scope
 - Billing page displays plan, status, usage, limits, and checkout action.

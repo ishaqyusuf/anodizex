@@ -11,7 +11,7 @@ In progress. Page shell, form consistency, page skeleton fallbacks, and stale TO
 ## Architecture
 - Route pages stay thin and compose headers, Suspense boundaries, hydrated data sections, and feature components.
 - Dashboard pages use the local `apps/dashboard/src/components/error-boundary.tsx` wrapper instead of importing internal Next.js boundary modules.
-- Page forms use shared `@afterservice/ui/form` primitives.
+- Page forms use shared `@anodizex/ui/form` primitives.
 
 ## Current State
 - Customers, jobs, follow-ups, and templates pages use the local app `ErrorBoundary` with `ErrorFallback`.
@@ -28,7 +28,7 @@ In progress. Page shell, form consistency, page skeleton fallbacks, and stale TO
 - Onboarding uses a form-shaped skeleton fallback instead of a raw placeholder block.
 - Onboarding page no longer carries stale prefetch TODOs; it has no route-level tRPC data dependency.
 - Sign-in, sign-up, forgot-password, and reset-password pages use a shared centered auth shell instead of duplicated split-panel layouts.
-- Sign-in, sign-up, forgot-password, and reset-password forms use shared `@afterservice/ui/form` primitives with local Zod schemas.
+- Sign-in, sign-up, forgot-password, and reset-password forms use shared `@anodizex/ui/form` primitives with local Zod schemas.
 - Sign-in and sign-up routes are thin server pages with metadata; client auth behavior lives in `sign-in-view.tsx` and `sign-up-view.tsx`.
 - Settings and billing pages already use constrained Midday-style page layouts.
 - Settings now groups workspace and appearance configuration as matching card-style settings sections, with a card-shaped workspace loading skeleton.

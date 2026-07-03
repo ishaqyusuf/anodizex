@@ -1,5 +1,5 @@
 {
-  "name": "@afterservice/notifications",
+  "name": "@anodizex/notifications",
   "private": true,
   "type": "module",
   "exports": {
@@ -10,10 +10,10 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@afterservice/db": "workspace:*",
-    "@afterservice/tsconfig": "workspace:*",
-    "@afterservice/utils": "workspace:*",
-    "@afterservice/whatsapp": "workspace:*",
+    "@anodizex/db": "workspace:*",
+    "@anodizex/tsconfig": "workspace:*",
+    "@anodizex/utils": "workspace:*",
+    "@anodizex/whatsapp": "workspace:*",
     "@types/node": "^25.2.3",
     "typescript": "^5.9.3",
     "zod": "^4.4.3"

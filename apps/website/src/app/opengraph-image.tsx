@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "afterservice - one board for every post-job customer follow-up";
+  "Anodizex - premium aluminium architectural systems";
 export const contentType = "image/png";
 export const runtime = "edge";
 export const size = {
@@ -121,7 +121,7 @@ export default function Image() {
                   lineHeight: 1,
                 }}
               >
-                afterservice
+                Anodizex
               </div>
               <div
                 style={{
@@ -131,7 +131,7 @@ export default function Image() {
                   lineHeight: 1.2,
                 }}
               >
-                Post-job follow-up software
+                Aluminium architectural systems
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@ export default function Image() {
                 lineHeight: 1.1,
               }}
             >
-              Free early access for service operators
+              Windows, doors, sliding systems, facades
             </div>
             <div
               style={{
@@ -163,7 +163,7 @@ export default function Image() {
                 lineHeight: 0.98,
               }}
             >
-              One board for every post-job follow-up.
+              Premium aluminium systems for modern buildings.
             </div>
             <div
               style={{
@@ -173,8 +173,7 @@ export default function Image() {
                 lineHeight: 1.24,
               }}
             >
-              Customer check-ins, review-safe requests, issue recovery, and
-              repeat-service reminders.
+              Project-ready glazing, facade, entrance, and opening solutions.
             </div>
           </div>
 
@@ -197,7 +196,7 @@ export default function Image() {
                 width: 12,
               }}
             />
-            afterservice.app
+            anodizex.com
           </div>
         </div>
 
@@ -244,7 +243,7 @@ export default function Image() {
                 marginLeft: 10,
               }}
             >
-              Follow-up board
+              Project roadmap
             </div>
           </div>
           <div
@@ -258,18 +257,18 @@ export default function Image() {
             {[
               {
                 accent: "#f59e0b",
-                label: "Due today",
-                title: "HVAC maintenance",
+                label: "2026",
+                title: "Sliding systems",
               },
               {
                 accent: "#009b98",
-                label: "Sent",
-                title: "Plumbing install",
+                label: "2025",
+                title: "Commercial facade",
               },
               {
                 accent: "#22c55e",
-                label: "Replied",
-                title: "Electrical panel",
+                label: "2024",
+                title: "Entrance doors",
               },
             ].map((item) => (
               <div
@@ -323,7 +322,7 @@ export default function Image() {
                     fontWeight: 700,
                   }}
                 >
-                  Customer check-in ready
+                  Completed project
                 </div>
               </div>
             ))}

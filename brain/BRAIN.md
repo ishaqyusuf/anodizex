@@ -11,4 +11,4 @@ This is the durable project memory for Anodizex. It keeps product direction, arc
 ## Working Rules
 - Read relevant Brain files before meaningful changes.
 - Update Brain docs when product scope, architecture, API, database, or task state changes.
-- Keep copied code namespaces as-is until a dedicated rename/refactor pass.
+- Package scopes are now `@anodizex/*`; keep remaining copied route/domain strings scoped to dedicated cleanup passes.

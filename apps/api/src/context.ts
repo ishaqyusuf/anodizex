@@ -1,5 +1,5 @@
-import { auth } from "@afterservice/auth";
-import { getDbClient, type MembershipRole } from "@afterservice/db";
+import { auth } from "@anodizex/auth";
+import { getDbClient, type MembershipRole } from "@anodizex/db";
 
 type BetterAuthSession = NonNullable<
   Awaited<ReturnType<typeof auth.api.getSession>>

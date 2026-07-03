@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@afterservice/ui/cn";
+import { cn } from "@anodizex/ui/cn";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,9 +11,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@afterservice/ui/dropdown-menu";
-import { Icons } from "@afterservice/ui/icons";
-import { Input } from "@afterservice/ui/input";
+} from "@anodizex/ui/dropdown-menu";
+import { Icons } from "@anodizex/ui/icons";
+import { Input } from "@anodizex/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";

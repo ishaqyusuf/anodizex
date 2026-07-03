@@ -1,8 +1,8 @@
 "use client";
 
-import { updateWorkspaceSettingsSchema } from "@afterservice/api/schemas";
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
+import { updateWorkspaceSettingsSchema } from "@anodizex/api/schemas";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
 import {
   Button,
   Card,
@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
   Skeleton,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -27,7 +27,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo } from "react";
 import { useZodForm } from "@/hooks/use-zod-form";

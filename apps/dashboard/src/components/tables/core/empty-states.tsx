@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@afterservice/ui";
+import { Button } from "@anodizex/ui";
 import type { ReactNode } from "react";
 
 interface EmptyStateProps {

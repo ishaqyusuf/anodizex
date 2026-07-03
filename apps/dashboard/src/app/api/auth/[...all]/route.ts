@@ -1,4 +1,4 @@
-import { auth } from "@afterservice/auth";
+import { auth } from "@anodizex/auth";
 import { appendAuthCookieExpiryFallbacks } from "@/lib/session-cookies";
 
 const AUTH_DEBUG =

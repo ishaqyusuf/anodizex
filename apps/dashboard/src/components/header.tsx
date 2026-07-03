@@ -1,4 +1,4 @@
-import { Skeleton } from "@afterservice/ui/skeleton";
+import { Skeleton } from "@anodizex/ui/skeleton";
 import { Suspense } from "react";
 import { MobileMenu } from "@/components/mobile-menu";
 import { OpenSearchButton } from "@/components/search/open-search-button";

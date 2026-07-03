@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
   cn,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import Link from "next/link";
 import {
   followUpChannelLabels,

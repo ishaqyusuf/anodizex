@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@afterservice/ui";
+import { cn } from "@anodizex/ui";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import type { DashboardOverviewData } from "./overview-types";

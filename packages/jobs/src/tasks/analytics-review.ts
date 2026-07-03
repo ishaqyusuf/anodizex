@@ -1,4 +1,4 @@
-import { getDbClient } from "@afterservice/db";
+import { getDbClient } from "@anodizex/db";
 import { logger, schedules } from "@trigger.dev/sdk/v3";
 
 const TASK_ID = "daily-analytics-review" as const;

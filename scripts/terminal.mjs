@@ -34,11 +34,31 @@ const terminalScripts = {
       { command: "bun", args: ["run", "db:generate"], cwd: "packages/db" },
     ],
   },
+  "db:local:migrate": {
+    description: "Start local Docker Postgres and run Prisma migrate dev.",
+    steps: [{ command: "bun", args: ["run", "db:local:migrate"] }],
+  },
+  "db:local:push": {
+    description: "Start local Docker Postgres and push the Prisma schema.",
+    steps: [{ command: "bun", args: ["run", "db:local:push"] }],
+  },
   "db:migrate": {
     description: "Run Prisma migrate dev.",
     steps: [
       { command: "bun", args: ["run", "db:migrate"], cwd: "packages/db" },
     ],
+  },
+  "db:start": {
+    description: "Start local Docker Postgres and wait until it is ready.",
+    steps: [{ command: "bun", args: ["run", "db:start"] }],
+  },
+  "db:status": {
+    description: "Show the local Docker Postgres container status.",
+    steps: [{ command: "bun", args: ["run", "db:status"] }],
+  },
+  "db:stop": {
+    description: "Stop the local Docker Postgres container.",
+    steps: [{ command: "bun", args: ["run", "db:stop"] }],
   },
   "db:validate": {
     description: "Validate the Prisma schema.",
@@ -64,7 +84,7 @@ const terminalScripts = {
     steps: [
       {
         command: "bun",
-        args: ["run", "--filter", "@afterservice/dashboard", "build"],
+        args: ["run", "--filter", "@anodizex/dashboard", "build"],
       },
       { command: "bun", args: ["run", "start:dashboard:prod"] },
     ],
@@ -74,7 +94,7 @@ const terminalScripts = {
     steps: [
       {
         command: "bun",
-        args: ["run", "--filter", "@afterservice/website", "build"],
+        args: ["run", "--filter", "@anodizex/website", "build"],
       },
       { command: "bun", args: ["run", "start:website:prod"] },
     ],

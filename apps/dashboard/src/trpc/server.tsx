@@ -1,8 +1,8 @@
 import "server-only";
 
-import { createContext } from "@afterservice/api/context";
-import type { AppRouter } from "@afterservice/api/router";
-import { appRouter } from "@afterservice/api/router";
+import { createContext } from "@anodizex/api/context";
+import type { AppRouter } from "@anodizex/api/router";
+import { appRouter } from "@anodizex/api/router";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { headers } from "next/headers";

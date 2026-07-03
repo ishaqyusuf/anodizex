@@ -1,4 +1,4 @@
-import type { Option } from "@afterservice/ui/multiple-selector";
+import type { Option } from "@anodizex/ui/multiple-selector";
 
 export const SYSTEM_CUSTOMER_TAGS = [
   "vip",

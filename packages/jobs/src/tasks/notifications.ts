@@ -1,8 +1,8 @@
-import { getDbClient } from "@afterservice/db";
+import { getDbClient } from "@anodizex/db";
 import {
   Notifications,
   type NotificationTypes,
-} from "@afterservice/notifications";
+} from "@anodizex/notifications";
 import { logger, task } from "@trigger.dev/sdk/v3";
 
 type NotificationTaskPayload = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardContent } from "@afterservice/ui";
+import { Button, Card, CardContent } from "@anodizex/ui";
 import { useRouter } from "next/navigation";
 
 export function ErrorFallback() {

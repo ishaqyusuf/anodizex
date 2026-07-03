@@ -1,7 +1,7 @@
 import { defineConfig, env } from "prisma/config";
 
 const placeholderDatabaseUrl =
-  "postgresql://afterservice:afterservice@localhost:5432/afterservice";
+  "postgresql://anodizex:anodizex@localhost:55435/anodizex";
 
 function isCodegenCommand() {
   return process.argv.some((arg) => arg === "generate" || arg === "validate");

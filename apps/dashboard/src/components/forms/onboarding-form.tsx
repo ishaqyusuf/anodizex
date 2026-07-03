@@ -1,8 +1,8 @@
 "use client";
 
-import { onboardingSchema } from "@afterservice/api/schemas";
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
+import { onboardingSchema } from "@anodizex/api/schemas";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
 import {
   Button,
   ComboboxDropdown,
@@ -18,7 +18,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -26,7 +26,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { Info } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { z } from "zod";

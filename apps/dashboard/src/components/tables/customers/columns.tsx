@@ -1,19 +1,19 @@
 "use client";
 
-import type { AppRouter } from "@afterservice/api/router";
-import { Badge } from "@afterservice/ui";
+import type { AppRouter } from "@anodizex/api/router";
+import { Badge } from "@anodizex/ui";
 import { format } from "date-fns";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { inferRouterOutputs } from "@trpc/server";
 import { MoreHorizontal, Mail, Phone, Building } from "lucide-react";
-import { Button } from "@afterservice/ui";
+import { Button } from "@anodizex/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 
 type CustomersListPage = inferRouterOutputs<AppRouter>["customers"]["list"];
 type Customer = CustomersListPage["items"][number];

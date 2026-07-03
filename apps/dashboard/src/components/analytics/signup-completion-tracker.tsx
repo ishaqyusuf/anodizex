@@ -1,7 +1,7 @@
 "use client";
 
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 

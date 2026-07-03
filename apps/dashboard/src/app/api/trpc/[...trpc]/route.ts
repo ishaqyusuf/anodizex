@@ -1,3 +1,3 @@
-export * from "@afterservice/api/internal-api";
+export * from "@anodizex/api/internal-api";
 
 export const dynamic = "force-dynamic";

@@ -1,7 +1,7 @@
 "use client";
 
-import type { AppRouter } from "@afterservice/api/router";
-import { updateTemplateSchema } from "@afterservice/api/schemas";
+import type { AppRouter } from "@anodizex/api/router";
+import { updateTemplateSchema } from "@anodizex/api/schemas";
 import {
   Button,
   Checkbox,
@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
   Textarea,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -21,7 +21,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { useMutation } from "@tanstack/react-query";
 import type { inferRouterOutputs } from "@trpc/server";
 import { useEffect } from "react";

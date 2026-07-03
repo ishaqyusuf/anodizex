@@ -1,5 +1,5 @@
 {
-  "extends": "@afterservice/tsconfig/nextjs",
+  "extends": "@anodizex/tsconfig/nextjs",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

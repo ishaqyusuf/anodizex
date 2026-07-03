@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@afterservice/ui";
+import { Sheet } from "@anodizex/ui";
 import { CustomerCreateForm } from "@/components/forms/customer-create-form";
 import { useCustomerParams } from "@/hooks/use-customer-params";
 import { DashboardSheetContent } from "./dashboard-sheet-content";

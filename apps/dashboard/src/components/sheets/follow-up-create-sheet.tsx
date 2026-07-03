@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@afterservice/ui";
+import { Sheet } from "@anodizex/ui";
 import { FollowUpCreateForm } from "@/components/forms/follow-up-create-form";
 import { useFollowUpParams } from "@/hooks/use-follow-up-params";
 import { DashboardSheetContent } from "./dashboard-sheet-content";

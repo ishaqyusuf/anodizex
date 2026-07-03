@@ -97,7 +97,7 @@ function createCallerFromContext(context) {
 
 async function runAuthAndOperatorSmoke() {
   const id = uniqueId();
-  const email = `smoke-${id}@afterservice.test`;
+  const email = `smoke-${id}@anodizex.test`;
   const password = "password123";
   const workspaceName = `Smoke Workspace ${id.slice(0, 8)}`;
   createdUserEmails.add(email);
@@ -163,7 +163,7 @@ async function runAuthAndOperatorSmoke() {
 
   const customer = await caller.customers.create({
     companyName: "Smoke Co",
-    email: `customer-${id}@afterservice.test`,
+    email: `customer-${id}@anodizex.test`,
     name: "Smoke Customer",
     notes: "Created by smoke:mvp",
     phone: "555-0100",
@@ -200,7 +200,7 @@ async function runAuthAndOperatorSmoke() {
   const sent = await caller.followUps.markSent({
     body: "Checking in after the smoke service.",
     id: followUp.item.id,
-    recipient: `customer-${id}@afterservice.test`,
+    recipient: `customer-${id}@anodizex.test`,
     subject: "Checking in",
   });
   assert(sent.item.status === "sent", "markSent did not update status");
@@ -269,7 +269,7 @@ async function runPermissionAndScopeSmoke(primary) {
 
   const staffCaller = createCallerFromContext({
     user: {
-      email: "staff@afterservice.test",
+      email: "staff@anodizex.test",
       id: "smoke-staff",
       name: "Staff",
     },
@@ -303,7 +303,7 @@ async function runPermissionAndScopeSmoke(primary) {
   createdWorkspaceIds.add(limitWorkspace.id);
   const limitUser = await db.user.create({
     data: {
-      email: `limit-${uniqueId()}@afterservice.test`,
+      email: `limit-${uniqueId()}@anodizex.test`,
       name: "Limit User",
     },
   });

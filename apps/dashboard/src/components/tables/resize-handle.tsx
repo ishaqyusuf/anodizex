@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@afterservice/ui/cn";
+import { cn } from "@anodizex/ui/cn";
 import type { Header } from "@tanstack/react-table";
 
 interface ResizeHandleProps<TData> {

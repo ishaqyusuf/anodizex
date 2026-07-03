@@ -1,8 +1,8 @@
-import { getDbClient } from "@afterservice/db";
+import { getDbClient } from "@anodizex/db";
 import {
   getDevAppUrlStrings,
   resolveEmailRecipients,
-} from "@afterservice/utils";
+} from "@anodizex/utils";
 import { prismaAdapter } from "@better-auth/prisma-adapter";
 import { betterAuth } from "better-auth";
 
@@ -106,7 +106,7 @@ export const auth = betterAuth({
           body: JSON.stringify({
             from:
               readNonEmptyEnv("EMAIL_FROM_ADDRESS") ??
-              "noreply@afterservice.app",
+              "noreply@anodizex.app",
             to: recipientResolution.recipients,
             subject: "Reset your password",
             html: `<p>Click <a href="${url}">here</a> to reset your password.</p>`,

@@ -1,7 +1,7 @@
 "use client";
 
-import type { AppRouter } from "@afterservice/api/router";
-import { Table, TableBody, TableCell, TableRow } from "@afterservice/ui/table";
+import type { AppRouter } from "@anodizex/api/router";
+import { Table, TableBody, TableCell, TableRow } from "@anodizex/ui/table";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import { useMutation, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";

@@ -5,6 +5,12 @@ This file tracks unstarted work outside the active phase checklist.
 
 ## Current Backlog
 - Customer self-onboarding job flow.
+- Generate formal Prisma migration history for the website CMS schema now that the local Docker database is available on port `55435`.
+- Configure `BLOB_READ_WRITE_TOKEN`, `RESEND_API_KEY`, `EMAIL_FROM_ADDRESS`, and the production Anodizex contact email before production contact/media use.
+- Replace inherited afterservice pricing, feature, solution, guide, privacy, and terms copy with Anodizex-specific pages in a dedicated cleanup pass.
+- Add richer dashboard editing for existing roadmap, gallery, and blog records after the first-pass CMS is validated.
+- Resolve the root Turbo Prisma `P1001` issue so formal migration history can be generated for the website CMS and project quotation schema.
+- Add quotation PDF/export, customer email sending, tax/discount controls, revision history, and full saved-quote editing polish after the first quotation pass is validated.
 
 ## Customer Self-Onboarding Job Flow
 Status: backlog

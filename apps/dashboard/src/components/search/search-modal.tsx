@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, DialogContent } from "@afterservice/ui/dialog";
+import { Dialog, DialogContent } from "@anodizex/ui/dialog";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useSearchStore } from "@/store/search";
 import { Search } from "./search";

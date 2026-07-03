@@ -1,4 +1,4 @@
-import { Button, Card, CardContent } from "@afterservice/ui";
+import { Button, Card, CardContent } from "@anodizex/ui";
 
 type SheetMissingStateProps = {
   description: string;

@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle, cn } from "@afterservice/ui";
+import { Card, CardContent, CardHeader, CardTitle, cn } from "@anodizex/ui";
 import {
   followUpStatusLabels,
   toFollowUpStatus,

@@ -12,11 +12,11 @@ This file keeps absolute local paths and external company references used for ar
 - `plot-keys`: `/Users/M1PRO/Documents/code/plot-keys`
 
 ## Product Company References
-- Schüco: aluminium windows, doors, façades, sliding systems.
-- Reynaers Aluminium: aluminium windows, doors, sliding and folding systems, façades.
-- Kawneer: architectural aluminium windows, doors, entrances, storefronts, curtain wall systems.
-- TECHNAL: aluminium windows, doors, sliders, façades, pergolas, solar protection.
-- AluK: aluminium construction systems, windows, doors, sliding doors, folding doors, curtain walling, shutters, louvers.
+- Schüco: https://www.schueco.com/ - aluminium windows, doors, façades, sliding systems.
+- Reynaers Aluminium: https://www.reynaers.com/ - aluminium windows, doors, sliding and folding systems, façades.
+- Kawneer: https://www.kawneer.com/ - architectural aluminium windows, doors, entrances, storefronts, curtain wall systems.
+- TECHNAL: https://www.technal.com/ - aluminium windows, doors, sliders, façades, pergolas, solar protection.
+- AluK: https://www.aluk.com/ - aluminium construction systems, windows, doors, sliding doors, folding doors, curtain walling, shutters, louvers.
 
 ## Notes
 - `source-after-service` is the copied implementation baseline.

@@ -13,7 +13,7 @@ Implemented dry-run foundation on 2026-05-30.
 ## Architecture
 - Package owner: `packages/jobs/src/index.ts`.
 - API endpoint owner: `apps/api/src/index.ts` at `POST /api/jobs/follow-ups/dry-run`.
-- Database access comes from `@afterservice/db`.
+- Database access comes from `@anodizex/db`.
 - The endpoint is internal-only and requires `CRON_SECRET`.
 - Scheduled Trigger.dev owner-report task: `packages/jobs/src/tasks/analytics-review.ts` at `08:00 Africa/Lagos`.
 - The analytics review queries OpenPanel Insights with read/root credentials and aggregates platform-wide Prisma counts for jobs, customers, templates, follow-ups, messages, users, workspaces, and top workspace activity.
@@ -25,4 +25,4 @@ The daily analytics review is an internal owner email only. It sends directly to
 
 ## Verification
 - `bun run smoke:mvp` checks unauthorized cron access is rejected and authorized dry-run requests return an OK job result.
-- `bun --filter @afterservice/jobs typecheck` should cover the daily analytics task.
+- `bun --filter @anodizex/jobs typecheck` should cover the daily analytics task.

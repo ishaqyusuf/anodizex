@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@afterservice/ui";
+import { Sheet } from "@anodizex/ui";
 import { useQuery } from "@tanstack/react-query";
 import { FollowUpWorkForm } from "@/components/forms/follow-up-work-form";
 import { useFollowUpParams } from "@/hooks/use-follow-up-params";

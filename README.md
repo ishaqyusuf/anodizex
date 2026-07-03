@@ -1,10 +1,10 @@
-# afterservice
+# Anodizex
 
-![afterservice README banner](.github/assets/readme-banner.svg)
+![Anodizex README banner](.github/assets/readme-banner.svg)
 
-afterservice is after-service follow-up software for local operators. It helps service businesses turn completed work into structured customer check-ins, review requests, repeat visits, issue resolution, and referrals.
+Anodizex is an aluminium systems platform for windows, sliding systems, doors, façades, project showcases, customer enquiries, and project quotations.
 
-The product is built for repair shops, installers, clinics, salons, spas, local contractors, and field service teams whose customer experience continues after the job is done.
+The product is built for architectural aluminium operators who need a public project website, content management, enquiry capture, and dashboard workflows for quoting and project follow-up.
 
 ## Product Workflow
 
@@ -20,8 +20,8 @@ This repository is a private Bun/Turbo workspace.
 
 | Path | Purpose |
 | --- | --- |
-| `apps/website` | Public marketing site for `afterservice.app`. |
-| `apps/dashboard` | Authenticated operator dashboard for onboarding, customers, jobs, follow-ups, templates, billing, and settings. |
+| `apps/website` | Public Anodizex website for landing content, contact enquiries, gallery, roadmap projects, and blog posts. |
+| `apps/dashboard` | Authenticated operator dashboard for website CMS, customers, jobs, follow-ups, templates, billing, settings, and project quotations. |
 | `apps/api` | Hono/tRPC API for business operations, auth context, permissions, webhooks, and job endpoints. |
 | `packages/auth` | Session, auth, and workspace membership helpers. |
 | `packages/db` | Prisma/Postgres schema, generated client, query helpers, and domain types. |
@@ -40,13 +40,25 @@ This repository is a private Bun/Turbo workspace.
 Requirements:
 
 - Bun `1.3.9`
-- Postgres-compatible database
+- Docker for the local Postgres database, or another Postgres-compatible database
 - Project environment variables in `.env`
 
 Install dependencies:
 
 ```bash
 bun install
+```
+
+Start the local Docker Postgres database:
+
+```bash
+bun run db:start
+```
+
+The local database is exposed at:
+
+```bash
+DATABASE_URL=postgresql://anodizex:anodizex@localhost:55435/anodizex
 ```
 
 Start the full local stack:
@@ -111,10 +123,19 @@ Environment configuration is loaded from the workspace root.
 Useful environment and database commands:
 
 ```bash
+bun run db:start
+bun run db:status
 bun run db:validate
 bun run db:generate
 bun run db:migrate
 bun run db:push
+```
+
+For local Docker database work without relying on `.env`, use:
+
+```bash
+bun run db:local:migrate
+bun run db:local:push
 ```
 
 Production env sync helpers:
@@ -199,8 +220,8 @@ If Trigger.dev reports `Project not found` while using the `default` profile:
 
 ## Engineering Notes
 
-- Use the product name `afterservice`, the domain `afterservice.app`, and package namespace `@afterservice/*`.
-- Use `buildSiteUrl`, `buildDashboardUrl`, and `buildApiUrl` from `@afterservice/utils` for cross-app URL construction.
+- Use the product name `Anodizex` and package namespace `@anodizex/*`.
+- Use `buildSiteUrl`, `buildDashboardUrl`, and `buildApiUrl` from `@anodizex/utils` for cross-app URL construction.
 - Keep app-specific UI inside the owning app until it is generic enough for `packages/ui`.
 - Preserve server-side workspace permission checks for all workspace-scoped operations.
 - Read and update `brain/` docs for meaningful product, architecture, API, database, billing, auth, or workflow changes.

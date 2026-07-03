@@ -1,4 +1,4 @@
-import { appMetadata } from "@afterservice/utils";
+import { appMetadata } from "@anodizex/utils";
 import type { Metadata } from "next";
 import { createPageMetadata } from "../../lib/seo";
 

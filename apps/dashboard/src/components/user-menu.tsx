@@ -1,7 +1,7 @@
 "use client";
 
-import { LogEvents } from "@afterservice/events";
-import { useClearIdentity, useTrack } from "@afterservice/events/client";
+import { LogEvents } from "@anodizex/events";
+import { useClearIdentity, useTrack } from "@anodizex/events/client";
 import {
   Avatar,
   AvatarFallback,
@@ -12,7 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import { LogOut, Settings, User } from "lucide-react";
 import { useState } from "react";
 import { signOut } from "@/lib/auth-client";

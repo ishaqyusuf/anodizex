@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@afterservice/ui";
-import { Skeleton } from "@afterservice/ui";
+import { cn } from "@anodizex/ui";
+import { Skeleton } from "@anodizex/ui";
 import type { SkeletonType } from "./types";
 
 interface SkeletonCellProps {

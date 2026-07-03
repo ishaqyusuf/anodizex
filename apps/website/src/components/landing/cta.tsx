@@ -1,8 +1,8 @@
 "use client";
 
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
-import { Button } from "@afterservice/ui";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
+import { Button } from "@anodizex/ui";
 
 export function LandingCTA() {
   const track = useTrack();

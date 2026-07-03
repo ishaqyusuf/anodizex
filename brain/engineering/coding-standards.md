@@ -12,7 +12,8 @@ Implementation-facing engineering standards for Anodizex.
 - Prisma schema changes must be followed by root `bun db:migrate` and `bun db:push` when those scripts exist. Do not manually create migration files.
 
 ## Copied Code Rules
-- Keep copied `afterservice` namespaces and domains until a focused rename/refactor pass.
+- Use `@anodizex/*` for internal workspace package scopes.
+- Keep remaining copied `afterservice` route/domain strings until a focused rename/refactor pass.
 - Delete copied flows only after the replacement Anodizex behavior is defined.
 - Prefer small commits that move one product area at a time.
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 

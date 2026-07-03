@@ -1,5 +1,5 @@
-import { createContext } from "@afterservice/api/context";
-import { appRouter } from "@afterservice/api/router";
+import { createContext } from "@anodizex/api/context";
+import { appRouter } from "@anodizex/api/router";
 import { headers } from "next/headers";
 
 export async function getServerCaller() {

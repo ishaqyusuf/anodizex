@@ -21,7 +21,7 @@ This file gives implementation rules for AI agents.
 - Summarize what changed and what was verified.
 
 ## Forbidden Drift
-- Do not rename afterservice.
+- Do not rename remaining copied afterservice route/domain/cookie behavior outside a focused cleanup pass.
 - Do not copy Plot Keys real estate concepts into product code.
 - Do not wire real outbound messaging without explicit configuration.
 - Do not make checkout redirects the source of paid entitlement truth.

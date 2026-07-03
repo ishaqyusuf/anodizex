@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@afterservice/ui";
+import { Button } from "@anodizex/ui";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { Portal } from "@/components/portal";

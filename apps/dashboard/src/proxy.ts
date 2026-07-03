@@ -73,7 +73,9 @@ export const config = {
 };
 
 export default async function proxy(request: NextRequest) {
-  const response = I18nMiddleware(request);
+  const response = I18nMiddleware(
+    request as unknown as Parameters<typeof I18nMiddleware>[0],
+  );
   const { search } = request.nextUrl;
   const authenticated = hasAcceptedSessionCookie(request);
   const normalizedPathname = stripSupportedLocale(request.nextUrl.pathname);

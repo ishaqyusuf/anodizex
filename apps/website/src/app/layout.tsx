@@ -1,7 +1,7 @@
-import { Provider as AnalyticsProvider } from "@afterservice/events/client";
-import { websiteNavItems } from "@afterservice/site-nav";
-import { BrandLogo, cn } from "@afterservice/ui";
-import { appMetadata } from "@afterservice/utils";
+import { Provider as AnalyticsProvider } from "@anodizex/events/client";
+import { websiteNavItems } from "@anodizex/site-nav";
+import { BrandLogo, cn } from "@anodizex/ui";
+import { appMetadata } from "@anodizex/utils";
 import type { Metadata } from "next";
 import { Hedvig_Letters_Sans, Hedvig_Letters_Serif } from "next/font/google";
 import { headers } from "next/headers";
@@ -34,9 +34,9 @@ const hedvigSerif = Hedvig_Letters_Serif({
 export const metadata: Metadata = {
   ...createPageMetadata({
     description:
-      "Free beta for local service operators who need one board for post-job customer follow-up.",
+      "Premium aluminium windows, sliding systems, doors, facades, and architectural systems for modern buildings.",
     path: "/",
-    title: "afterservice | Post-job follow-up board for service shops",
+    title: "Anodizex | Aluminium architectural systems",
   }),
   applicationName: appMetadata.name,
   appleWebApp: {

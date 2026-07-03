@@ -15,7 +15,7 @@ Updated on 2026-06-09 to follow the dashboard form and loading-state standard.
 - Suggestion data owner: `apps/dashboard/src/lib/onboarding-suggestions.ts`.
 
 ## Current State
-- Onboarding form uses shared `@afterservice/ui/form` primitives.
+- Onboarding form uses shared `@anodizex/ui/form` primitives.
 - Business type and service category use creatable `ComboboxDropdown` suggestions.
 - Default follow-up delay uses the shared `Select` primitive and exposes a hover tooltip explaining that it controls the starting due date for new follow-ups after completed jobs.
 - Business names are validated against a small reserved-name blacklist shared by onboarding and workspace settings schemas.

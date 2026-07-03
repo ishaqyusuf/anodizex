@@ -22,6 +22,12 @@ As of 2026-06-09, onboarding business type and service category fields use creat
 
 As of 2026-06-09, a post-MVP customer self-onboarding job flow is planned in `brain/features/customer-self-onboarding-job-flow.md`: operators can start a job from only phone/email, then invite the customer to complete profile and service details through a tokenized afterservice link.
 
+As of 2026-07-02, the first Anodizex public website/CMS pass is implemented and documented in `brain/features/anodizex-website-cms.md`: the website now has aluminium systems landing content, contact enquiry flow, gallery, completed-project roadmap pages, blog pages, dashboard CMS controls, and Vercel Blob upload support. Inherited afterservice SEO/pricing/feature pages still require a dedicated Anodizex cleanup pass.
+
+As of 2026-07-02, the first dashboard project quotation pass is implemented and documented in `brain/features/project-quotation-system.md`: owner/admin users can manage a material cost library, track supplier-based material pricing and pricing history, build BOQ-style project quotations, apply markup, and view server-calculated totals for aluminium system units.
+
+As of 2026-07-02, internal workspace package scopes were renamed from the copied `@afterservice/*` namespace to `@anodizex/*`.
+
 ## Phase 1: Repo Bootstrap
 
 Status: complete.
@@ -33,7 +39,7 @@ Deliverables:
 - Repo at `/Users/M1PRO/Documents/code/micro-startups/after-service`.
 - Apps: website, dashboard, API.
 - Packages: auth, db, jobs, notifications, site-nav, tsconfig, ui, utils.
-- Package namespace `@afterservice/*`.
+- Package namespace `@anodizex/*`.
 - Root scripts for dev, build, typecheck, lint, format.
 - Root `.env`, `.env.production`, `.env.example`.
 - Git initialized on `main`.
@@ -112,9 +118,9 @@ Goal: establish a practical operator-focused interface foundation.
 
 Deliverables:
 
-- `@afterservice/ui` components: Button, Input, Textarea, Select, Dialog, Dropdown, Tabs, Badge, Table, EmptyState.
+- `@anodizex/ui` components: Button, Input, Textarea, Select, Dialog, Dropdown, Tabs, Badge, Table, EmptyState.
 - Dashboard shell: sidebar, topbar, user menu placeholder, workspace switcher placeholder, billing badge placeholder.
-- `@afterservice/site-nav` dashboard nav registry.
+- `@anodizex/site-nav` dashboard nav registry.
 - Website nav and CTA links.
 
 Design rules:
@@ -174,7 +180,7 @@ Acceptance:
 
 - Prisma schema validates.
 - Initial migration applies.
-- Generated client exports from `@afterservice/db`.
+- Generated client exports from `@anodizex/db`.
 - Every business model is workspace-scoped.
 
 ## Phase 6: Authentication And Workspace Onboarding
@@ -183,7 +189,7 @@ Goal: allow an operator to create an account, create a workspace, and land in th
 
 Deliverables:
 
-- Better Auth-style `@afterservice/auth`.
+- Better Auth-style `@anodizex/auth`.
 - Sign-up and sign-in pages.
 - API context with session, active workspace, and membership role.
 - Workspace onboarding flow.

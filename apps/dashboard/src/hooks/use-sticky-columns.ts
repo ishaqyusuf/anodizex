@@ -1,4 +1,4 @@
-import { cn } from "@afterservice/ui";
+import { cn } from "@anodizex/ui";
 import type { VisibilityState } from "@tanstack/react-table";
 import { useCallback, useMemo } from "react";
 import type { StickyColumnConfig } from "@/components/tables/core";

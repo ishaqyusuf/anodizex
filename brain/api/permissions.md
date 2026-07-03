@@ -10,6 +10,8 @@ This file defines authorization rules.
 
 ## Public Routes
 - Website pages.
+- Website content reads: `website.getLanding`, `website.getProject`, and `website.getBlogPost`.
+- Website contact submission: `website.submitContact` through the website `/api/contact` adapter.
 - Sign-up/sign-in pages.
 - API health.
 - Lemon Squeezy webhook endpoint with signature verification.
@@ -35,11 +37,17 @@ Require active membership:
 - Billing portal access.
 - Team invites.
 - Workspace-level settings.
+- Website CMS management under `website.admin.*`.
+- Dashboard Vercel Blob upload token route at `/api/website/blob/upload`.
+- Project quotation, quotation material, and supplier material pricing management under `quotations.*`.
 
 ## Enforcement Rules
 - Never trust workspace ID from the client without membership lookup.
 - Permission checks must run in API procedures.
 - UI gates are helpful but not security boundaries.
+- Public website contact submissions may create `ContactInquiry` records but cannot choose workspace scope.
+- Vercel Blob upload tokens are only generated after Better Auth session validation and owner/admin membership lookup.
+- Quotation create/update/status/material/supplier-price mutations are owner/admin operations because they affect pricing and customer-facing commercial terms.
 
 ## Auth Proxy Behavior
 - Browser OAuth:
@@ -56,7 +64,7 @@ Require active membership:
 - Website proxy:
   - `/login` and `/sign-in` redirect to dashboard `/sign-in`.
   - `/signup` and `/sign-up` redirect to dashboard `/sign-up`.
-  - Uses `buildDashboardUrl` from `@afterservice/utils` for correct host resolution.
+  - Uses `buildDashboardUrl` from `@anodizex/utils` for correct host resolution.
 - Trusted origins:
   - Local: `http://localhost:4100`, `http://localhost:4101`, `http://127.0.0.1:4100`, `http://127.0.0.1:4101`.
   - Portless: `http://afterservice.localhost:1355`, `http://app-afterservice.localhost:1355`.

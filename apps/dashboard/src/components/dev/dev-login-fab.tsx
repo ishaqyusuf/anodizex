@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === "production") {
   throw new Error("DevLoginFab must not be imported in production.");
 }
 
-import { Button } from "@afterservice/ui";
+import { Button } from "@anodizex/ui";
 import { useState } from "react";
 import type { DevAccount } from "./dev-auth-store";
 import { getDevAccounts } from "./dev-auth-store";

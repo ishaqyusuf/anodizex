@@ -2,7 +2,7 @@ import {
   getHeaderPricingHints,
   type PricingResolution,
   resolvePricingRegion,
-} from "@afterservice/plans";
+} from "@anodizex/plans";
 import { headers } from "next/headers";
 
 type SearchParams =

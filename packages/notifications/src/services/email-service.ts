@@ -1,4 +1,4 @@
-import { resolveEmailRecipients } from "@afterservice/utils";
+import { resolveEmailRecipients } from "@anodizex/utils";
 import type { EmailInput } from "../base";
 
 type EmailSendResult = {

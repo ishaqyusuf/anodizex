@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@afterservice/ui";
+import { Button } from "@anodizex/ui";
 import { Database, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";

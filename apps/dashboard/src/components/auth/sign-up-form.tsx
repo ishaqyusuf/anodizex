@@ -1,8 +1,8 @@
 "use client";
 
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
-import { Button, Icons, Input } from "@afterservice/ui";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
+import { Button, Icons, Input } from "@anodizex/ui";
 import {
   Form,
   FormControl,
@@ -10,7 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";

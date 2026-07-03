@@ -1,6 +1,6 @@
 "use client";
 
-import { createJobSchema } from "@afterservice/api/schemas";
+import { createJobSchema } from "@anodizex/api/schemas";
 import {
   Button,
   Calendar,
@@ -13,8 +13,8 @@ import {
   PopoverContent,
   PopoverTrigger,
   Textarea,
-} from "@afterservice/ui";
-import { cn } from "@afterservice/ui/cn";
+} from "@anodizex/ui";
+import { cn } from "@anodizex/ui/cn";
 import {
   Form,
   FormControl,
@@ -22,7 +22,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@afterservice/ui/form";
+} from "@anodizex/ui/form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useMemo } from "react";

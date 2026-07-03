@@ -1,4 +1,4 @@
-import { appMetadata } from "@afterservice/utils";
+import { appMetadata } from "@anodizex/utils";
 import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {

@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@afterservice/ui/button";
-import { Checkbox } from "@afterservice/ui/checkbox";
-import { Icons } from "@afterservice/ui/icons";
-import { Label } from "@afterservice/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@afterservice/ui/popover";
+import { Button } from "@anodizex/ui/button";
+import { Checkbox } from "@anodizex/ui/checkbox";
+import { Icons } from "@anodizex/ui/icons";
+import { Label } from "@anodizex/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@anodizex/ui/popover";
 import { useJobsStore } from "@/store/jobs";
 
 export function JobsColumnVisibility() {

@@ -51,4 +51,4 @@ Align the public landing page, pricing page, dashboard billing surface, plan lim
 - `bun run build` passed.
 - Stale public-copy scan across `apps/website`, `apps/dashboard`, `apps/api`, and `packages` returned no matches.
 - HTTP smoke checks confirmed `/` and `/pricing` serve the Free Beta and planned paid plan copy from the local website server.
-- Full monorepo `bun run lint` still fails on existing `@afterservice/ui` animation/accessibility diagnostics outside this pricing alignment scope.
+- Full monorepo `bun run lint` still fails on existing `@anodizex/ui` animation/accessibility diagnostics outside this pricing alignment scope.

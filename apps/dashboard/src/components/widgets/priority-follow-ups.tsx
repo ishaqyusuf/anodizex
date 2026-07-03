@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import { ArrowUpRight, Clock3 } from "lucide-react";
 import Link from "next/link";
 import {

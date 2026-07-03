@@ -1,4 +1,4 @@
-import baseConfig from "@afterservice/ui/tailwind.config";
+import baseConfig from "@anodizex/ui/tailwind.config";
 import type { Config } from "tailwindcss";
 
 export default {

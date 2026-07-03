@@ -1,5 +1,5 @@
-import type { Prisma, PrismaClient } from "@afterservice/db";
-import { WhatsAppService } from "@afterservice/whatsapp";
+import type { Prisma, PrismaClient } from "@anodizex/db";
+import { WhatsAppService } from "@anodizex/whatsapp";
 import type {
   NotificationHandler,
   NotificationOptions,
@@ -288,4 +288,5 @@ export type {
   UserData,
   WhatsAppInput,
 } from "./base";
+export { EmailService };
 export type { NotificationTypes } from "./schemas";

@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@afterservice/ui";
-import { Skeleton } from "@afterservice/ui";
+import { cn } from "@anodizex/ui";
+import { Skeleton } from "@anodizex/ui";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import type {
   ColumnDef,
   ColumnSizingState,

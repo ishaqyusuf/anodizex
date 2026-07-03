@@ -14,7 +14,7 @@ In progress. Primary dashboard sheet forms aligned on 2026-06-09.
 - Sheet open state remains URL-backed through existing domain hooks or nearby `nuqs` query state.
 - Primary dashboard sheets share `apps/dashboard/src/components/sheets/dashboard-sheet-content.tsx` for scrollable content, visible header copy, accessible sheet titles, and body spacing.
 - Forms use the typed `useZodForm` helper with API schemas where available.
-- Fields use `@afterservice/ui/form` primitives and shared UI controls instead of raw labels, native selects, or direct `form.register` markup.
+- Fields use `@anodizex/ui/form` primitives and shared UI controls instead of raw labels, native selects, or direct `form.register` markup.
 - Loading states use `apps/dashboard/src/components/sheets/sheet-form-skeleton.tsx` instead of centered text placeholders.
 
 ## Current State

@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@afterservice/ui";
+import { Sheet } from "@anodizex/ui";
 import { TemplateCreateForm } from "@/components/forms/template-create-form";
 import { useTemplateParams } from "@/hooks/use-template-params";
 import { DashboardSheetContent } from "./dashboard-sheet-content";

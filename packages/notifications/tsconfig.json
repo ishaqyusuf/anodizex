@@ -1,5 +1,5 @@
 {
-  "extends": "@afterservice/tsconfig/base",
+  "extends": "@anodizex/tsconfig/base",
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

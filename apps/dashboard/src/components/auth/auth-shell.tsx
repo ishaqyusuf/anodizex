@@ -1,5 +1,5 @@
-import { BrandLogo } from "@afterservice/ui";
-import { appMetadata } from "@afterservice/utils";
+import { BrandLogo } from "@anodizex/ui";
+import { appMetadata } from "@anodizex/utils";
 import type { ReactNode } from "react";
 
 type AuthShellProps = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Badge, Button } from "@afterservice/ui";
+import { Badge, Button } from "@anodizex/ui";
 import { ClipboardList, Plus } from "lucide-react";
 import Link from "next/link";
 import type { DashboardOverviewData } from "./overview-types";

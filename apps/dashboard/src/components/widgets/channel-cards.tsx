@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@afterservice/ui";
+import { Card, CardContent } from "@anodizex/ui";
 import {
   followUpChannelLabels,
   toFollowUpChannel,

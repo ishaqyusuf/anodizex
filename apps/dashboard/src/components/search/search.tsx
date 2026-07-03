@@ -1,6 +1,6 @@
 "use client";
 
-import { dashboardNavItems } from "@afterservice/site-nav";
+import { dashboardNavItems } from "@anodizex/site-nav";
 import {
   Command,
   CommandEmpty,
@@ -8,9 +8,9 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@afterservice/ui/command";
-import { Icons } from "@afterservice/ui/icons";
-import { Spinner } from "@afterservice/ui/spinner";
+} from "@anodizex/ui/command";
+import { Icons } from "@anodizex/ui/icons";
+import { Spinner } from "@anodizex/ui/spinner";
 import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 import { useMemo, useRef, useState } from "react";

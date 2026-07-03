@@ -1,6 +1,6 @@
 "use client";
 
-import { Sheet } from "@afterservice/ui";
+import { Sheet } from "@anodizex/ui";
 import { useQuery } from "@tanstack/react-query";
 import { useQueryState } from "nuqs";
 import { ScheduleFollowUpForm } from "@/components/forms/schedule-follow-up-form";

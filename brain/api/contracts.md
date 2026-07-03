@@ -126,6 +126,95 @@ type FollowUpTemplateDto = {
 };
 ```
 
+## Project Quotations
+Quotation inputs use Zod schemas from `@anodizex/api/schemas`. Currency values are stored and returned as integer cents.
+
+```ts
+type QuotationMaterialDto = {
+  id: string;
+  name: string;
+  category: string;
+  unit: string;
+  currentUnitCostCents: number;
+  supplier: string | null;
+  notes: string | null;
+  archivedAt: string | null;
+  supplierPrices: QuotationMaterialSupplierPriceDto[];
+  costHistory: Array<{
+    id: string;
+    unitCostCents: number;
+    supplier: string;
+    note: string;
+    createdAt: string;
+    effectiveAt: string;
+  }>;
+};
+
+type QuotationMaterialSupplierPriceDto = {
+  id: string;
+  materialId: string;
+  supplierName: string;
+  supplierSku: string;
+  unitCostCents: number;
+  currency: string;
+  leadTimeDays: number | null;
+  isPreferred: boolean;
+  archivedAt: string | null;
+  history: Array<{
+    id: string;
+    previousUnitCostCents: number | null;
+    unitCostCents: number;
+    note: string;
+    createdAt: string;
+    effectiveAt: string;
+  }>;
+};
+
+type ProjectQuotationDto = {
+  id: string;
+  projectName: string;
+  clientName: string;
+  clientEmail: string | null;
+  clientPhone: string | null;
+  projectAddress: string | null;
+  status: "draft" | "sent" | "approved" | "declined" | "expired";
+  validUntil: string | null;
+  markupPercent: number;
+  materialSubtotalCents: number;
+  laborSubtotalCents: number;
+  markupCents: number;
+  totalCents: number;
+  units: ProjectQuotationUnitDto[];
+};
+
+type ProjectQuotationUnitDto = {
+  id: string;
+  label: string;
+  systemType: string;
+  widthMm: number;
+  heightMm: number;
+  quantity: number;
+  laborCostCents: number;
+  materialSubtotalCents: number;
+  totalCents: number;
+  materialLines: ProjectQuotationMaterialLineDto[];
+};
+
+type ProjectQuotationMaterialLineDto = {
+  id: string;
+  materialId: string | null;
+  supplierPriceId: string | null;
+  materialName: string;
+  supplierName: string;
+  supplierSku: string;
+  unit: string;
+  quantity: number;
+  unitCostCents: number;
+  wastePercent: number;
+  totalCents: number;
+};
+```
+
 ## Billing
 ```ts
 type BillingPlanDto = {
@@ -147,6 +236,80 @@ type BillingPlanDto = {
 
 type CheckoutResult = {
   checkoutUrl: string;
+};
+```
+
+## Website
+Public website reads return serialized dates as ISO strings and use fallback Anodizex demo content when a workspace has not created CMS data yet.
+
+```ts
+type WebsiteLanding = {
+  item: {
+    settings: WebsiteSettingsDto;
+    gallery: WebsiteGalleryItemDto[];
+    projects: WebsiteProjectDto[];
+    blogPosts: BlogPostDto[];
+  };
+};
+
+type WebsiteSettingsDto = {
+  id: string;
+  workspaceId: string;
+  companyName: string;
+  headline: string;
+  description: string;
+  email: string;
+  phone: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  region: string;
+  country: string;
+  officeHours: string;
+  heroImageUrl: string;
+};
+
+type WebsiteProjectDto = {
+  id: string;
+  slug: string;
+  title: string;
+  year: number;
+  summary: string;
+  description: string;
+  log: string;
+  coverImageUrl: string;
+  serviceType: string;
+  media: WebsiteProjectMediaDto[];
+};
+```
+
+Website admin mutations use shared Zod schemas from `@anodizex/api/schemas`. Sort mutations accept ordered ID arrays:
+
+```ts
+type ReorderWebsiteItemsInput = {
+  ids: string[];
+};
+```
+
+Contact form submission:
+
+```ts
+type ContactInquiryInput = {
+  name: string;
+  email: string;
+  phone?: string;
+  companyName?: string;
+  projectType?: string;
+  message: string;
+};
+
+type ContactInquiryResult = {
+  item: {
+    id: string;
+    status: "new" | "reviewed" | "replied" | "archived";
+    adminEmailStatus: string;
+    customerEmailStatus: string;
+  };
 };
 ```
 

@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@afterservice/ui";
+} from "@anodizex/ui";
 import type { SeoFaqItem } from "../seo-faq";
 
 export const landingFaqs: SeoFaqItem[] = [

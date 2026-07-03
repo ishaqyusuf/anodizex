@@ -1,4 +1,4 @@
-import { getDbClient } from "@afterservice/db";
+import { getDbClient } from "@anodizex/db";
 import type { Metadata } from "next";
 import { SignInView } from "@/components/auth/sign-in-view";
 

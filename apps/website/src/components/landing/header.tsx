@@ -3,10 +3,10 @@
 
 "use client";
 
-import { LogEvents } from "@afterservice/events";
-import { useTrack } from "@afterservice/events/client";
-import { BrandLogo, Button } from "@afterservice/ui";
-import { appMetadata } from "@afterservice/utils";
+import { LogEvents } from "@anodizex/events";
+import { useTrack } from "@anodizex/events/client";
+import { BrandLogo, Button } from "@anodizex/ui";
+import { appMetadata } from "@anodizex/utils";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
 

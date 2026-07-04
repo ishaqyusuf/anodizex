@@ -22,22 +22,13 @@ const appUrlKeys = [
 
 const authUrlKeys = ["BETTER_AUTH_URL"] as const;
 
-const productionRequiredKeys = [
-  "AUTH_SECRET",
-  "BETTER_AUTH_URL",
-  "DATABASE_URL",
-  "EMAIL_FROM_ADDRESS",
-  "GOOGLE_CLIENT_ID",
-  "GOOGLE_CLIENT_SECRET",
-  "POLAR_ACCESS_TOKEN",
-  "POLAR_ORGANIZATION_ID",
-  "POLAR_WEBHOOK_SECRET",
-  "RESEND_API_KEY",
-  "CRON_SECRET",
-  "TWILIO_ACCOUNT_SID",
-  "TWILIO_AUTH_TOKEN",
-  "TWILIO_WHATSAPP_NUMBER",
-] as const;
+const requiredKeys = ["DATABASE_URL"] as const;
+
+const defaultAppUrls = {
+  api: "https://dashboard.afterservice.app/api",
+  dashboard: "https://dashboard.afterservice.app",
+  site: "https://www.afterservice.app",
+} as const;
 
 function readEnv(env: EnvSource, key: string): string | undefined {
   const value = env[key];
@@ -49,18 +40,12 @@ function readEnv(env: EnvSource, key: string): string | undefined {
   return value;
 }
 
-function requireEnv(env: EnvSource, key: string): string {
-  const value = readEnv(env, key);
-
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${key}`);
-  }
-
-  return value;
-}
-
-function requireUrl(env: EnvSource, key: string): string {
-  const value = requireEnv(env, key);
+function optionalUrl(
+  env: EnvSource,
+  key: string,
+  fallback: string,
+): string {
+  const value = readEnv(env, key) ?? fallback;
 
   try {
     return new URL(value).toString().replace(/\/$/, "");
@@ -71,9 +56,13 @@ function requireUrl(env: EnvSource, key: string): string {
 
 export function getAppUrls(env: EnvSource = process.env): AppUrls {
   return {
-    api: requireUrl(env, "NEXT_PUBLIC_API_URL"),
-    dashboard: requireUrl(env, "NEXT_PUBLIC_DASHBOARD_URL"),
-    site: requireUrl(env, "NEXT_PUBLIC_SITE_URL"),
+    api: optionalUrl(env, "NEXT_PUBLIC_API_URL", defaultAppUrls.api),
+    dashboard: optionalUrl(
+      env,
+      "NEXT_PUBLIC_DASHBOARD_URL",
+      defaultAppUrls.dashboard,
+    ),
+    site: optionalUrl(env, "NEXT_PUBLIC_SITE_URL", defaultAppUrls.site),
   };
 }
 
@@ -94,10 +83,6 @@ export function validateWorkspaceEnv(
   env: EnvSource = process.env,
   mode: WorkspaceEnvMode = "local",
 ): EnvValidationResult {
-  const requiredKeys =
-    mode === "production"
-      ? [...appUrlKeys, ...productionRequiredKeys]
-      : [...appUrlKeys, "DATABASE_URL"];
   const missing: string[] = [];
   const invalid: string[] = [];
 

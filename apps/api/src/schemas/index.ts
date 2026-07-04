@@ -170,10 +170,12 @@ export const websiteSettingsSchema = z.object({
 
 export const createGalleryItemSchema = z.object({
   alt: optionalStringSchema,
+  capturedAt: optionalStringSchema,
   description: optionalStringSchema,
   isFeatured: z.boolean().default(true),
   mediaType: websiteMediaTypeSchema.default("image"),
   projectId: z.string().trim().min(1).optional().or(z.literal("")),
+  tags: optionalStringSchema,
   thumbnailUrl: optionalUrlSchema,
   title: z.string().trim().min(1, "Title is required"),
   url: z.string().trim().url("Enter a valid media URL"),

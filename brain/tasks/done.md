@@ -14,3 +14,4 @@ Tracks completed work.
 - Implemented first-pass dashboard project quotation system with material cost library, material cost history, BOQ units, material line snapshots, markup calculation, and owner/admin tRPC management.
 - Renamed internal workspace package scope from copied `@afterservice/*` names to `@anodizex/*`.
 - Added supplier-based material pricing, supplier price history, preferred supplier pricing, and supplier snapshots on project quotation material lines.
+- Implemented Telegram-only raw media catalog import for website gallery items, including Vercel Blob upload, Telegram source metadata, idempotent import tracking, and dashboard gallery editing for imported media.

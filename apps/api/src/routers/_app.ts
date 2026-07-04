@@ -365,6 +365,23 @@ function optionalValue(value: string | null | undefined) {
   return value?.trim() ? value.trim() : null;
 }
 
+function optionalDateValue(value: string | null | undefined) {
+  const trimmed = optionalValue(value);
+  if (!trimmed) return null;
+
+  const date = new Date(trimmed);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function tagsFromInput(value: string | null | undefined) {
+  return (
+    value
+      ?.split(",")
+      .map((tag) => tag.trim())
+      .filter(Boolean) ?? []
+  );
+}
+
 function slugify(value: string) {
   return (
     value
@@ -472,14 +489,19 @@ function websiteSettingsDto(settings: {
 
 function galleryItemDto(item: {
   alt?: string | null;
+  blobPathname?: string | null;
+  capturedAt?: Date | null;
   createdAt: Date;
+  dateSource?: string | null;
   description?: string | null;
   id: string;
   isFeatured: boolean;
   mediaType: string;
   project?: { slug: string; title: string } | null;
   projectId?: string | null;
+  sourceProvider?: string | null;
   sortOrder: number;
+  tags?: string[];
   thumbnailUrl?: string | null;
   title: string;
   updatedAt: Date;
@@ -487,7 +509,10 @@ function galleryItemDto(item: {
 }) {
   return {
     alt: item.alt ?? "",
+    blobPathname: item.blobPathname ?? "",
+    capturedAt: iso(item.capturedAt),
     createdAt: item.createdAt.toISOString(),
+    dateSource: item.dateSource ?? "",
     description: item.description ?? "",
     id: item.id,
     isFeatured: item.isFeatured,
@@ -496,7 +521,9 @@ function galleryItemDto(item: {
       ? { slug: item.project.slug, title: item.project.title }
       : null,
     projectId: item.projectId ?? "",
+    sourceProvider: item.sourceProvider ?? "",
     sortOrder: item.sortOrder,
+    tags: item.tags ?? [],
     thumbnailUrl: item.thumbnailUrl ?? "",
     title: item.title,
     updatedAt: item.updatedAt.toISOString(),
@@ -2394,27 +2421,34 @@ const workspaceRouter = t.router({
   }),
 });
 
+const quotationMaterialCostHistoryOrderBy: Prisma.QuotationMaterialCostHistoryOrderByWithRelationInput =
+  { effectiveAt: "desc" };
+const quotationMaterialSupplierPriceHistoryOrderBy: Prisma.QuotationMaterialSupplierPriceHistoryOrderByWithRelationInput =
+  { effectiveAt: "desc" };
+const quotationMaterialSupplierPriceOrderBy: Prisma.QuotationMaterialSupplierPriceOrderByWithRelationInput[] =
+  [
+    { isPreferred: "desc" },
+    { supplierName: "asc" },
+    { createdAt: "desc" },
+  ];
+
 function quotationMaterialInclude(includeArchivedSupplierPrices = false) {
   return {
     costHistory: {
-      orderBy: { effectiveAt: "desc" },
+      orderBy: quotationMaterialCostHistoryOrderBy,
       take: 5,
     },
     supplierPrices: {
       include: {
         history: {
-          orderBy: { effectiveAt: "desc" },
+          orderBy: quotationMaterialSupplierPriceHistoryOrderBy,
           take: 5,
         },
       },
-      orderBy: [
-        { isPreferred: "desc" },
-        { supplierName: "asc" },
-        { createdAt: "desc" },
-      ],
+      orderBy: quotationMaterialSupplierPriceOrderBy,
       where: includeArchivedSupplierPrices ? undefined : { archivedAt: null },
     },
-  } as const;
+  };
 }
 
 async function syncPreferredSupplierPrice(
@@ -3427,11 +3461,14 @@ const websiteRouter = t.router({
         const item = await db.websiteGalleryItem.create({
           data: {
             alt: optionalValue(input.alt),
+            capturedAt: optionalDateValue(input.capturedAt),
+            dateSource: optionalValue(input.capturedAt) ? "manual" : null,
             description: optionalValue(input.description),
             isFeatured: input.isFeatured,
             mediaType: input.mediaType,
             projectId,
             sortOrder,
+            tags: tagsFromInput(input.tags),
             thumbnailUrl: optionalValue(input.thumbnailUrl),
             title: input.title,
             url: input.url,
@@ -3457,10 +3494,13 @@ const websiteRouter = t.router({
         const item = await db.websiteGalleryItem.update({
           data: {
             alt: optionalValue(input.alt),
+            capturedAt: optionalDateValue(input.capturedAt),
+            dateSource: optionalValue(input.capturedAt) ? "manual" : null,
             description: optionalValue(input.description),
             isFeatured: input.isFeatured,
             mediaType: input.mediaType,
             projectId,
+            tags: tagsFromInput(input.tags),
             thumbnailUrl: optionalValue(input.thumbnailUrl),
             title: input.title,
             url: input.url,

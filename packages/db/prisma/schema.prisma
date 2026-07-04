@@ -422,23 +422,34 @@ model WebsiteProjectMedia {
 }
 
 model WebsiteGalleryItem {
-  id           String           @id @default(cuid())
-  workspaceId  String
-  projectId    String?
-  mediaType    WebsiteMediaType @default(image)
-  title        String
-  description  String?
-  url          String
-  thumbnailUrl String?
-  alt          String?
-  sortOrder    Int              @default(0)
-  isFeatured   Boolean          @default(true)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  project      WebsiteProject?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  workspace    Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  id             String           @id @default(cuid())
+  workspaceId    String
+  projectId      String?
+  mediaType      WebsiteMediaType @default(image)
+  title          String
+  description    String?
+  url            String
+  thumbnailUrl   String?
+  alt            String?
+  tags           String[]         @default([])
+  capturedAt     DateTime?
+  dateSource     String?
+  sourceProvider String?
+  sourceId       String?
+  sourceUniqueId String?
+  sourceMetadata Json?
+  blobPathname   String?
+  sortOrder      Int              @default(0)
+  isFeatured     Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  project        WebsiteProject?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  workspace      Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@index([workspaceId, sortOrder])
+  @@index([workspaceId, capturedAt])
+  @@index([workspaceId, sourceProvider])
+  @@unique([workspaceId, sourceProvider, sourceUniqueId])
 }
 
 model BlogPost {

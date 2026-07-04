@@ -54,3 +54,14 @@ Tracks database migration workflow and migration history notes.
   - `bun run db:push -- --ui=tui`: reached Prisma and failed with `P1001` against `localhost:55435`.
 - Docker health still reported `anodizex-postgres-1` healthy and `pg_isready -U anodizex -d anodizex` accepting connections after the failures.
 - Formal migration history still depends on resolving the root Prisma/Turbo `P1001` issue. No manual migration file was created.
+
+## 2026-07-04 Telegram Media Catalog Schema Update
+- Added gallery media catalog fields to `WebsiteGalleryItem`: tags, captured date, date source, source provider/IDs, source metadata, and Blob pathname.
+- Added indexes for captured date/source provider and a workspace/source-provider/source-unique-ID uniqueness constraint for idempotent Telegram imports.
+- `bun run db:validate` passed.
+- `bun --filter @anodizex/db db:generate` passed and refreshed the ignored generated Prisma client.
+- Required root Prisma scripts were attempted:
+  - `bun run db:migrate`: blocked by Turbo's interactive task guard before Prisma ran.
+  - `bun run db:migrate -- --ui=tui`, `TURBO_UI=true bun run db:migrate`, and direct `bunx turbo ... --ui=tui` attempts were also blocked by the same guard in this shell.
+  - `bun run db:push`: blocked by the same Turbo interactive task guard before Prisma ran.
+- No manual migration file was created.

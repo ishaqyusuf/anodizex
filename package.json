@@ -40,6 +40,10 @@
     "jobs:deploy": "bun run --filter @anodizex/jobs deploy",
     "kill:ports": "bun scripts/with-workspace-env.mjs --mode local -- sh ./scripts/kill-port.sh",
     "lint": "biome check package.json turbo.json scripts && turbo lint",
+    "media:telegram:dry-run": "bun scripts/with-workspace-env.mjs --mode local -- bun scripts/import-telegram-media.mjs",
+    "media:telegram:import": "bun scripts/with-workspace-env.mjs --mode local -- bun scripts/import-telegram-media.mjs --apply",
+    "media:telegram:prod:dry-run": "bun scripts/with-workspace-env.mjs --mode production -- bun scripts/import-telegram-media.mjs",
+    "media:telegram:prod:import": "bun scripts/with-workspace-env.mjs --mode production -- bun scripts/import-telegram-media.mjs --apply",
     "smoke:mvp": "bun scripts/smoke-mvp.mjs",
     "start:dashboard:prod": "bun --cwd apps/dashboard ../../scripts/with-workspace-env.mjs --mode production -- bun run next start -p 4101",
     "start:website:prod": "bun --cwd apps/website ../../scripts/with-workspace-env.mjs --mode production -- bun run next start -p 4100",
@@ -56,6 +60,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@radix-ui/react-portal": "^1.1.10",
+    "@vercel/blob": "^2.5.0",
     "framer-motion": "^12.40.0"
   }
 }

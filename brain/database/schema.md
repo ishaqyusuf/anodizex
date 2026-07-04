@@ -35,7 +35,7 @@ This file documents the implemented Prisma/Postgres schema in `packages/db`.
 - `WebsiteSettings`: workspace-scoped public website contact details, hero copy, social links, and hero image URL.
 - `WebsiteProject`: completed-project roadmap entries with year, slug, summary, description, log, cover image, status, and publish date.
 - `WebsiteProjectMedia`: image/video media attached to a roadmap project page.
-- `WebsiteGalleryItem`: public gallery image/video items, optionally linked to a roadmap project, with sortable ordering.
+- `WebsiteGalleryItem`: public gallery image/video items, optionally linked to a roadmap project, with sortable ordering, editable tags/date metadata, and Telegram/Vercel Blob import source fields.
 - `BlogPost`: public blog posts with slug, excerpt, content, cover image, author, sort order, and publish date.
 - `ContactInquiry`: public contact form submissions with admin/customer email delivery status.
 
@@ -70,6 +70,8 @@ This file documents the implemented Prisma/Postgres schema in `packages/db`.
 - Website project slugs per workspace.
 - Blog post slugs per workspace.
 - Website media ordering by workspace/project.
+- Website gallery media by workspace/captured date and workspace/source provider.
+- Telegram-imported gallery media uniqueness by workspace, source provider, and source unique ID.
 - Contact inquiry creation date and status.
 - Quotation materials by workspace/name and archived state.
 - Quotation supplier prices by workspace/material/supplier and archived state.

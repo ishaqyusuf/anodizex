@@ -20,6 +20,7 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 - Public blog pages at `/blog/[slug]`.
 - Dashboard `/website` page for editing contact information, adding/removing/reordering gallery items, adding/removing/reordering roadmap projects, adding project media, adding/removing blog posts, and viewing enquiries.
 - Vercel Blob client-upload route for dashboard owner/admin media uploads when `BLOB_READ_WRITE_TOKEN` is configured.
+- Telegram-only raw media import for cataloging bot-received images/videos into unassigned gallery items backed by Vercel Blob.
 - External media URLs remain supported as a fallback and future storage-provider abstraction point.
 
 ## Out Of Scope
@@ -34,12 +35,13 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 - Contact form sends an admin notification and a customer confirmation email when Resend env is configured.
 - Dashboard CMS uses tabs for Contact, Gallery, Roadmap, Blog, and Inquiries.
 - Gallery and roadmap list ordering uses simple up/down controls.
-- Media fields can be filled by Vercel Blob upload or pasted URL.
+- Gallery items can be added manually, uploaded through Vercel Blob, imported from Telegram, edited after import, tagged, dated, featured/unfeatured, and later assigned to projects.
 
 ## Data
-- New Prisma models: `WebsiteSettings`, `WebsiteProject`, `WebsiteProjectMedia`, `WebsiteGalleryItem`, `BlogPost`, and `ContactInquiry`.
+- Prisma models: `WebsiteSettings`, `WebsiteProject`, `WebsiteProjectMedia`, `WebsiteGalleryItem`, `BlogPost`, and `ContactInquiry`.
 - New enums: `WebsiteMediaType` and `ContactInquiryStatus`.
 - Website CMS content is workspace-scoped for dashboard management.
+- `WebsiteGalleryItem` stores tags, media dates, Telegram source IDs, Blob pathnames, and source metadata for imported raw media.
 - Public reads use the first available website settings workspace and fallback Anodizex demo content when the CMS is empty.
 
 ## API
@@ -47,6 +49,7 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 - Owner/admin tRPC procedures under `website.admin.*` manage settings, gallery, roadmap projects/media, blog posts, and inquiry status.
 - Website `/api/contact` is a thin public adapter that validates input and delegates to `website.submitContact`.
 - Dashboard `/api/website/blob/upload` authenticates owner/admin users before generating Vercel Blob client upload tokens.
+- Root Telegram import scripts read bot updates, download configured chat media, upload public Blob files, and upsert workspace-scoped gallery items by Telegram `file_unique_id`.
 
 ## Acceptance Criteria
 - [x] Landing page presents Anodizex aluminium systems content and uses real image assets.
@@ -57,8 +60,17 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 - [x] Roadmap project cards open public project detail pages with log and media.
 - [x] Landing page includes blog cards and public blog pages.
 - [x] Vercel Blob support exists through an authenticated client-upload route.
+- [x] Telegram bot media can be cataloged as unassigned gallery items for later dashboard organization.
 
 ## Verification
+- 2026-07-04 Telegram media import update:
+  - `bun run db:validate` passed.
+  - `bun --filter @anodizex/db db:generate` passed.
+  - `bun --filter @anodizex/api typecheck` passed.
+  - `bun --filter @anodizex/dashboard typecheck` passed.
+  - `bun scripts/import-telegram-media.mjs --limit=1` loaded the importer and failed fast with `TELEGRAM_BOT_TOKEN is required.`, as expected without configured secrets.
+  - Full `bun run typecheck` was attempted but was killed with exit 137 during shared package TypeScript checks.
+  - Required root `bun run db:migrate` and `bun run db:push` were attempted but blocked by Turbo's interactive task guard before Prisma ran.
 - `bun install` completed and saved the lockfile.
 - `bun db:migrate` and `bun db:push` were attempted as required, but both failed because `DATABASE_URL` is not available in this environment.
 - `DATABASE_URL=postgresql://user:pass@localhost:5432/anodizex bun --filter @anodizex/db db:generate` refreshed the ignored generated Prisma client locally.

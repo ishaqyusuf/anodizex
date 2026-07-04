@@ -4,7 +4,7 @@
 Tracks active work.
 
 ## Current
-- No active implementation task is currently tracked after the initial seed.
+- No active implementation task is currently tracked.
 
 ## Next Likely Work
 - Rename visible afterservice branding to Anodizex.

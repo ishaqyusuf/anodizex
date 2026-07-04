@@ -47,6 +47,8 @@ Require active membership:
 - UI gates are helpful but not security boundaries.
 - Public website contact submissions may create `ContactInquiry` records but cannot choose workspace scope.
 - Vercel Blob upload tokens are only generated after Better Auth session validation and owner/admin membership lookup.
+- Telegram media import is a privileged root script, not a public endpoint. Apply mode requires `TELEGRAM_BOT_TOKEN`, `TELEGRAM_IMPORT_CHAT_ID`, `BLOB_READ_WRITE_TOKEN`, and `DATABASE_URL`.
+- Telegram imports only catalog media from the configured chat ID and create unassigned workspace gallery items for later owner/admin dashboard organization.
 - Quotation create/update/status/material/supplier-price mutations are owner/admin operations because they affect pricing and customer-facing commercial terms.
 
 ## Auth Proxy Behavior

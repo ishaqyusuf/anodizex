@@ -6,6 +6,7 @@ import {
   createGalleryItemSchema,
   createProjectMediaSchema,
   createWebsiteProjectSchema,
+  updateGalleryItemSchema,
   websiteSettingsSchema,
 } from "@anodizex/api/schemas";
 import {
@@ -59,6 +60,11 @@ const mediaTypeOptions = [
   { label: "Image", value: "image" },
   { label: "Video", value: "video" },
 ] as const;
+const emptyProjectValue = "__none";
+
+function dateInputValue(value?: string | null) {
+  return value ? value.slice(0, 10) : "";
+}
 
 export function WebsiteContentManager() {
   const trpc = useTRPC();
@@ -213,6 +219,8 @@ function GalleryManager({
       isFeatured: true,
       mediaType: "image",
       projectId: "",
+      tags: "",
+      capturedAt: "",
       thumbnailUrl: "",
       title: "",
       url: "",
@@ -274,9 +282,23 @@ function GalleryManager({
                 name="description"
                 label="Description"
               />
+              <div className="grid gap-5 md:grid-cols-2">
+                <TextField control={form.control} name="tags" label="Tags" />
+                <TextField
+                  control={form.control}
+                  name="capturedAt"
+                  label="Media date"
+                  type="date"
+                />
+              </div>
               <TextField control={form.control} name="url" label="Media URL" />
               <TextField control={form.control} name="thumbnailUrl" label="Thumbnail URL" />
               <TextField control={form.control} name="alt" label="Alt text" />
+              <CheckboxField
+                control={form.control}
+                name="isFeatured"
+                label="Show in public gallery"
+              />
               <FormField
                 control={form.control}
                 name="mediaType"
@@ -318,24 +340,194 @@ function GalleryManager({
 
       <Card>
         <CardHeader>
-          <CardTitle>Gallery order</CardTitle>
+          <CardTitle>Gallery catalog</CardTitle>
           <CardDescription>
-            Move items up or down to control the public gallery order.
+            Edit imported Telegram media, then move items up or down to control
+            the public gallery order.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <OrderedList
-            emptyLabel="No gallery items yet."
-            items={items}
-            getTitle={(item) => item.title}
-            getDescription={(item) => item.description || item.url}
-            onDelete={(item) => deleteMutation.mutate({ id: item.id })}
-            onMove={(nextItems) =>
-              reorderMutation.mutate({ ids: nextItems.map((item) => item.id) })
-            }
-          />
+        <CardContent className="grid gap-4">
+          {items.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No gallery items yet.</p>
+          ) : (
+            items.map((item, index) => (
+              <GalleryItemEditor
+                key={item.id}
+                item={item}
+                projects={projects}
+                canMoveDown={index < items.length - 1}
+                canMoveUp={index > 0}
+                onDelete={() => deleteMutation.mutate({ id: item.id })}
+                onMove={(direction) => {
+                  const nextItems = [...items];
+                  const [moved] = nextItems.splice(index, 1);
+                  if (!moved) return;
+                  nextItems.splice(index + direction, 0, moved);
+                  reorderMutation.mutate({
+                    ids: nextItems.map((nextItem) => nextItem.id),
+                  });
+                }}
+              />
+            ))
+          )}
         </CardContent>
       </Card>
+    </div>
+  );
+}
+
+function GalleryItemEditor({
+  canMoveDown,
+  canMoveUp,
+  item,
+  onDelete,
+  onMove,
+  projects,
+}: {
+  canMoveDown: boolean;
+  canMoveUp: boolean;
+  item: GalleryItem;
+  onDelete: () => void;
+  onMove: (direction: -1 | 1) => void;
+  projects: Project[];
+}) {
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  const form = useZodForm({
+    schema: updateGalleryItemSchema,
+    defaultValues: {
+      alt: item.alt,
+      capturedAt: dateInputValue(item.capturedAt),
+      description: item.description,
+      id: item.id,
+      isFeatured: item.isFeatured,
+      mediaType: item.mediaType as "image" | "video",
+      projectId: item.projectId,
+      tags: item.tags.join(", "),
+      thumbnailUrl: item.thumbnailUrl,
+      title: item.title,
+      url: item.url,
+    },
+  });
+  const mutation = useMutation(
+    trpc.website.admin.updateGalleryItem.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.website.admin.getContent.queryKey(),
+        });
+      },
+    }),
+  );
+
+  return (
+    <div className="border border-border p-4">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit((values) =>
+            mutation.mutate({ ...values, id: item.id }),
+          )}
+          className="grid gap-4"
+        >
+          <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+            <div>
+              <div className="font-medium">{item.title}</div>
+              <div className="mt-1 text-sm text-muted-foreground">
+                {item.sourceProvider === "telegram"
+                  ? "Imported from Telegram"
+                  : "Manual gallery item"}
+                {item.capturedAt ? ` · ${dateInputValue(item.capturedAt)}` : ""}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                disabled={!canMoveUp}
+                onClick={() => onMove(-1)}
+              >
+                <ArrowUp />
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                disabled={!canMoveDown}
+                onClick={() => onMove(1)}
+              >
+                <ArrowDown />
+              </Button>
+              <Button type="button" variant="destructive" onClick={onDelete}>
+                Remove
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <TextField control={form.control} name="title" label="Title" />
+            <TextField control={form.control} name="tags" label="Tags" />
+            <TextField
+              control={form.control}
+              name="capturedAt"
+              label="Media date"
+              type="date"
+            />
+            <ProjectSelect
+              control={form.control}
+              name="projectId"
+              projects={projects}
+            />
+          </div>
+          <LongTextField
+            control={form.control}
+            name="description"
+            label="Caption or description"
+          />
+          <div className="grid gap-4 md:grid-cols-2">
+            <TextField control={form.control} name="url" label="Media URL" />
+            <TextField
+              control={form.control}
+              name="thumbnailUrl"
+              label="Thumbnail URL"
+            />
+            <TextField control={form.control} name="alt" label="Alt text" />
+            <FormField
+              control={form.control}
+              name="mediaType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Media type</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select media type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {mediaTypeOptions.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <CheckboxField
+            control={form.control}
+            name="isFeatured"
+            label="Show in public gallery"
+          />
+          <Button type="submit" disabled={mutation.isPending}>
+            {mutation.isPending ? "Saving..." : "Save gallery item"}
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 }
@@ -889,7 +1081,12 @@ function ProjectSelect({
       render={({ field }) => (
         <FormItem>
           <FormLabel>Project</FormLabel>
-          <Select onValueChange={field.onChange} value={field.value}>
+          <Select
+            onValueChange={(value) =>
+              field.onChange(value === emptyProjectValue ? "" : value)
+            }
+            value={field.value || emptyProjectValue}
+          >
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder="Select a project" />
@@ -897,6 +1094,7 @@ function ProjectSelect({
             </FormControl>
             <SelectContent>
               <SelectGroup>
+                <SelectItem value={emptyProjectValue}>No project</SelectItem>
                 {projects.map((project) => (
                   <SelectItem key={project.id} value={project.id}>
                     {project.title}
@@ -905,6 +1103,37 @@ function ProjectSelect({
               </SelectGroup>
             </SelectContent>
           </Select>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}
+
+function CheckboxField({
+  control,
+  label,
+  name,
+}: {
+  control: any;
+  label: string;
+  name: string;
+}) {
+  return (
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="flex items-center gap-3">
+          <FormControl>
+            <Input
+              type="checkbox"
+              checked={Boolean(field.value)}
+              onChange={(event) => field.onChange(event.target.checked)}
+              className="size-4"
+            />
+          </FormControl>
+          <FormLabel className="text-sm font-medium">{label}</FormLabel>
           <FormMessage />
         </FormItem>
       )}

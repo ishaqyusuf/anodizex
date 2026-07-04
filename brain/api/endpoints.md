@@ -93,7 +93,7 @@ The API service also keeps `/trpc/*` as a legacy/local compatibility mount, but 
 `website.admin`
 - `getContent`: owner/admin read for current workspace website settings, gallery, roadmap projects/media, blog posts, and recent contact inquiries.
 - `updateSettings`: owner/admin update for public contact details, hero copy, social URLs, and hero image URL.
-- `createGalleryItem`, `updateGalleryItem`, `deleteGalleryItem`, `reorderGallery`: owner/admin gallery management.
+- `createGalleryItem`, `updateGalleryItem`, `deleteGalleryItem`, `reorderGallery`: owner/admin gallery management, including tags, captured media date, featured state, and project assignment.
 - `createProject`, `updateProject`, `deleteProject`, `reorderProjects`: owner/admin roadmap project management.
 - `createProjectMedia`, `updateProjectMedia`, `deleteProjectMedia`, `reorderProjectMedia`: owner/admin project media management.
 - `createBlogPost`, `updateBlogPost`, `deleteBlogPost`: owner/admin blog management.
@@ -108,3 +108,8 @@ The API service also keeps `/trpc/*` as a legacy/local compatibility mount, but 
 - Website admin routes derive workspace from the authenticated session and require owner/admin role.
 - Public contact email sends require `RESEND_API_KEY` and `EMAIL_FROM_ADDRESS`; local/dev recipient override follows `TEST_EMAIL`.
 - Quotation material and quotation mutations derive workspace from the authenticated session and require owner/admin role.
+
+## Root Import Scripts
+- `bun run media:telegram:dry-run`: reads Telegram bot updates and lists detected media/chat IDs without downloading, uploading, or writing database rows.
+- `bun run media:telegram:import`: downloads media from `TELEGRAM_IMPORT_CHAT_ID`, uploads public Vercel Blob files, and creates/upserts unassigned gallery items.
+- Production variants use `.env.production`: `media:telegram:prod:dry-run` and `media:telegram:prod:import`.

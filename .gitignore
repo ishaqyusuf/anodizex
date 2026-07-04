@@ -11,4 +11,4 @@ packages/db/generated
 .gstack/
 .vercel
 .trigger/
-.gallery
+.telegram-media-import-state.json

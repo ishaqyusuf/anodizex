@@ -55,6 +55,7 @@ This file documents intended entity relationships.
 - `WebsiteProject` can be linked from many `WebsiteGalleryItems`.
 - `WebsiteProjectMedia` belongs to one `WebsiteProject` and one `Workspace`.
 - `WebsiteGalleryItem` belongs to one `Workspace` and may belong to one `WebsiteProject`.
+- Telegram-imported `WebsiteGalleryItem` records remain unassigned until a dashboard user links them to a `WebsiteProject`.
 - `BlogPost` belongs to one `Workspace`.
 - `ContactInquiry` may belong to one `Workspace`; it can be stored without a workspace when public contact is submitted before a CMS workspace exists.
 
@@ -64,6 +65,7 @@ This file documents intended entity relationships.
 - Provider event IDs must be unique for idempotency.
 - Website admin mutations require owner/admin membership and only mutate the active workspace.
 - Public website reads return published workspace content when available and fallback Anodizex demo content when CMS data is empty.
+- Telegram media import must upsert gallery items by Telegram `file_unique_id` within a workspace so repeated imports do not duplicate media.
 - Quotation totals are calculated server-side from unit quantities, material snapshots, labor cost, and markup percentage.
 - Quotation material lines snapshot name, unit, supplier name/SKU, and unit cost so historical quote totals remain stable when the material library or supplier pricing changes later.
 - Only one active supplier price should be marked preferred for a material; setting a supplier price preferred updates the material's default current cost.

@@ -281,6 +281,24 @@ type WebsiteProjectDto = {
   serviceType: string;
   media: WebsiteProjectMediaDto[];
 };
+
+type WebsiteGalleryItemDto = {
+  id: string;
+  title: string;
+  description: string;
+  mediaType: "image" | "video";
+  url: string;
+  thumbnailUrl: string;
+  alt: string;
+  tags: string[];
+  capturedAt: string | null;
+  dateSource: string;
+  sourceProvider: string;
+  blobPathname: string;
+  isFeatured: boolean;
+  projectId: string;
+  project: { slug: string; title: string } | null;
+};
 ```
 
 Website admin mutations use shared Zod schemas from `@anodizex/api/schemas`. Sort mutations accept ordered ID arrays:

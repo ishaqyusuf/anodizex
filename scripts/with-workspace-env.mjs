@@ -74,26 +74,16 @@ function parseEnvFile(filePath) {
   return parsed;
 }
 
-function envFilesForMode(mode) {
+function envFileForMode(mode) {
   if (mode === "production") {
-    return [".env.production"];
+    return ".env.production";
   }
 
   if (mode === "local" || mode === "development") {
-    return [".env", ".env.local"];
+    return ".env";
   }
 
   throw new Error(`Unknown env mode "${mode}". Use "local" or "production".`);
-}
-
-function readMergedEnvFiles(fileNames) {
-  return fileNames.reduce(
-    (merged, fileName) => ({
-      ...merged,
-      ...parseEnvFile(resolve(workspaceRoot, fileName)),
-    }),
-    {},
-  );
 }
 
 const { command, mode } = parseArgs(process.argv.slice(2));
@@ -105,32 +95,19 @@ if (command.length === 0) {
   process.exit(1);
 }
 
-const envFiles = envFilesForMode(mode);
-const fileEnv = readMergedEnvFiles(envFiles);
+const envFile = envFileForMode(mode);
+const fileEnv = parseEnvFile(resolve(workspaceRoot, envFile));
 const defaultEnv = parseEnvFile(resolve(workspaceRoot, ".env"));
-const overrideEnv = envFiles.includes(".env.local")
-  ? parseEnvFile(resolve(workspaceRoot, ".env.local"))
-  : fileEnv;
 const processEnv = { ...process.env };
-const childEnv =
-  mode === "production"
-    ? {
-        ...processEnv,
-        ...fileEnv,
-      }
-    : {
-        ...fileEnv,
-        ...processEnv,
-      };
 
-if (envFiles.some((fileName) => fileName !== ".env")) {
+if (envFile !== ".env") {
   for (const [key, value] of Object.entries(defaultEnv)) {
     if (
       processEnv[key] === value &&
-      overrideEnv[key] !== undefined &&
-      overrideEnv[key] !== value
+      fileEnv[key] !== undefined &&
+      fileEnv[key] !== value
     ) {
-      childEnv[key] = overrideEnv[key];
+      delete processEnv[key];
     }
   }
 }
@@ -138,7 +115,8 @@ if (envFiles.some((fileName) => fileName !== ".env")) {
 const child = spawn(command[0], command.slice(1), {
   cwd: process.cwd(),
   env: {
-    ...childEnv,
+    ...fileEnv,
+    ...processEnv,
     AFTERSERVICE_ENV_MODE: mode === "production" ? "production" : "local",
     AFTERSERVICE_WORKSPACE_ROOT: workspaceRoot,
   },

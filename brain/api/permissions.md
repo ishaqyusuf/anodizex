@@ -70,7 +70,6 @@ Require active membership:
 - Trusted origins:
   - Local: `http://localhost:4100`, `http://localhost:4101`, `http://127.0.0.1:4100`, `http://127.0.0.1:4101`.
   - Portless: `http://afterservice.localhost:1355`, `http://app-afterservice.localhost:1355`.
-  - App env: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_DASHBOARD_URL`, `SITE_PUBLIC_URL`, `DASHBOARD_PUBLIC_URL`, and `BETTER_AUTH_URL` are normalized to origins when present.
   - Env-provided: `BETTER_AUTH_TRUSTED_ORIGINS`, `AUTH_TRUSTED_ORIGINS` (comma-separated).
 - Safe redirect validation:
   - Only allow same-origin relative paths beginning with `/`.

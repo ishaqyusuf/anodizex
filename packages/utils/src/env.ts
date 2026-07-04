@@ -17,9 +17,9 @@ export type EnvValidationResult = {
 const appUrlKeys = [
   "NEXT_PUBLIC_SITE_URL",
   "NEXT_PUBLIC_DASHBOARD_URL",
+  "NEXT_PUBLIC_API_URL",
 ] as const;
 
-const optionalAppUrlKeys = ["NEXT_PUBLIC_API_URL", "API_PUBLIC_URL"] as const;
 const authUrlKeys = ["BETTER_AUTH_URL"] as const;
 
 const productionRequiredKeys = [
@@ -69,37 +69,10 @@ function requireUrl(env: EnvSource, key: string): string {
   }
 }
 
-function optionalUrl(env: EnvSource, key: string): string | undefined {
-  const value = readEnv(env, key);
-
-  if (!value) {
-    return undefined;
-  }
-
-  try {
-    return new URL(value).toString().replace(/\/$/, "");
-  } catch {
-    throw new Error(`Environment variable ${key} must be a valid URL.`);
-  }
-}
-
-function resolveApiUrl(env: EnvSource, dashboardUrl: string): string {
-  const configuredApiUrl =
-    optionalUrl(env, "NEXT_PUBLIC_API_URL") ?? optionalUrl(env, "API_PUBLIC_URL");
-
-  if (configuredApiUrl) {
-    return configuredApiUrl;
-  }
-
-  return new URL("/api", `${dashboardUrl}/`).toString().replace(/\/$/, "");
-}
-
 export function getAppUrls(env: EnvSource = process.env): AppUrls {
-  const dashboard = requireUrl(env, "NEXT_PUBLIC_DASHBOARD_URL");
-
   return {
-    api: resolveApiUrl(env, dashboard),
-    dashboard,
+    api: requireUrl(env, "NEXT_PUBLIC_API_URL"),
+    dashboard: requireUrl(env, "NEXT_PUBLIC_DASHBOARD_URL"),
     site: requireUrl(env, "NEXT_PUBLIC_SITE_URL"),
   };
 }
@@ -109,12 +82,9 @@ export function getDevAppUrlStrings(env: EnvSource = process.env): AppUrls {
     return getAppUrls(env);
   }
 
+  const api = readEnv(env, "NEXT_PUBLIC_API_URL") ?? "http://localhost:4102";
   const dashboard =
     readEnv(env, "NEXT_PUBLIC_DASHBOARD_URL") ?? "http://localhost:4101";
-  const api =
-    readEnv(env, "NEXT_PUBLIC_API_URL") ??
-    readEnv(env, "API_PUBLIC_URL") ??
-    "http://localhost:4102";
   const site = readEnv(env, "NEXT_PUBLIC_SITE_URL") ?? "http://localhost:4100";
 
   return { api, dashboard, site };
@@ -137,7 +107,7 @@ export function validateWorkspaceEnv(
     }
   }
 
-  for (const key of [...appUrlKeys, ...optionalAppUrlKeys, ...authUrlKeys]) {
+  for (const key of [...appUrlKeys, ...authUrlKeys]) {
     const value = readEnv(env, key);
 
     if (!value) {

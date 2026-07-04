@@ -23,8 +23,7 @@ This file records core technology choices.
 - Database: Postgres
 - ORM: Prisma planned for Phase 5
 - Auth: Better Auth-style package architecture planned for Phase 6
-- Production env wrapper mode lets `.env.production` override inherited shell values, so a leaked local `DATABASE_URL` cannot shadow the intended production database during local production commands.
-- Prisma client generation is mode-neutral and does not force the local env wrapper during production builds.
+- API and database command/env setup follows the copied after-service behavior: production uses `.env.production`, local uses `.env`, inherited process env can override wrapper file values, Prisma generation runs through local workspace env mode, and `NEXT_PUBLIC_API_URL` is required for production app URL resolution.
 
 ## Billing
 - Provider: Polar

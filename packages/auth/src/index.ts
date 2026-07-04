@@ -1,5 +1,8 @@
 import { getDbClient } from "@anodizex/db";
-import { resolveEmailRecipients } from "@anodizex/utils";
+import {
+  getDevAppUrlStrings,
+  resolveEmailRecipients,
+} from "@anodizex/utils";
 import { prismaAdapter } from "@better-auth/prisma-adapter";
 import { betterAuth } from "better-auth";
 
@@ -12,30 +15,6 @@ function unique(values: Array<string | undefined>) {
 function readNonEmptyEnv(name: string) {
   const value = process.env[name]?.trim();
   return value ? value : undefined;
-}
-
-function toOrigin(value: string | undefined) {
-  if (!value) {
-    return undefined;
-  }
-
-  try {
-    return new URL(value).origin;
-  } catch {
-    return value;
-  }
-}
-
-function readFirstEnvOrigin(...names: string[]) {
-  for (const name of names) {
-    const origin = toOrigin(readNonEmptyEnv(name));
-
-    if (origin) {
-      return origin;
-    }
-  }
-
-  return undefined;
 }
 
 export const authRoutes = {
@@ -58,20 +37,18 @@ export const portlessAuthOrigins = [
 ] as const;
 
 export function getTrustedOrigins() {
+  const urls = getDevAppUrlStrings();
+
   return unique(
     [
-      readFirstEnvOrigin("NEXT_PUBLIC_SITE_URL", "SITE_PUBLIC_URL"),
-      readFirstEnvOrigin(
-        "NEXT_PUBLIC_DASHBOARD_URL",
-        "DASHBOARD_PUBLIC_URL",
-        "BETTER_AUTH_URL",
-      ),
+      urls.site,
+      urls.dashboard,
       ...localAuthOrigins,
       ...portlessAuthOrigins,
       process.env.BETTER_AUTH_TRUSTED_ORIGINS,
       process.env.AUTH_TRUSTED_ORIGINS,
     ].flatMap((value) =>
-      value?.split(",").map((origin: string) => toOrigin(origin.trim())),
+      value?.split(",").map((origin: string) => origin.trim()),
     ),
   );
 }

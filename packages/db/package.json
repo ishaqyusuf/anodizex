@@ -8,7 +8,7 @@
   "scripts": {
     "build": "bun run db:generate && tsc --noEmit",
     "--build": "prisma generate && tsc",
-    "db:generate": "prisma generate",
+    "db:generate": "bun ../../scripts/with-workspace-env.mjs --mode local -- prisma generate",
     "db:migrate": "bun ../../scripts/with-workspace-env.mjs --mode local -- prisma migrate dev",
     "db:push": "bun ../../scripts/with-workspace-env.mjs --mode production -- prisma db push",
     "db:validate": "bun ../../scripts/with-workspace-env.mjs --mode local -- prisma validate",

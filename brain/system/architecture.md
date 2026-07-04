@@ -43,7 +43,7 @@ Workspace package names use the `@anodizex/*` scope.
 ## Data Flow
 Dashboard pages call typed tRPC procedures. API procedures resolve session and workspace membership, enforce permissions, perform database operations, and return typed results. Billing webhooks update persisted subscription state, which API entitlement helpers use for feature gates.
 
-Public website pages can call public tRPC procedures for published CMS content and contact submission. Public contact submissions do not accept client-provided workspace scope; the API resolves the website workspace or stores fallback public inquiry data. `DATABASE_URL` is the only environment variable required by the shared validator; public app URLs and provider credentials are optional configuration with built-in defaults or feature-specific checks.
+Public website pages can call public tRPC procedures for published CMS content and contact submission. Public contact submissions do not accept client-provided workspace scope; the API resolves the website workspace or stores fallback public inquiry data. `DATABASE_URL` is the only environment variable required by the shared validator; public app URLs and provider credentials are optional configuration with built-in defaults or feature-specific checks. Production-mode workspace commands force `DATABASE_URL` from `.env.production` when present so local database URLs cannot override production scripts.
 
 Project quotation pages call protected tRPC procedures. The API resolves the active workspace, enforces owner/admin access, fetches material costs, calculates totals, and persists quote units and material line snapshots in a single transaction.
 

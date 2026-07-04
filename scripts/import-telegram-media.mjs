@@ -33,6 +33,21 @@ function optionalEnv(name) {
   return process.env[name]?.trim() || null;
 }
 
+function blobAccessEnv() {
+  const value =
+    optionalEnv("TELEGRAM_IMPORT_BLOB_ACCESS") ??
+    optionalEnv("BLOB_ACCESS") ??
+    "private";
+
+  if (value !== "public" && value !== "private") {
+    throw new Error(
+      "TELEGRAM_IMPORT_BLOB_ACCESS must be either 'public' or 'private'.",
+    );
+  }
+
+  return value;
+}
+
 function readState() {
   if (!existsSync(statePath)) return {};
 
@@ -175,10 +190,35 @@ async function resolveWorkspace(db) {
     return db.workspace.findUniqueOrThrow({ where: { slug: workspaceSlug } });
   }
 
-  return db.workspace.findFirstOrThrow({ orderBy: { createdAt: "asc" } });
+  const existing = await db.workspace.findFirst({
+    orderBy: { createdAt: "asc" },
+  });
+
+  if (existing) {
+    return existing;
+  }
+
+  return db.workspace.create({
+    data: {
+      businessType: "Architectural aluminium systems",
+      name: "Anodizex",
+      serviceCategory: "Aluminium windows, doors, sliding systems, and facades",
+      slug: "anodizex",
+      websiteSettings: {
+        create: {},
+      },
+    },
+  });
 }
 
-async function importMedia({ blobToken, db, item, token, workspace }) {
+async function importMedia({
+  blobAccess,
+  blobToken,
+  db,
+  item,
+  token,
+  workspace,
+}) {
   const existing = await db.websiteGalleryItem.findUnique({
     where: {
       workspaceId_sourceProvider_sourceUniqueId: {
@@ -205,7 +245,7 @@ async function importMedia({ blobToken, db, item, token, workspace }) {
   const safeFileName = safeName(item.fileName);
   const blobPathname = `anodizex/telegram/${workspace.slug}/${item.sourceUniqueId}-${safeFileName}`;
   const blob = await put(blobPathname, body, {
-    access: "public",
+    access: blobAccess,
     allowOverwrite: false,
     contentType: item.mimeType ?? undefined,
     multipart: body.length > 8 * 1024 * 1024,
@@ -225,6 +265,7 @@ async function importMedia({ blobToken, db, item, token, workspace }) {
       sortOrder,
       sourceId: String(item.messageId),
       sourceMetadata: {
+        blobAccess,
         chatId: item.chatId,
         fileId: item.fileId,
         fileName: item.fileName,
@@ -306,6 +347,7 @@ async function main() {
 
   const db = getDbClient();
   const workspace = await resolveWorkspace(db);
+  const blobAccess = blobAccessEnv();
   const blobToken = requiredEnv("BLOB_READ_WRITE_TOKEN");
   const lastUpdateId = Math.max(
     state.lastUpdateId ?? 0,
@@ -313,7 +355,14 @@ async function main() {
   );
 
   for (const item of selected) {
-    const result = await importMedia({ blobToken, db, item, token, workspace });
+    const result = await importMedia({
+      blobAccess,
+      blobToken,
+      db,
+      item,
+      token,
+      workspace,
+    });
     console.log(
       `${result.action}: ${item.mediaType} ${item.sourceUniqueId} -> ${result.item.url}`,
     );

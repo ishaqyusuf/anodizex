@@ -23,7 +23,7 @@ This file records core technology choices.
 - Database: Postgres
 - ORM: Prisma planned for Phase 5
 - Auth: Better Auth-style package architecture planned for Phase 6
-- API and database command/env setup follows the copied after-service behavior: production uses `.env.production`, local uses `.env`, inherited process env can override wrapper file values, and Prisma generation runs through local workspace env mode.
+- API and database command/env setup follows the copied after-service behavior with an Anodizex production safety guard: production uses `.env.production`, forces its `DATABASE_URL` over inherited process env when present, local uses `.env` with inherited env overrides, and Prisma generation runs through local workspace env mode.
 - `DATABASE_URL` is the only required variable in the shared environment validator. Public app URLs, auth/email/job secrets, and optional providers such as Google OAuth, Polar billing, and Twilio/WhatsApp are configured when the matching feature is enabled.
 
 ## Billing

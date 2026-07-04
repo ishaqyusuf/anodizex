@@ -112,14 +112,25 @@ if (envFile !== ".env") {
   }
 }
 
+const childEnv =
+  mode === "production"
+    ? {
+        ...fileEnv,
+        ...processEnv,
+        DATABASE_URL: fileEnv.DATABASE_URL ?? processEnv.DATABASE_URL,
+        AFTERSERVICE_ENV_MODE: "production",
+        AFTERSERVICE_WORKSPACE_ROOT: workspaceRoot,
+      }
+    : {
+        ...fileEnv,
+        ...processEnv,
+        AFTERSERVICE_ENV_MODE: "local",
+        AFTERSERVICE_WORKSPACE_ROOT: workspaceRoot,
+      };
+
 const child = spawn(command[0], command.slice(1), {
   cwd: process.cwd(),
-  env: {
-    ...fileEnv,
-    ...processEnv,
-    AFTERSERVICE_ENV_MODE: mode === "production" ? "production" : "local",
-    AFTERSERVICE_WORKSPACE_ROOT: workspaceRoot,
-  },
+  env: childEnv,
   shell: process.platform === "win32",
   stdio: "inherit",
 });

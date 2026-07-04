@@ -4,6 +4,7 @@
   "scripts": {
     "build": "bun ../../scripts/with-workspace-env.mjs --mode production -- next build --turbopack",
     "dev": "bun ../../scripts/with-workspace-env.mjs --mode local -- next dev --turbopack -p 4100",
+    "dev:portless": "PORTLESS_APP_PORT=${PORTLESS_APP_PORT:-4100} PORTLESS_WILDCARD=${PORTLESS_WILDCARD:-1} PORTLESS_SYNC_HOSTS=${PORTLESS_SYNC_HOSTS:-0} portless afterservice next dev --turbopack",
     "lint": "biome check .",
     "pwa:verify": "bun ../../scripts/verify-website-pwa.mjs",
     "start": "bun ../../scripts/with-workspace-env.mjs --mode production -- next start -p 4100",

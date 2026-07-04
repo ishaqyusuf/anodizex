@@ -23,6 +23,8 @@ This file records core technology choices.
 - Database: Postgres
 - ORM: Prisma planned for Phase 5
 - Auth: Better Auth-style package architecture planned for Phase 6
+- Production env wrapper mode lets `.env.production` override inherited shell values, so a leaked local `DATABASE_URL` cannot shadow the intended production database during local production commands.
+- Prisma client generation is mode-neutral and does not force the local env wrapper during production builds.
 
 ## Billing
 - Provider: Polar
@@ -33,8 +35,10 @@ This file records core technology choices.
 - Website: `4100`
 - Dashboard: `4101`
 - API: `4102`
+- Default local dev command: `bun run dev` runs the portless stack. The standard port-based scripts remain available as `dev:website`, `dev:dashboard`, and `dev:api`.
 
 ## Domains
 - Website: `afterservice.app`
 - Dashboard: `dashboard.afterservice.app`
 - Public API base: `dashboard.afterservice.app/api`
+- Local portless domains: `afterservice.localhost`, `app-afterservice.localhost`, and `api-afterservice.localhost`.

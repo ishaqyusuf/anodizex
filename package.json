@@ -10,7 +10,7 @@
     "build": "bun scripts/with-workspace-env.mjs --mode production -- turbo build",
     "clean": "git clean -xdf node_modules .turbo apps/*/.next apps/*/.turbo packages/*/.turbo",
     "dev:prepare": "bun run kill:ports",
-    "dev": "bun run dev:prepare && bun scripts/with-workspace-env.mjs --mode local -- turbo dev --parallel",
+    "dev": "bun run dev:portless",
     "dev:api": "bun run dev:prepare && bun scripts/with-workspace-env.mjs --mode local -- turbo dev --filter=@anodizex/api",
     "dev:dashboard": "bun run dev:prepare && bun scripts/with-workspace-env.mjs --mode local -- turbo dev --filter=@anodizex/dashboard",
     "dev:jobs": "bun run dev:prepare && bun scripts/with-workspace-env.mjs --mode local -- turbo dev --filter=@anodizex/jobs",

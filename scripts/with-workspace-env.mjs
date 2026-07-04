@@ -74,16 +74,26 @@ function parseEnvFile(filePath) {
   return parsed;
 }
 
-function envFileForMode(mode) {
+function envFilesForMode(mode) {
   if (mode === "production") {
-    return ".env.production";
+    return [".env.production"];
   }
 
   if (mode === "local" || mode === "development") {
-    return ".env";
+    return [".env", ".env.local"];
   }
 
   throw new Error(`Unknown env mode "${mode}". Use "local" or "production".`);
+}
+
+function readMergedEnvFiles(fileNames) {
+  return fileNames.reduce(
+    (merged, fileName) => ({
+      ...merged,
+      ...parseEnvFile(resolve(workspaceRoot, fileName)),
+    }),
+    {},
+  );
 }
 
 const { command, mode } = parseArgs(process.argv.slice(2));
@@ -95,19 +105,32 @@ if (command.length === 0) {
   process.exit(1);
 }
 
-const envFile = envFileForMode(mode);
-const fileEnv = parseEnvFile(resolve(workspaceRoot, envFile));
+const envFiles = envFilesForMode(mode);
+const fileEnv = readMergedEnvFiles(envFiles);
 const defaultEnv = parseEnvFile(resolve(workspaceRoot, ".env"));
+const overrideEnv = envFiles.includes(".env.local")
+  ? parseEnvFile(resolve(workspaceRoot, ".env.local"))
+  : fileEnv;
 const processEnv = { ...process.env };
+const childEnv =
+  mode === "production"
+    ? {
+        ...processEnv,
+        ...fileEnv,
+      }
+    : {
+        ...fileEnv,
+        ...processEnv,
+      };
 
-if (envFile !== ".env") {
+if (envFiles.some((fileName) => fileName !== ".env")) {
   for (const [key, value] of Object.entries(defaultEnv)) {
     if (
       processEnv[key] === value &&
-      fileEnv[key] !== undefined &&
-      fileEnv[key] !== value
+      overrideEnv[key] !== undefined &&
+      overrideEnv[key] !== value
     ) {
-      delete processEnv[key];
+      childEnv[key] = overrideEnv[key];
     }
   }
 }
@@ -115,8 +138,7 @@ if (envFile !== ".env") {
 const child = spawn(command[0], command.slice(1), {
   cwd: process.cwd(),
   env: {
-    ...fileEnv,
-    ...processEnv,
+    ...childEnv,
     AFTERSERVICE_ENV_MODE: mode === "production" ? "production" : "local",
     AFTERSERVICE_WORKSPACE_ROOT: workspaceRoot,
   },

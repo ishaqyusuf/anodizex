@@ -11,3 +11,4 @@ packages/db/generated
 .gstack/
 .vercel
 .trigger/
+.gallery

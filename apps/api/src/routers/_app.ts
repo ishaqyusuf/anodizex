@@ -2532,12 +2532,7 @@ const quotationMaterialSupplierPricesRouter = t.router({
           },
         });
 
-        if (
-          supplierPrice.isPreferred &&
-          (!existing.isPreferred ||
-            existing.unitCostCents !== supplierPrice.unitCostCents ||
-            existing.supplierName !== supplierPrice.supplierName)
-        ) {
+        if (supplierPrice.isPreferred) {
           await syncPreferredSupplierPrice(
             tx,
             ctx.workspace.id,

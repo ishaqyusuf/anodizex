@@ -25,6 +25,7 @@ This file records core technology choices.
 - ORM: Prisma planned for Phase 5
 - Auth: Better Auth-style package architecture planned for Phase 6
 - API and database command/env setup follows the copied after-service behavior with an Anodizex production safety guard: production uses `.env.production`, forces its `DATABASE_URL` over inherited process env when present, local uses `.env` with inherited env overrides, and Prisma generation runs through local workspace env mode.
+- The website and dashboard package-level build scripts intentionally stay simple as `bun next build --turbopack`; deployment/build runners must provide the required production env directly.
 - `bun run env:prod:check` validates the production env file before deploy-sensitive work. It rejects missing, invalid, localhost, `127.0.0.1`, `::1`, or local port `55435` `DATABASE_URL` values; it also checks for a configured high-entropy Better Auth secret and paired Google OAuth credentials when either Google value is present.
 - `DATABASE_URL` is the only required variable in the shared environment validator. Public app URLs, auth/email/job secrets, and optional providers such as Google OAuth, Polar billing, and Twilio/WhatsApp are configured when the matching feature is enabled.
 

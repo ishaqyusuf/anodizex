@@ -32,6 +32,7 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 
 ## UX
 - Landing page uses Anodizex as the first-viewport signal, with a real architectural image background and clear calls to request consultation or view completed work.
+- Website header/footer branding uses the provided Anodizex company logo artwork from `/brand/anodizex-logo.png`.
 - Contact form sends an admin notification and a customer confirmation email when Resend env is configured.
 - Dashboard CMS uses tabs for Contact, Gallery, Roadmap, Blog, and Inquiries.
 - Gallery and roadmap list ordering uses simple up/down controls.
@@ -66,6 +67,14 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 - [x] Telegram bot media can be cataloged as unassigned gallery items for later dashboard organization.
 
 ## Verification
+- 2026-07-05 website branding update:
+  - `bun --filter @anodizex/website typecheck` passed.
+  - `bun --filter @anodizex/ui typecheck` passed.
+  - Focused Biome check passed for `packages/ui/src/components/brand-logo.tsx`, `apps/website/src/app/layout.tsx`, and `apps/website/src/app/manifest.ts`.
+  - In-app browser verification on `http://localhost:4100/` confirmed the updated header logo, favicon metadata, PNG fallback icon metadata, apple touch icon metadata, and no console errors.
+- 2026-07-05 logo correction:
+  - Replaced the approximate vector mark with the provided company logo artwork.
+  - Browser DOM verification confirmed the header logo renders `/brand/anodizex-logo.png` and favicon metadata points to `/favicon.png` plus the PNG fallback icons.
 - 2026-07-04 Telegram media import update:
   - `bun run db:validate` passed.
   - `bun --filter @anodizex/db db:generate` passed.

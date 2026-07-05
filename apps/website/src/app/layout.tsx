@@ -48,6 +48,13 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  icons: {
+    apple: [{ sizes: "192x192", url: "/icons/icon-192.png" }],
+    icon: [
+      { sizes: "32x32", type: "image/png", url: "/favicon.png" },
+      { sizes: "192x192", type: "image/png", url: "/icons/icon-192.png" },
+    ],
+  },
   manifest: "/manifest.webmanifest",
   metadataBase: new URL(siteUrl),
   verification: process.env.GOOGLE_SITE_VERIFICATION

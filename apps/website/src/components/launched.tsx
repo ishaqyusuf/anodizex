@@ -168,7 +168,8 @@ export function LaunchedPage({ content }: LaunchedPageProps) {
           alt="Modern aluminium architectural glazing"
           className="absolute inset-0 size-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/58" />
+        <div className="absolute inset-0 bg-black/72" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/24 to-black/0" />
         <div className="relative mx-auto grid w-full max-w-7xl gap-8 px-5 pb-12 pt-28 text-white sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div className="max-w-3xl">
             <Badge variant="secondary">Windows, doors, sliders, facades</Badge>

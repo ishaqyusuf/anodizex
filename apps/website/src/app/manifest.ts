@@ -38,6 +38,6 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     short_name: appMetadata.name,
     start_url: "/?source=pwa",
-    theme_color: "#009b98",
+    theme_color: "#071A21",
   };
 }

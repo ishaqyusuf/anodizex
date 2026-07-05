@@ -5,6 +5,7 @@ Track the marketing website install path for supported mobile browsers.
 
 ## Current Behavior
 - The website exposes `/manifest.webmanifest` from `apps/website/src/app/manifest.ts`.
+- The website favicon is exposed as `/favicon.png`; manifest install icons are generated from the provided Anodizex company logo artwork into `/icons/icon-192.png`, `/icons/icon-512.png`, and `/icons/maskable-512.png`.
 - The website registers `/sw.js` from `apps/website/src/components/pwa-service-worker-register.tsx` on secure origins, `localhost`, and `127.0.0.1`.
 - The service worker in `apps/website/public/sw.js` caches the app shell, manifest, and icons, claims clients on activation, serves same-origin cached assets, and returns a 200 HTML offline response for navigations when the network and cached shell are unavailable.
 - The mobile landing install sheet in `apps/website/src/components/landing/mobile-install-top-sheet.tsx` only calls `beforeinstallprompt.prompt()` when a deferred browser prompt exists.
@@ -19,6 +20,8 @@ Track the marketing website install path for supported mobile browsers.
 - Real install success still needs verification on physical Android Chrome or a browser environment with installability diagnostics.
 
 ## Verification
+- 2026-07-05: Updated the website favicon and PWA icon set to the Anodizex company mark; `bun --filter @anodizex/website typecheck`, `bun --filter @anodizex/ui typecheck`, and focused Biome checks for the touched logo/manifest files passed. Local browser verification on `http://localhost:4100/` confirmed favicon metadata, PNG icon fallback, apple touch icon metadata, and no console errors.
+- 2026-07-05: Replaced the hand-traced logo approximation with the provided company logo artwork as the source for `/favicon.png`, `/icon.png`, and PWA PNG icons. Browser DOM verification confirmed favicon metadata points at `/favicon.png` and `/icons/icon-192.png`.
 - 2026-06-15: `bun --filter @anodizex/website typecheck` passed.
 - 2026-06-15: `bun run --filter @anodizex/website build` passed.
 - 2026-06-15: `bun --filter @anodizex/events typecheck` passed.

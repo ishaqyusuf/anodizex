@@ -11,7 +11,7 @@ This file defines authorization rules.
 ## Public Routes
 - Website pages.
 - Website content reads: `website.getLanding`, `website.getProject`, and `website.getBlogPost`.
-- Website contact submission: `website.submitContact` through the website `/api/contact` adapter.
+- Website contact submission: public `website.submitContact` through the website same-origin `/api/trpc` route.
 - Sign-up/sign-in pages.
 - API health.
 - Lemon Squeezy webhook endpoint with signature verification.

@@ -17,7 +17,7 @@ Updated on 2026-06-11 so inline new-customer creation from the job form can coll
 ## Architecture
 - API owner: `apps/api/src/routers/_app.ts` `serviceJobs` router.
 - UI owner: `apps/dashboard/src/app/jobs/page.tsx`.
-- Dashboard server actions call tRPC procedures through `apps/dashboard/src/lib/trpc-server.ts`.
+- Dashboard server and client calls use the Midday-style `apps/dashboard/src/trpc` helpers.
 - Create sheet owner: `apps/dashboard/src/components/sheets/job-create-sheet.tsx`.
 - Create form owner: `apps/dashboard/src/components/forms/job-create-form.tsx`.
 

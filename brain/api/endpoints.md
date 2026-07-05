@@ -7,7 +7,6 @@ Production public API base: `https://dashboard.afterservice.app/api`.
 
 ## HTTP
 - `GET /health`: API service health.
-- `POST /api/contact` in `apps/website`: public website contact adapter. Validates the contact payload, delegates to the `website.submitContact` tRPC procedure, stores the inquiry, and sends admin/customer emails when Resend env is configured.
 - `POST /api/website/blob/upload` in `apps/dashboard`: authenticated Vercel Blob client-upload token route for owner/admin users. Allows public image/video uploads for website gallery, project, blog, and settings media when `BLOB_READ_WRITE_TOKEN` is configured.
 - `POST /webhooks/lemon-squeezy`: Lemon Squeezy webhook receiver. Requires a valid `x-signature` HMAC signature and stores idempotent `BillingEvent` records.
 - `POST /api/jobs/follow-ups/dry-run`: cron/internal follow-up job endpoint. Requires `Authorization: Bearer <CRON_SECRET>` or `x-cron-secret`, runs a due follow-up dry-run by default, and can mark overdue follow-ups missed with `{ markMissed: true }`.
@@ -15,8 +14,8 @@ Production public API base: `https://dashboard.afterservice.app/api`.
 - `POST /api/onboarding`: dashboard same-origin onboarding adapter. Requires a valid Better Auth session, creates a workspace, owner membership, starter subscription state, and starter templates.
 
 ## tRPC Routers
-Canonical production tRPC base: `https://dashboard.afterservice.app/api/trpc`.
-The API service also keeps `/trpc/*` as a legacy/local compatibility mount, but browser and dashboard-facing code should use `/api/trpc`.
+Canonical production dashboard tRPC base: `https://dashboard.afterservice.app/api/trpc`.
+The dashboard and website apps each expose a same-origin `/api/trpc` route backed by the shared API router. The API service also keeps `/trpc/*` as a legacy/local compatibility mount, but browser-facing app code should use `/api/trpc`.
 
 `health`
 - `health`: returns service status.
@@ -106,6 +105,7 @@ The API service also keeps `/trpc/*` as a legacy/local compatibility mount, but 
 - Billing webhooks use signature verification, not session auth.
 - Cron job endpoints use `CRON_SECRET` and must not send outbound messages.
 - Website admin routes derive workspace from the authenticated session and require owner/admin role.
+- Public website contact submissions use `website.submitContact` through the website same-origin `/api/trpc` route.
 - Public contact email sends require `RESEND_API_KEY` and `EMAIL_FROM_ADDRESS`; local/dev recipient override follows `TEST_EMAIL`.
 - Quotation material and quotation mutations derive workspace from the authenticated session and require owner/admin role.
 

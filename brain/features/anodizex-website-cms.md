@@ -47,7 +47,8 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 ## API
 - Public tRPC procedures: `website.getLanding`, `website.getProject`, `website.getBlogPost`, and `website.submitContact`.
 - Owner/admin tRPC procedures under `website.admin.*` manage settings, gallery, roadmap projects/media, blog posts, and inquiry status.
-- Website `/api/contact` is a thin public adapter that validates input and delegates to `website.submitContact`.
+- Website has its own `apps/website/src/trpc` server/client stack, matching the dashboard Midday-style tRPC pattern.
+- Website contact submissions go through `website.submitContact` on the website same-origin `/api/trpc` route.
 - Dashboard `/api/website/blob/upload` authenticates owner/admin users before generating Vercel Blob client upload tokens.
 - Root Telegram import scripts read bot updates, download configured chat media, upload Blob files with configured access, and upsert workspace-scoped gallery items by Telegram `file_unique_id`.
 - `TELEGRAM_IMPORT_BLOB_ACCESS` or `BLOB_ACCESS` can set imported Blob access to `public` or `private`; it defaults to `private` to match the current production store.

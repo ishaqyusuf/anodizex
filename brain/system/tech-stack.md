@@ -14,6 +14,7 @@ This file records core technology choices.
 - Dashboard: Next.js App Router (`next@^16.2.9`, React 19.2.x)
 - API: Hono with tRPC
 - Dashboard theme management: `next-themes` with class-based light/dark/system mode.
+- Website and dashboard both use app-local `src/trpc` folders for Midday-style server/client tRPC calls and same-origin `/api/trpc` routes.
 
 ## Dependency Notes
 - 2026-06-10: Aligned the monorepo Next.js packages on `next@^16.2.9` and React packages on 19.2.x. This keeps the website, dashboard, and shared UI package on one Next/React line.

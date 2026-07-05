@@ -17,15 +17,21 @@ import {
   FormLabel,
   FormMessage,
 } from "@anodizex/ui/form";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import type { z } from "zod";
 import { useZodForm } from "@/hooks/use-zod-form";
+import { useTRPC } from "@/trpc/client";
 
 type ContactFormValues = z.output<typeof contactInquirySchema>;
 
 export function ContactForm() {
+  const trpc = useTRPC();
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const submitContact = useMutation(
+    trpc.website.submitContact.mutationOptions(),
+  );
   const form = useZodForm({
     schema: contactInquirySchema,
     defaultValues: {
@@ -42,18 +48,15 @@ export function ContactForm() {
     setStatus("idle");
     setMessage("");
 
-    const response = await fetch("/api/contact", {
-      body: JSON.stringify(values),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    });
-    const payload = (await response.json().catch(() => null)) as {
-      error?: string;
-    } | null;
-
-    if (!response.ok) {
+    try {
+      await submitContact.mutateAsync(values);
+    } catch (error) {
       setStatus("error");
-      setMessage(payload?.error ?? "Could not submit the enquiry.");
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Could not submit the enquiry.",
+      );
       return;
     }
 
@@ -177,8 +180,8 @@ export function ContactForm() {
             )}
           />
 
-          <Button type="submit" size="lg" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Sending..." : "Send enquiry"}
+          <Button type="submit" size="lg" disabled={submitContact.isPending}>
+            {submitContact.isPending ? "Sending..." : "Send enquiry"}
           </Button>
         </form>
       </Form>

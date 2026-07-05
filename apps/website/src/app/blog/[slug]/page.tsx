@@ -2,7 +2,7 @@ import { Badge, Button } from "@anodizex/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createPageMetadata } from "@/lib/seo";
-import { getWebsiteCaller } from "@/lib/server-trpc";
+import { getQueryClient, trpc } from "@/trpc/server";
 
 type BlogPageProps = {
   params: Promise<{ slug: string }>;
@@ -22,8 +22,9 @@ export async function generateMetadata({
   params,
 }: BlogPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const caller = await getWebsiteCaller();
-  const { item } = await caller.website.getBlogPost({ slug });
+  const { item } = await getQueryClient().fetchQuery(
+    trpc.website.getBlogPost.queryOptions({ slug }),
+  );
 
   if (!item) {
     return createPageMetadata({
@@ -45,8 +46,9 @@ export async function generateMetadata({
 
 export default async function BlogPage({ params }: BlogPageProps) {
   const { slug } = await params;
-  const caller = await getWebsiteCaller();
-  const { item } = await caller.website.getBlogPost({ slug });
+  const { item } = await getQueryClient().fetchQuery(
+    trpc.website.getBlogPost.queryOptions({ slug }),
+  );
 
   if (!item) notFound();
 

@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
 import type { LandingPageContent } from "@/components/launched";
 import { createPageMetadata } from "@/lib/seo";
-import { getWebsiteCaller } from "@/lib/server-trpc";
+import { getQueryClient, trpc } from "@/trpc/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   return createPageMetadata({
@@ -21,8 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const caller = await getWebsiteCaller();
-  const content = (await caller.website.getLanding()).item as LandingPageContent;
+  const content = (
+    await getQueryClient().fetchQuery(trpc.website.getLanding.queryOptions())
+  ).item as LandingPageContent;
   const { settings } = content;
   const address = [
     settings.addressLine1,

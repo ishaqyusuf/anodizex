@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { JsonLd } from "../components/json-ld";
-import { LaunchedPage, type LandingPageContent } from "../components/launched";
-import {
-  createPageMetadata,
-  organizationJsonLd,
-} from "../lib/seo";
-import { getWebsiteCaller } from "../lib/server-trpc";
+import { type LandingPageContent, LaunchedPage } from "../components/launched";
+import { createPageMetadata, organizationJsonLd } from "../lib/seo";
+import { getQueryClient, trpc } from "../trpc/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   return createPageMetadata({
@@ -17,8 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const caller = await getWebsiteCaller();
-  const content = await caller.website.getLanding();
+  const content = await getQueryClient().fetchQuery(
+    trpc.website.getLanding.queryOptions(),
+  );
 
   return (
     <>

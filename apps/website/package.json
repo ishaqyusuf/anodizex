@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@anodizex/api": "workspace:*",
+    "@anodizex/db": "workspace:*",
     "@anodizex/events": "workspace:*",
     "@anodizex/plans": "workspace:*",
     "@anodizex/site-nav": "workspace:*",

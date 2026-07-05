@@ -1,20 +1,15 @@
-import { Badge, Button } from "@anodizex/ui";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { BlogPostPageContent } from "@/components/blog-post-page-content";
 import { createPageMetadata } from "@/lib/seo";
-import { getQueryClient, trpc } from "@/trpc/server";
+import { getQueryClient, HydrateClient, prefetch, trpc } from "@/trpc/server";
 
 type BlogPageProps = {
   params: Promise<{ slug: string }>;
 };
 
 type BlogPost = {
-  authorName: string;
-  content: string;
-  coverImageUrl: string;
   excerpt: string;
-  publishedAt: string | null;
-  slug: string;
   title: string;
 };
 
@@ -46,54 +41,14 @@ export async function generateMetadata({
 
 export default async function BlogPage({ params }: BlogPageProps) {
   const { slug } = await params;
-  const { item } = await getQueryClient().fetchQuery(
-    trpc.website.getBlogPost.queryOptions({ slug }),
-  );
 
-  if (!item) notFound();
-
-  const post = item as BlogPost;
+  await prefetch(trpc.website.getBlogPost.queryOptions({ slug }));
 
   return (
-    <article>
-      <section className="mx-auto max-w-4xl px-5 py-14 sm:px-8">
-        <Badge variant="secondary">Anodizex blog</Badge>
-        <h1 className="mt-5 text-4xl font-semibold tracking-normal sm:text-5xl">
-          {post.title}
-        </h1>
-        <p className="mt-5 text-lg leading-8 text-muted-foreground">
-          {post.excerpt}
-        </p>
-        <div className="mt-5 text-sm text-muted-foreground">
-          {post.authorName}
-          {post.publishedAt
-            ? ` · ${new Intl.DateTimeFormat("en", {
-                dateStyle: "medium",
-              }).format(new Date(post.publishedAt))}`
-            : null}
-        </div>
-      </section>
-
-      {post.coverImageUrl ? (
-        <div className="mx-auto max-w-6xl px-5 sm:px-8">
-          <div className="aspect-[16/8] overflow-hidden bg-muted">
-            <img
-              src={post.coverImageUrl}
-              alt={post.title}
-              className="size-full object-cover"
-            />
-          </div>
-        </div>
-      ) : null}
-
-      <section className="mx-auto max-w-3xl px-5 py-14 sm:px-8">
-        <div className="whitespace-pre-line text-base leading-8 text-muted-foreground">
-          {post.content}
-        </div>
-        <Button asChild variant="outline" className="mt-10">
-          <a href="/#blog">Back to blog</a>
-        </Button>
-      </section>
-    </article>
+    <HydrateClient>
+      <Suspense fallback={null}>
+        <BlogPostPageContent slug={slug} />
+      </Suspense>
+    </HydrateClient>
   );
 }

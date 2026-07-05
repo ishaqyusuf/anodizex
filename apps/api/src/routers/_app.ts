@@ -352,6 +352,72 @@ const fallbackBlogPosts = [
   },
 ] as const;
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function getErrorCause(error: unknown) {
+  return isRecord(error) ? error.cause : undefined;
+}
+
+function isDatabaseConnectionError(error: unknown): boolean {
+  let current: unknown = error;
+
+  for (let depth = 0; depth < 4 && current; depth += 1) {
+    if (isRecord(current)) {
+      if (current.code === "P1001") {
+        return true;
+      }
+
+      if (
+        typeof current.message === "string" &&
+        current.message.includes("Can't reach database server")
+      ) {
+        return true;
+      }
+    }
+
+    current = getErrorCause(current);
+  }
+
+  return false;
+}
+
+function fallbackLandingContent() {
+  return {
+    item: {
+      blogPosts: fallbackBlogPosts,
+      gallery: fallbackGallery,
+      projects: fallbackProjects,
+      settings: anodizexFallbackSettings,
+    },
+  };
+}
+
+function logWebsiteDatabaseFallback(procedure: string, error: unknown) {
+  console.warn(
+    `[website.${procedure}] Database unavailable; serving fallback content.`,
+    error instanceof Error ? error.message : String(error),
+  );
+}
+
+async function withWebsiteReadFallback<T>(
+  procedure: string,
+  query: () => Promise<T>,
+  fallback: () => T,
+) {
+  try {
+    return await query();
+  } catch (error) {
+    if (isDatabaseConnectionError(error)) {
+      logWebsiteDatabaseFallback(procedure, error);
+      return fallback();
+    }
+
+    throw error;
+  }
+}
+
 function requireOwnerOrAdmin(ctx: ApiContext) {
   if (ctx.workspace?.role !== "owner" && ctx.workspace?.role !== "admin") {
     throw new TRPCError({
@@ -3200,165 +3266,200 @@ const quotationsRouter = t.router({
 });
 
 const websiteRouter = t.router({
-  getLanding: t.procedure.query(async () => {
-    const settings = await db.websiteSettings.findFirst({
-      orderBy: { updatedAt: "desc" },
-    });
-    const workspaceId = settings?.workspaceId;
+  getLanding: t.procedure.query(() =>
+    withWebsiteReadFallback(
+      "getLanding",
+      async () => {
+        const settings = await db.websiteSettings.findFirst({
+          orderBy: { updatedAt: "desc" },
+        });
+        const workspaceId = settings?.workspaceId;
 
-    if (!workspaceId || !settings) {
-      return {
-        item: {
-          blogPosts: fallbackBlogPosts,
-          gallery: fallbackGallery,
-          projects: fallbackProjects,
-          settings: anodizexFallbackSettings,
-        },
-      };
-    }
+        if (!workspaceId || !settings) {
+          return fallbackLandingContent();
+        }
 
-    const now = new Date();
-    const [gallery, projects, blogPosts] = await Promise.all([
-      db.websiteGalleryItem.findMany({
-        include: { project: { select: { slug: true, title: true } } },
-        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-        where: { isFeatured: true, workspaceId },
-      }),
-      db.websiteProject.findMany({
-        include: { media: { orderBy: { sortOrder: "asc" } } },
-        orderBy: [{ year: "desc" }, { sortOrder: "asc" }],
-        where: {
-          OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
-          workspaceId,
-        },
-      }),
-      db.blogPost.findMany({
-        orderBy: [{ sortOrder: "asc" }, { publishedAt: "desc" }],
-        take: 3,
-        where: {
-          OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
-          workspaceId,
-        },
-      }),
-    ]);
+        const now = new Date();
+        const [gallery, projects, blogPosts] = await Promise.all([
+          db.websiteGalleryItem.findMany({
+            include: { project: { select: { slug: true, title: true } } },
+            orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+            where: { isFeatured: true, workspaceId },
+          }),
+          db.websiteProject.findMany({
+            include: { media: { orderBy: { sortOrder: "asc" } } },
+            orderBy: [{ year: "desc" }, { sortOrder: "asc" }],
+            where: {
+              OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
+              workspaceId,
+            },
+          }),
+          db.blogPost.findMany({
+            orderBy: [{ sortOrder: "asc" }, { publishedAt: "desc" }],
+            take: 3,
+            where: {
+              OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
+              workspaceId,
+            },
+          }),
+        ]);
 
-    return {
-      item: {
-        blogPosts: blogPosts.length
-          ? blogPosts.map(blogPostDto)
-          : fallbackBlogPosts,
-        gallery: gallery.length ? gallery.map(galleryItemDto) : fallbackGallery,
-        projects: projects.length ? projects.map(projectDto) : fallbackProjects,
-        settings: websiteSettingsDto(settings),
+        return {
+          item: {
+            blogPosts: blogPosts.length
+              ? blogPosts.map(blogPostDto)
+              : fallbackBlogPosts,
+            gallery: gallery.length
+              ? gallery.map(galleryItemDto)
+              : fallbackGallery,
+            projects: projects.length
+              ? projects.map(projectDto)
+              : fallbackProjects,
+            settings: websiteSettingsDto(settings),
+          },
+        };
       },
-    };
-  }),
+      fallbackLandingContent,
+    ),
+  ),
   getProject: t.procedure
     .input(z.object({ slug: z.string().trim().min(1) }))
-    .query(async ({ input }) => {
-      const now = new Date();
-      const item = await db.websiteProject.findFirst({
-        include: { media: { orderBy: { sortOrder: "asc" } } },
-        where: {
-          OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
-          slug: input.slug,
+    .query(({ input }) =>
+      withWebsiteReadFallback(
+        "getProject",
+        async () => {
+          const now = new Date();
+          const item = await db.websiteProject.findFirst({
+            include: { media: { orderBy: { sortOrder: "asc" } } },
+            where: {
+              OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
+              slug: input.slug,
+            },
+          });
+
+          const fallback = fallbackProjects.find(
+            (project) => project.slug === input.slug,
+          );
+
+          return {
+            item: item ? projectDto(item) : (fallback ?? null),
+          };
         },
-      });
-
-      const fallback = fallbackProjects.find(
-        (project) => project.slug === input.slug,
-      );
-
-      return {
-        item: item ? projectDto(item) : (fallback ?? null),
-      };
-    }),
+        () => ({
+          item:
+            fallbackProjects.find((project) => project.slug === input.slug) ??
+            null,
+        }),
+      ),
+    ),
   getBlogPost: t.procedure
     .input(z.object({ slug: z.string().trim().min(1) }))
-    .query(async ({ input }) => {
-      const now = new Date();
-      const item = await db.blogPost.findFirst({
-        where: {
-          OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
-          slug: input.slug,
+    .query(({ input }) =>
+      withWebsiteReadFallback(
+        "getBlogPost",
+        async () => {
+          const now = new Date();
+          const item = await db.blogPost.findFirst({
+            where: {
+              OR: [{ publishedAt: null }, { publishedAt: { lte: now } }],
+              slug: input.slug,
+            },
+          });
+
+          const fallback = fallbackBlogPosts.find(
+            (post) => post.slug === input.slug,
+          );
+
+          return {
+            item: item ? blogPostDto(item) : (fallback ?? null),
+          };
         },
-      });
-
-      const fallback = fallbackBlogPosts.find(
-        (post) => post.slug === input.slug,
-      );
-
-      return {
-        item: item ? blogPostDto(item) : (fallback ?? null),
-      };
-    }),
+        () => ({
+          item:
+            fallbackBlogPosts.find((post) => post.slug === input.slug) ?? null,
+        }),
+      ),
+    ),
   submitContact: t.procedure
     .input(contactInquirySchema)
     .mutation(async ({ input }) => {
-      const settings = await db.websiteSettings.findFirst({
-        orderBy: { updatedAt: "desc" },
-      });
-      const fallbackWorkspace = settings
-        ? null
-        : await db.workspace.findFirst({
-            orderBy: { createdAt: "asc" },
-            select: { id: true },
-          });
-      const workspaceId =
-        settings?.workspaceId ?? fallbackWorkspace?.id ?? null;
-      const adminEmail =
-        settings?.email ??
-        process.env.ANODIZEX_CONTACT_EMAIL ??
-        process.env.EMAIL_FROM_ADDRESS ??
-        anodizexFallbackSettings.email;
+      try {
+        const settings = await db.websiteSettings.findFirst({
+          orderBy: { updatedAt: "desc" },
+        });
+        const fallbackWorkspace = settings
+          ? null
+          : await db.workspace.findFirst({
+              orderBy: { createdAt: "asc" },
+              select: { id: true },
+            });
+        const workspaceId =
+          settings?.workspaceId ?? fallbackWorkspace?.id ?? null;
+        const adminEmail =
+          settings?.email ??
+          process.env.ANODIZEX_CONTACT_EMAIL ??
+          process.env.EMAIL_FROM_ADDRESS ??
+          anodizexFallbackSettings.email;
 
-      const created = await db.contactInquiry.create({
-        data: {
-          companyName: optionalValue(input.companyName),
-          email: input.email,
-          message: input.message,
-          name: input.name,
-          phone: optionalValue(input.phone),
-          projectType: optionalValue(input.projectType),
-          workspaceId,
-        },
-      });
-
-      const adminResult = await emailService.send({
-        data: { body: contactAdminBody(input), inquiryId: created.id },
-        subject: `New Anodizex enquiry from ${input.name}`,
-        user: {
-          email: adminEmail,
-          id: `admin-${created.id}`,
-          workspace_id: workspaceId ?? "public",
-        },
-      });
-      const customerResult = await emailService.send({
-        data: { body: contactCustomerBody(input), inquiryId: created.id },
-        subject: "We received your Anodizex enquiry",
-        user: {
-          email: input.email,
-          id: `customer-${created.id}`,
-          workspace_id: workspaceId ?? "public",
-        },
-      });
-
-      const item = await db.contactInquiry.update({
-        data: {
-          adminEmailStatus: adminResult.status,
-          customerEmailStatus: customerResult.status,
-          metadata: {
-            adminRecipients: adminResult.recipients,
-            customerRecipients: customerResult.recipients,
-            emailRecipientOverride:
-              adminResult.wasRecipientOverridden ||
-              customerResult.wasRecipientOverridden,
+        const created = await db.contactInquiry.create({
+          data: {
+            companyName: optionalValue(input.companyName),
+            email: input.email,
+            message: input.message,
+            name: input.name,
+            phone: optionalValue(input.phone),
+            projectType: optionalValue(input.projectType),
+            workspaceId,
           },
-        },
-        where: { id: created.id },
-      });
+        });
 
-      return { item: inquiryDto(item) };
+        const adminResult = await emailService.send({
+          data: { body: contactAdminBody(input), inquiryId: created.id },
+          subject: `New Anodizex enquiry from ${input.name}`,
+          user: {
+            email: adminEmail,
+            id: `admin-${created.id}`,
+            workspace_id: workspaceId ?? "public",
+          },
+        });
+        const customerResult = await emailService.send({
+          data: { body: contactCustomerBody(input), inquiryId: created.id },
+          subject: "We received your Anodizex enquiry",
+          user: {
+            email: input.email,
+            id: `customer-${created.id}`,
+            workspace_id: workspaceId ?? "public",
+          },
+        });
+
+        const item = await db.contactInquiry.update({
+          data: {
+            adminEmailStatus: adminResult.status,
+            customerEmailStatus: customerResult.status,
+            metadata: {
+              adminRecipients: adminResult.recipients,
+              customerRecipients: customerResult.recipients,
+              emailRecipientOverride:
+                adminResult.wasRecipientOverridden ||
+                customerResult.wasRecipientOverridden,
+            },
+          },
+          where: { id: created.id },
+        });
+
+        return { item: inquiryDto(item) };
+      } catch (error) {
+        if (isDatabaseConnectionError(error)) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message:
+              "We could not save your enquiry right now. Please try again shortly or contact us directly.",
+            cause: error,
+          });
+        }
+
+        throw error;
+      }
     }),
   admin: t.router({
     getContent: protectedProcedure.query(async ({ ctx }) => {

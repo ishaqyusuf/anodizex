@@ -33,6 +33,7 @@
     "db:validate": "turbo -F @anodizex/db db:validate",
     "env:prod:export": "bun scripts/prod-env.mjs export",
     "env:prod:export:apply": "bun scripts/prod-env.mjs export --apply",
+    "env:prod:check": "bun scripts/check-production-env.mjs",
     "env:prod:import": "bun scripts/prod-env.mjs import",
     "email:test": "bun scripts/with-workspace-env.mjs --mode local -- bun scripts/send-test-email.mjs",
     "format": "biome format --write .",

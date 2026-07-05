@@ -11,15 +11,12 @@ import { makeQueryClient } from "./query-client";
 
 export const getQueryClient = cache(makeQueryClient);
 
-type ServerPrefetchQueryOptions = Parameters<
-  ReturnType<typeof getQueryClient>["prefetchQuery"]
->[0];
+type ServerPrefetchOptions = { queryKey: readonly unknown[] };
+type QueryClient = ReturnType<typeof getQueryClient>;
+type ServerPrefetchQueryOptions = Parameters<QueryClient["prefetchQuery"]>[0];
 type ServerPrefetchInfiniteQueryOptions = Parameters<
-  ReturnType<typeof getQueryClient>["prefetchInfiniteQuery"]
+  QueryClient["prefetchInfiniteQuery"]
 >[0];
-type ServerPrefetchOptions =
-  | ServerPrefetchQueryOptions
-  | ServerPrefetchInfiniteQueryOptions;
 
 function isQueryDescriptor(value: unknown): value is { type: string } {
   return typeof value === "object" && value !== null && "type" in value;
@@ -27,7 +24,7 @@ function isQueryDescriptor(value: unknown): value is { type: string } {
 
 function isInfiniteQueryOptions(
   queryOptions: ServerPrefetchOptions,
-): queryOptions is ServerPrefetchInfiniteQueryOptions {
+): queryOptions is ServerPrefetchOptions & { queryKey: readonly unknown[] } {
   const descriptor = queryOptions.queryKey[1];
 
   return isQueryDescriptor(descriptor) && descriptor.type === "infinite";
@@ -62,10 +59,16 @@ export function prefetch(queryOptions: ServerPrefetchOptions) {
   const queryClient = getQueryClient();
 
   if (isInfiniteQueryOptions(queryOptions)) {
-    return queryClient.prefetchInfiniteQuery(queryOptions).catch(() => {});
+    return queryClient
+      .prefetchInfiniteQuery(
+        queryOptions as unknown as ServerPrefetchInfiniteQueryOptions,
+      )
+      .catch(() => {});
   }
 
-  return queryClient.prefetchQuery(queryOptions).catch(() => {});
+  return queryClient
+    .prefetchQuery(queryOptions as unknown as ServerPrefetchQueryOptions)
+    .catch(() => {});
 }
 
 export function batchPrefetch(queryOptionsArray: ServerPrefetchOptions[]) {
@@ -73,9 +76,15 @@ export function batchPrefetch(queryOptionsArray: ServerPrefetchOptions[]) {
 
   for (const queryOptions of queryOptionsArray) {
     if (isInfiniteQueryOptions(queryOptions)) {
-      void queryClient.prefetchInfiniteQuery(queryOptions).catch(() => {});
+      void queryClient
+        .prefetchInfiniteQuery(
+          queryOptions as unknown as ServerPrefetchInfiniteQueryOptions,
+        )
+        .catch(() => {});
     } else {
-      void queryClient.prefetchQuery(queryOptions).catch(() => {});
+      void queryClient
+        .prefetchQuery(queryOptions as unknown as ServerPrefetchQueryOptions)
+        .catch(() => {});
     }
   }
 }

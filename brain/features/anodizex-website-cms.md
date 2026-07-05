@@ -49,6 +49,8 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 - Public tRPC procedures: `website.getLanding`, `website.getProject`, `website.getBlogPost`, and `website.submitContact`.
 - Owner/admin tRPC procedures under `website.admin.*` manage settings, gallery, roadmap projects/media, blog posts, and inquiry status.
 - Website has its own `apps/website/src/trpc` server/client stack, matching the dashboard Midday-style tRPC pattern.
+- Public website pages prefetch tRPC query options on the server, hydrate through `HydrateClient`, and consume the same query options in client content components.
+- Public landing/project/blog reads return curated fallback content when the database is unreachable; `website.submitContact` still requires persistence and returns a retryable server error on database connection failure.
 - Website contact submissions go through `website.submitContact` on the website same-origin `/api/trpc` route.
 - Dashboard `/api/website/blob/upload` authenticates owner/admin users before generating Vercel Blob client upload tokens.
 - Root Telegram import scripts read bot updates, download configured chat media, upload Blob files with configured access, and upsert workspace-scoped gallery items by Telegram `file_unique_id`.
@@ -75,6 +77,13 @@ Anodizex needs a professional public website for aluminium systems, completed wo
 - 2026-07-05 logo correction:
   - Replaced the approximate vector mark with the provided company logo artwork.
   - Browser DOM verification confirmed the header logo renders `/brand/anodizex-logo.png` and favicon metadata points to `/favicon.png` plus the PNG fallback icons.
+- 2026-07-05 tRPC hydration and production database guard update:
+  - `bun --filter @anodizex/api typecheck` passed.
+  - `bun --filter @anodizex/website typecheck` passed.
+  - Focused Biome check passed for website tRPC prefetch/hydration files, website page content components, production env guard scripts, and `package.json`.
+  - `bun scripts/with-workspace-env.mjs --mode production -- true` passed with the hosted `.env.production` database URL.
+  - `bun scripts/check-production-env.mjs` correctly failed only because the local production auth secret is not configured.
+  - A smoke check confirmed the production database guard rejects `127.0.0.1:55435`.
 - 2026-07-04 Telegram media import update:
   - `bun run db:validate` passed.
   - `bun --filter @anodizex/db db:generate` passed.

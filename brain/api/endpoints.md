@@ -84,10 +84,10 @@ The dashboard and website apps each expose a same-origin `/api/trpc` route backe
 - `getPortalUrl`: optional portal URL response. Returns `null` until configured.
 
 `website`
-- `getLanding`: public read for website settings, featured gallery, roadmap projects, and blog posts. Returns fallback Anodizex demo content when CMS data is empty.
-- `getProject`: public read for one roadmap project by slug.
-- `getBlogPost`: public read for one blog post by slug.
-- `submitContact`: public contact form mutation. Stores a contact inquiry and sends an admin notification plus customer confirmation email through the existing Resend email service.
+- `getLanding`: public read for website settings, featured gallery, roadmap projects, and blog posts. Returns fallback Anodizex demo content when CMS data is empty or when the database is unreachable.
+- `getProject`: public read for one roadmap project by slug. Falls back to the matching curated project when the database is unreachable.
+- `getBlogPost`: public read for one blog post by slug. Falls back to the matching curated blog post when the database is unreachable.
+- `submitContact`: public contact form mutation. Stores a contact inquiry and sends an admin notification plus customer confirmation email through the existing Resend email service. Requires a reachable database and returns a friendly retry message on database connection failure.
 
 `website.admin`
 - `getContent`: owner/admin read for current workspace website settings, gallery, roadmap projects/media, blog posts, and recent contact inquiries.
@@ -106,6 +106,8 @@ The dashboard and website apps each expose a same-origin `/api/trpc` route backe
 - Cron job endpoints use `CRON_SECRET` and must not send outbound messages.
 - Website admin routes derive workspace from the authenticated session and require owner/admin role.
 - Public website contact submissions use `website.submitContact` through the website same-origin `/api/trpc` route.
+- Public website reads use server-side prefetch plus `HydrateClient` in `apps/website`, matching the dashboard tRPC pattern.
+- Public website read procedures may return curated fallback content during database connection failures; admin procedures and public contact writes do not silently succeed without persistence.
 - Public contact email sends require `RESEND_API_KEY` and `EMAIL_FROM_ADDRESS`; local/dev recipient override follows `TEST_EMAIL`.
 - Quotation material and quotation mutations derive workspace from the authenticated session and require owner/admin role.
 

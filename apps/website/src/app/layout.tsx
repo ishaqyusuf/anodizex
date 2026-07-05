@@ -1,4 +1,3 @@
-import { Provider as AnalyticsProvider } from "@anodizex/events/client";
 import { websiteNavItems } from "@anodizex/site-nav";
 import { BrandLogo, cn } from "@anodizex/ui";
 import { appMetadata } from "@anodizex/utils";
@@ -7,10 +6,9 @@ import { Hedvig_Letters_Sans, Hedvig_Letters_Serif } from "next/font/google";
 import { headers } from "next/headers";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { PwaServiceWorkerRegister } from "../components/pwa-service-worker-register";
 import { createPageMetadata, siteUrl } from "../lib/seo";
-import { TRPCReactProvider } from "../trpc/client";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const hedvigSans = Hedvig_Letters_Sans({
   adjustFontFallback: true,
@@ -84,9 +82,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col bg-background text-foreground">
-        <TRPCReactProvider>
-          <AnalyticsProvider />
-          <PwaServiceWorkerRegister />
+        <Providers>
           {!hasLandingShell && (
             <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
               <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -142,7 +138,7 @@ export default async function RootLayout({
               </div>
             </footer>
           )}
-        </TRPCReactProvider>
+        </Providers>
       </body>
     </html>
   );

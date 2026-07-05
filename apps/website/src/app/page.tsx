@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { JsonLd } from "../components/json-ld";
-import { type LandingPageContent, LaunchedPage } from "../components/launched";
+import { LandingPageContentView } from "../components/landing-page-content";
 import { createPageMetadata, organizationJsonLd } from "../lib/seo";
-import { getQueryClient, trpc } from "../trpc/server";
+import { HydrateClient, prefetch, trpc } from "../trpc/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   return createPageMetadata({
@@ -14,14 +15,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const content = await getQueryClient().fetchQuery(
-    trpc.website.getLanding.queryOptions(),
-  );
+  await prefetch(trpc.website.getLanding.queryOptions());
 
   return (
     <>
       <JsonLd data={[organizationJsonLd()]} />
-      <LaunchedPage content={content.item as LandingPageContent} />
+      <HydrateClient>
+        <Suspense fallback={null}>
+          <LandingPageContentView />
+        </Suspense>
+      </HydrateClient>
     </>
   );
 }
